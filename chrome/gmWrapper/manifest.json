@@ -1,0 +1,19 @@
+{
+    "name": "change name for your GM script",
+    "version": "1.0",
+    "description": "change description for your GM script",
+    "permissions" : [
+        "http://*/*" ,
+        "https://*/*"
+    ] ,
+    "background_page": "background.html",
+
+    "content_scripts": [{
+        "matches": [
+            "http://*/*" ,
+            "https://*/*" 
+        ],
+        "js": [ "gmWrapper.js" , "yourGMScript.user.js" ]
+    }]
+}
+
