@@ -1,0 +1,19 @@
+REQUIRE
+= gm2chext
+* http://github.com/umezo/umezone/tree/master/chrome/gm2chext
+
+== DESCRIPTION:
+converter of GreaseMonkey scripts to Chrome extension
+
+== REQUIREMENTS:
+* crxmake
+** http://github.com/Constellation/crxmake
+* mako
+** http://www.makotemplates.org/
+
+
+== INSTALL:
+
+
+== LICENSE:
+
