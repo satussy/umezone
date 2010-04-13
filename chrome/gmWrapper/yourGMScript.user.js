@@ -4,11 +4,8 @@
 //
 //
 // ==/UserScript==
-//
-//
-//
 
-if( typeof isChromeExtension == "undefined" ){ //chrome wrapperが読み込まれていない場合
+if( typeof isChromeExtension == "undefined" ){ //case : script runs on non chrome browser
     init();
 }else{
     function onReadyGM(){
@@ -33,7 +30,7 @@ function init(){
         onload : function (req) {
             GM_log( req );
         } 
-//        忘れてた, 
+//        no support
 //        onerror : function (){
 //            removeMessage( mes );
 //            printMessage( "error" );

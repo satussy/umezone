@@ -1,4 +1,5 @@
 onReadyGM = function(){}
+unsafeWindow=window;
 function isChromeExtension() { return (typeof chrome == 'object') && (typeof chrome.extension == 'object') }
 function chromeCompatible() {
 //    console.log( "gmWrapper.chromeCompatible" );
