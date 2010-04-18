@@ -4,11 +4,11 @@ import json
 import os
 import shutil
 
+import commands
+
 from mako.template import Template
 
 from os import path
-os.environ['DJANGO_SETTINGS_MODULE'] = '__main__'
-
 
 
 APP_ROOT = path.dirname( path.abspath( __file__ ) ) + "/.."
@@ -41,7 +41,8 @@ def parseGM( file ):
         "require"  : [] 
     }
     lines = [] 
-    for line in f :
+    for line in file :
+        line = line.strip()
         if line.startswith( "//" ) :
             m = matcher.match( line ) 
             if m == None :
@@ -69,7 +70,9 @@ def makeChromeMeta( gmmeta ) :
         "permissions"     : [ "http://*/*" , "https://*/*" ] ,
         "background_page" : "background.html",
         "content_scripts" : [{
-            "matches" : gmmeta.get( "include" , ["http://*/*"] ) ,
+            "include_globs" : gmmeta.get( "include" , ["http://*/*"] ) ,
+            "exclude_globs" : gmmeta.get( "exclude" , [] ) ,
+            "matches"       : [ "http://*/*" , "https://*/*" ] ,
             "js": [ 
                 "gmWrapper.js" , 
                 getChromeScriptName( gmmeta.get( "name" , "" ) ) + ".user.js"
@@ -82,10 +85,18 @@ def getChromeScriptName( name ):
 
 
 def initScriptFiles( gmdata ):
-    script_name = gmdata["meta"]["name"]
+    try:
+        script_name = gmdata["meta"]["name"]
+    except KeyError :
+        raise SyntaxError , "Specified script might not be GreaseMonkey Script"
+
     DIR_NAME = getChromeScriptName( script_name )
     SRC_ROOT = APP_ROOT + "/var/" + DIR_NAME 
     TEMPLATE = APP_ROOT + "/dat/template" 
+    
+    if path.exists( SRC_ROOT ):
+        shutil.rmtree( SRC_ROOT )
+
     shutil.copytree( TEMPLATE , SRC_ROOT )
 
     SCRIPT_NAME = SRC_ROOT + "/" + DIR_NAME + ".user.js" 
@@ -98,7 +109,6 @@ def initScriptFiles( gmdata ):
     return SRC_ROOT
 
 def initManifest( dir , gmmeta ):
-    print dir + "/manifest.json" 
     f = open( dir + "/manifest.json" , "w" )
     f.write( json.dumps( makeChromeMeta( gmmeta ) ) )
     f.close()
@@ -112,17 +122,27 @@ def initUserScript( path , src ):
 
 
 
-path = "http://coderepos.org/share/browser/lang/javascript/userscripts/fastlookupalc.user.js?format=txt" 
-
-f = urllib.urlopen( path )
-
-gmdata = parseGM( f )
-src_dir = initScriptFiles( gmdata )
-
+def sample():
+    path = "http://coderepos.org/share/browser/lang/javascript/userscripts/fastlookupalc.user.js?format=txt" 
+    f = urllib.urlopen( path )
+    gmdata = parseGM( f )
+    src_dir = initScriptFiles( gmdata )
 
 
 
 
+def saveByURL( url ):
+    f = urllib.urlopen( url )
+    gmdata = parseGM( f )
+    src_dir = initScriptFiles( gmdata )
+    makeCRX( src_dir )
+    return src_dir 
 
 
+
+def makeCRX( target_dir ):
+    current = os.getcwd()
+    os.chdir( path.dirname( target_dir ) )
+    commands.getoutput( '/usr/local/bin/crxmake --pack-extension=%s --ignore-file="pem$"' % target_dir );
+    os.chdir( current )
 
