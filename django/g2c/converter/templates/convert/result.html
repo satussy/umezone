@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}GreaseMonkey to Chrome extension Converter{% endblock %}
+{% block css %}
+.on  { display:block} .off { display:none }
+#waitMessage { padding-top: 20px ; background : #FFF url( "/g2c/img/icon/load_bar.gif" ) no-repeat top center ; }
+h1 { margin : 10px ; font-size : 2em ; } 
+form { margin : 10px ; }
+form #id_url {width:350px;}
+{% endblock %}
+{% block h1 %}GreaseMonkey to Chrome extension Converter{% endblock %}
+{% block body %}
+    <p>Input url of GreaseMonkey script to convert it to Chrome extension</p>
+    {% if result %}
+        success<br>
+        You requested to convert {{form.url}}
+    {% else %}
+        <form onsubmit="onSubmit()" id="form" action="" method="GET">
+            {{form.url}}
+            <input type="submit" value="Convert" />
+        </form>  
+        <p id="waitMessage" class="off" >now converting..<br>please wait</p>
+        <p class="errorMessage">{{message}}</p>
+    {% endif %}
+{% endblock %}
+{% block enddoc %}
+    <script type="text/javascript">
+    function onSubmit (){
+        document.getElementById( "form" ).className = "off" ;
+        document.getElementById( "waitMessage" ).className = "on" ;
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="jp">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock%}</title>
+    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="/css/reset-fonts.css" type="text/css" />
+<style type="text/css">
+body { text-align:center; }
+div#wrapper { width : 950px; margin : 0 auto 0 auto ; }
+{% block css %}{% endblock %}</style>
+</head>
+<body>
+    <div id="wrapper">
+    <h1>{% block h1 %}{% endblock %}</h1>
+    {% block body %}{% endblock %}
+    </div>
+
+    {% block enddoc %}{% endblock %}
+</body>
+</html>
