@@ -1,0 +1,14 @@
+* { display:none }
+html ,
+body,
+div#simple ,
+div#simple *{
+    display:block ;
+}
+div#simple input {
+    display:inline;
+}
+ a {color: #3472D0; font-size: 17px; text-decoration: none; padding: 2px; background: #d5eaff;}
+ a:visited {color: #CCC;}
+ a:hover {color: #FFFFFF; background: #3472D0;}
+ input {margin: 0px 5px;}
