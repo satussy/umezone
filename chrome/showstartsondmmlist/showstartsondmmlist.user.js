@@ -10,7 +10,7 @@
     var imgRegExp = new RegExp( "<img(\\s|.)*?([^<]*)>" , "ig")
 
     doc.addEventListener('DOMNodeInserted', handleInserted, false);
-    setStarts( $( ".text > a" );
+    setStarts( $( ".text > a" ) ) ;
 
     function setStarts( list ){
         list.each( function( i , elem ){
