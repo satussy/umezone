@@ -18,6 +18,8 @@
      them to be changed based on the locale and options. -->
 
 <resources>
+    <string name="fileListDialogPlayFromThis">Play From This</string>
+    <string name="Artist"><u>TEST</u></string>
     <string name="playerPause">||</string>
     <string name="playerPrev">&lt;</string>
     <string name="playerNext">&gt;</string>

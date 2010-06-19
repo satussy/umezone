@@ -17,7 +17,9 @@
 package in.tsuyabu.umezo.android.directron;
 
 import in.tsuyabu.umezo.android.directron.R;
+import in.tsuyabu.umezo.android.directron.app.DirectronMusicService;
 import in.tsuyabu.umezo.android.directron.app.PlayerActivity;
+import in.tsuyabu.umezo.android.directron.appwidget.PlayerWidgetService;
 import in.tsuyabu.umezo.android.io.AndroidAudioFilenameFilter;
 import in.tsuyabu.umezo.android.widget.FileAdapter;
 import in.tsuyabu.umezo.util.FileComparator;
@@ -138,9 +140,14 @@ public class FileListActivity extends ListActivity {
     }
     
     private void startPlayerActivity( File f ){
+    	Intent service = new Intent( this , DirectronMusicService.class );
+    	service.setAction(DirectronMusicService.ACTION_INIT);
+    	service.putExtra( "path" , f );
+    	startService(service);
+
     	Intent intent = new Intent( this , PlayerActivity.class );
-    	intent.putExtra( "path" , f );
-    	startActivity( intent );    	
+    	startActivity( intent );
+    	
     }
     
     

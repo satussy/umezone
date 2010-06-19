@@ -1,37 +1,41 @@
 package in.tsuyabu.umezo.android.directron.app;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Arrays;
 
-import in.tsuyabu.umezo.android.directron.ApplicationUtil;
-import in.tsuyabu.umezo.android.directron.MP;
 import in.tsuyabu.umezo.android.directron.PlayOrderManager;
 import in.tsuyabu.umezo.android.directron.R;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.SeekBar;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.content.Context;
-import android.database.Cursor;
+
+
 
 public class PlayerActivity extends Activity{
 	private static boolean isSeeking = false ;
-
-	private static PlayOrderManager list ;
+	private static int[] listBtnID = {
+		R.id.PlayerPlay  ,
+		R.id.PlayerPause ,
+		R.id.PlayerPrev  ,
+		R.id.PlayerNext  ,
+		R.id.PlayerStop  
+	};
 	
 	@Override
 	protected void onDestroy(){
@@ -46,176 +50,162 @@ public class PlayerActivity extends Activity{
         super.onCreate(savedInstanceState);
         
         Log.d("UMEZO", "onCreate");
-        
-        startService( new Intent(this,SpeakerChangeObserver.class ));
-        
-        
+
         setContentView( R.layout.player_activity );
-        Intent intent = getIntent();
         
-        File f = (File)intent.getSerializableExtra( "path" );
-        PlayerActivity.list = new PlayOrderManager( f.isFile() ? f : f.getParentFile() );
-        f = PlayerActivity.list.getNext();
+        DirectronMusicService.setOnChangeSouce(this.handler);
+        updateInfo( DirectronMusicService.getCurrentFile() );
+        
+        View v = findViewById(R.id.PlayerView );
+        v.setOnTouchListener( new OnTouchPlayer( this ) );
+        
+        this.fitAlbumArt();
+        
 
-        
-        final android.os.Handler handler = new android.os.Handler();
-        final Runnable timer = new ProgressTimer();
-		Timer t = new Timer( );
-		t.schedule( new TimerTask() {
+	}
+	
+
+	private void fitAlbumArt(){
+		ImageView img = (ImageView)this.findViewById(R.id.InfoAlbumArt);
+		img.setMinimumHeight(100);
+		img.setMinimumWidth(100);
+	}
+
+
+	private class OnTouchPlayer implements OnTouchListener {
+		private float x = 0 ;
+    	private float y = 0 ;
+    	private float l = 0 ;
+    	private int position ;
+
+    	private View c ;
+    	
+    	private static final int POSITION_CENTER = 0;
+    	private static final int POSITION_NORTH  = 1;
+    	private static final int POSITION_WEST   = 2;
+    	private static final int POSITION_EAST   = 3;
+    	private static final int POSITION_SOUTH  = 4;
+    	
+    	public OnTouchPlayer( Activity a ){
+    		c = a.findViewById(R.id.PlayerViewController);
+
+    	}
+    	
+    	
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			//Log.d("UMEZO","onTouch");
 			
-			@Override
-			public void run() {
-				handler.post( timer );
-				
+		
+			//boolean result;
+			
+			switch( event.getAction() ){
+				case MotionEvent.ACTION_DOWN :
+					Log.d("UMEZO","onTouch:Down");
+					c.setVisibility( View.VISIBLE );
+
+					//result = v.findViewById( R.id.PlayerViewController ).requestFocus();
+					//Log.d("UMEZO","========= " + ( result ? "o" : "x"));
+					//Touch start point origin mode
+					//x = event.getX();
+					//y = event.getY();
+					
+					//Screen center origin mode
+					x =	v.getWidth()/2;
+					y = v.getHeight()/2;
+					l = Math.min(x, y);
+					l = l * l / 3;
+					
+
+					break;
+				case MotionEvent.ACTION_UP :
+					Log.d("UMEZO","onTouch:UP");
+					c.setVisibility( View.INVISIBLE );
+					PlayerActivity.this.execControl( position );
+					
+					break;
+				case MotionEvent.ACTION_MOVE:
+					//Log.d("UMEZO","onTouch:MOVE");
+					float dx = event.getX() - x;
+					float dy = event.getY() - y;
+					
+					float L = dx*dx + dy*dy ;
+					if( L < l ){
+						//Log.d("UMEZO","--------- inside");
+						position = POSITION_CENTER ;
+					}else{
+						//Log.d("UMEZO","--------- outside");
+						double rad = ( Math.atan2(dx, dy) / Math.PI * 180 + 45 ) / 90 + 2 ;							
+						if( 1 <= rad && rad < 2 ){
+							position = POSITION_WEST ;
+						}else if( 2 <= rad && rad < 3 ){
+							position = POSITION_SOUTH ;
+						}else if( 3 <= rad && rad < 4 ){
+							position = POSITION_EAST ;
+						}else{
+							position = POSITION_NORTH ;
+						}
+					}
+					PlayerActivity.this.focusButton( position );
+					//result = this.v[position].requestFocusFromTouch();
+					//Log.d("UMEZO","========= " + ( result ? "o" : "x"));
+					
+					break;
 			}
-		} , 100 , 100 );
-
-        changeSource( this , f );
-        
-        MP.setOnCompletionListener( onComplete );
-
-        findViewById( R.id.PlayerStop  ).setOnClickListener( stopOnClick );
-        findViewById( R.id.PlayerPlay  ).setOnClickListener( playOnClick );
-        findViewById( R.id.PlayerNext  ).setOnClickListener( nextOnClick );
-        findViewById( R.id.PlayerPrev  ).setOnClickListener( prevOnClick );
-        findViewById( R.id.PlayerPause ).setOnClickListener( pauseOnClick );
-        
-		SeekBar skb = (SeekBar)findViewById(R.id.PlayerSeek);
-        skb.setOnSeekBarChangeListener( seekOnChange );
-        
-
+			return true;
+		}
 	}
-	
 
-	
-	/////////////////////////////////////////////////////////////////////
-	// PREV
-	/////////////////////////////////////////////////////////////////////
-	private OnClickListener prevOnClick = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			File f = PlayerActivity.list.getPrev();
-            changeSource( v.getContext() , f );
-        }
-    };
-	
-	/////////////////////////////////////////////////////////////////////
-	// NEXT
-	/////////////////////////////////////////////////////////////////////
-	private OnClickListener nextOnClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			File f = PlayerActivity.list.getNext();
-            changeSource( v.getContext() , f );
-		}
-	};
-	
-	
-	
-	
-	/////////////////////////////////////////////////////////////////////
-	// STOP
-	/////////////////////////////////////////////////////////////////////
-	private OnClickListener stopOnClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			MP.stop();
 
-		}
-	};
-	
-	/////////////////////////////////////////////////////////////////////
-	// PLAY
-	/////////////////////////////////////////////////////////////////////
-	private OnClickListener playOnClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			MP.start();
-		}
-	};
-	
-	/////////////////////////////////////////////////////////////////////
-	// PAUSE
-	/////////////////////////////////////////////////////////////////////
-	private OnClickListener pauseOnClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			MP.pause();
-		}
-	};
-	
-	/////////////////////////////////////////////////////////////////////
-	// COMPLETE
-	/////////////////////////////////////////////////////////////////////
-	private OnCompletionListener onComplete = new OnCompletionListener() {
-		@Override
-		public void onCompletion(MediaPlayer mp) {
-			File f = PlayerActivity.list.getNext();
-            changeSource( PlayerActivity.this , f );			
-		}
-	};
-	
-	/////////////////////////////////////////////////////////////////////
-	// SEEK
-	/////////////////////////////////////////////////////////////////////
-	private OnSeekBarChangeListener seekOnChange  = new OnSeekBarChangeListener() {
-		
-		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			isSeeking = false;
-			seekTo( seekBar.getProgress() );			
-		}
-		
-		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
-			isSeeking = true;
+	public void execControl(int position) {
+		Log.d("UMEZO","PlayerActivity:execControl : " + position );
+    	String action = null;
+		switch( listBtnID[position] ){
+			case R.id.PlayerStop :
+				Log.d("UMEZO" , "--------- stop");
+				action = DirectronMusicService.ACTION_STOP;
+				break;
+			case R.id.PlayerPlay :
+				Log.d("UMEZO" , "--------- play");
+				action = DirectronMusicService.ACTION_PLAY;
+				break;
+			case R.id.PlayerNext :
+				Log.d("UMEZO" , "--------- next");
+				action = DirectronMusicService.ACTION_NEXT;
+				break;
+			case R.id.PlayerPrev :
+				Log.d("UMEZO" , "--------- prev");
+				action = DirectronMusicService.ACTION_PREV;
+				break;
 			
 		}
 		
-		@Override
-		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			// TODO Auto-generated method stub
-			
+		if(action!=null){
+	    	Intent service = new Intent( this , DirectronMusicService.class );
+			service.setAction(action);
+			startService(service);
+		}
+		
+	}
+	
+	private Handler handler = new Handler(){
+		public void handleMessage( Message msg ){
+			File f = (File)msg.obj;
+			updateInfo(f);
 		}
 	};
 	
-	
-	
-	/////////////////////////////////////////////////////////////////////
-	// UI Control
-	/////////////////////////////////////////////////////////////////////
-	private void updateSeekbar(){
-		SeekBar skb = (SeekBar)findViewById(R.id.PlayerSeek);
-		skb.setProgress( MP.getPosition() );
-        skb.setMax( MP.getDuration() );
-        
-        TextView txt = (TextView)findViewById( R.id.PlayerTextDuration );
-        txt.setText( ApplicationUtil.getTimeText( MP.getDuration() ) );
-		
-        txt = (TextView)findViewById( R.id.PlayerTextNow );
-        txt.setText( ApplicationUtil.getTimeText( MP.getPosition() ) );
-		
-	}
-	
-	private void seekTo( int pos ){
-		MP.seekTo(pos);
-	}
-
-    private void changeSource( Context c , File f ){
-        if( f == null ){ return ; }
-        
-        ContentResolver resolver = c.getContentResolver();
+	private void updateInfo( File f ){
+		if( f == null ){return;}
+        ContentResolver resolver = PlayerActivity.this.getContentResolver();
         Cursor cursor = resolver.query(
         		MediaStore.Audio.Media.EXTERNAL_CONTENT_URI , 
         		new String[]{
         				MediaStore.Audio.Media.ALBUM ,
         				MediaStore.Audio.Media.ARTIST ,
-        				MediaStore.Audio.Media.TITLE
+        				MediaStore.Audio.Media.TITLE , 
+        				MediaStore.Audio.Media.ALBUM_ID 
         		},    // keys for select. null means all
         		MediaStore.Audio.Media.DISPLAY_NAME + "=?",
         		new String[]{
@@ -226,27 +216,44 @@ public class PlayerActivity extends Activity{
         );
         cursor.moveToFirst();
         
-        ((TextView)findViewById( R.id.PlayerTextArtist )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.ARTIST ) ));
-        ((TextView)findViewById( R.id.PlayerTextAlbum  )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.ALBUM  ) ));
-        ((TextView)findViewById( R.id.PlayerTextTitle  )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.TITLE  ) ));        
-        
-        MP.setDataSource( c , Uri.fromFile(f));
-        MP.prepare();
-        MP.start();
-        
-    }
-    
-    
-	
-	private class ProgressTimer implements Runnable{
 
-		@Override
-		public void run() {
-			if( !isSeeking ){
-				PlayerActivity.this.updateSeekbar();
-			}
-		}
-		
+        
+        ((TextView)findViewById( R.id.InfoArtist )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.ARTIST ) ));
+        ((TextView)findViewById( R.id.InfoAlbum  )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.ALBUM  ) ));
+        ((TextView)findViewById( R.id.InfoTitle  )).setText(cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.TITLE  ) ));
+        
+        int albumId = cursor.getInt( cursor.getColumnIndex( MediaStore.Audio.Media.ALBUM_ID ));
+        
+        
+        cursor = resolver.query(
+        		MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI , 
+        		new String[]{
+        				MediaStore.Audio.Albums.ALBUM_ART
+        		},    // keys for select. null means all
+        		"_id=?",
+        		//MediaStore.Audio.Albums.ALBUM_ID + "=?",
+        		new String[]{        			
+        			albumId+""
+        		},
+        		null
+        );
+        cursor.moveToFirst();
+        String src = cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Albums.ALBUM_ART ));
+        Log.d("UMEZO", "src = "+src);
+    	ImageView img = (ImageView)findViewById( R.id.InfoAlbumArt );
+
+        if( src != null ){
+        	img.setVisibility( View.VISIBLE );
+        	img.setImageURI( Uri.parse( src ));
+        }else{
+        	img.setVisibility( View.INVISIBLE );
+        }
+
 	}
 
+
+
+	public void focusButton(int position) {
+		this.findViewById( listBtnID[ position ] ).requestFocusFromTouch();
+	}
 }

@@ -35,13 +35,7 @@
              can launch and interact with.  The "name" attribute is the
              name of the class within your package that implements this
              activity. -->
-        <activity android:name="FileListActivity">
-
-            <!-- An IntentFilter tells the system when it should use your
-                 activity.  This allows the user to get to your activity
-                 without someone having to explicitly know to launch your
-                 class "com.examplel.android.skeletonapp.SkeletonActivity". -->
-            <intent-filter>
+        <activity android:name="FileListActivity"><intent-filter>
                 <!-- The MAIN action describes a main entry point into an
                      activity, without any associated data. -->
                 <action android:name="android.intent.action.MAIN" />
@@ -50,10 +44,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- An IntentFilter tells the system when it should use your
+                 activity.  This allows the user to get to your activity
+                 without someone having to explicitly know to launch your
+                 class "com.examplel.android.skeletonapp.SkeletonActivity". -->
+            
+
         </activity>
 
     <activity android:name=".app.PlayerActivity" android:configChanges="keyboard|keyboardHidden|orientation"></activity>
-<service android:name=".app.SpeakerChangeObserver" android:label="@string/AppName"></service>
+<service android:label="@string/AppName" android:name=".app.DirectronMusicService"><intent-filter><action android:name="in.tsuyabu.umezo.android.directron.app.DirectronMusicService.ACTION_PLAY"></action>
+</intent-filter>
+</service>
 
 
 
