@@ -1,6 +1,6 @@
 {
     "name": "show stars on list for DMM",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "append stars into list page on DMM",
     "icons" : {
         "16"  : "favicon.ico" ,
@@ -10,7 +10,8 @@
     },
     "content_scripts": [{
         "matches": [
-            "http://www.dmm.co.jp/*"
+            "http://www.dmm.co.jp/*" ,
+            "http://actress.dmm.co.jp/*"
         ],
         "js": [ "jquery.js" ,"showstartsondmmlist.user.js" ]
     }]
