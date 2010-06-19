@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:gravity="bottom">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerTextArtist" android:text="Artist"></TextView><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerTextAlbum" android:text="Album"></TextView><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerTextTitle" android:text="Title"></TextView><LinearLayout android:id="@+id/LinearLayout04" android:layout_height="wrap_content" android:gravity="center_horizontal" android:layout_width="fill_parent"><TextView android:text="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerTextNow" style="@style/TextAppearance.PlayerTime"></TextView><TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/" style="@style/TextAppearance.PlayerTime" android:layout_marginLeft="6px" android:layout_marginRight="6px"></TextView><TextView android:text="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerTextDuration" style="@style/TextAppearance.PlayerTime"></TextView></LinearLayout><LinearLayout android:id="@+id/LinearLayout02" android:layout_height="wrap_content" android:gravity="center_horizontal" android:layout_width="fill_parent"><Button android:layout_height="wrap_content" android:id="@+id/PlayerPrev" android:text="@string/playerPrev" android:layout_width="wrap_content"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/playerStop" android:id="@+id/PlayerStop"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerPause" android:text="@string/playerPause"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerPlay" android:text="@string/playerPlay"></Button><Button android:layout_height="wrap_content" android:id="@+id/PlayerNext" android:text="@string/playerNext" android:layout_width="wrap_content"></Button>
+</LinearLayout><LinearLayout android:id="@+id/LinearLayout03" android:layout_height="wrap_content" android:layout_width="fill_parent"><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/PlayerSeek"></SeekBar></LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

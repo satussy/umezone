@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"><Button android:layout_height="wrap_content" android:id="@+id/fileListDialogPlay" android:text="@string/fileListDialogPlay" android:layout_width="fill_parent"></Button>
+</LinearLayout>
