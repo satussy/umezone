@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_height="fill_parent" 
+    android:layout_width ="fill_parent" 
+    android:gravity      ="bottom|center_horizontal"
+    android:orientation  ="vertical"
+>
+
+        <!--
+        <ImageView 
+            android:src="@drawable/violet" 
+            android:baselineAlignBottom="true" 
+            android:id="@+id/InfoAlbumArt" 
+            android:layout_height="fill_parent" 
+            android:layout_width="fill_parent" 
+            android:layout_gravity="bottom">
+        </ImageView>
+        -->
+        <ListView
+            android:id           ="@+id/PlayListList"
+            android:layout_width ="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight       ="1"
+        >
+        </ListView>
+        <!--
+        <SeekBar
+            android:layout_width  ="fill_parent"
+            android:layout_height ="wrap_content"
+            android:paddingLeft   ="30dip"
+            android:paddingRight  ="30dip"
+            android:paddingTop    ="10dip"
+            android:paddingBottom ="10dip"
+        >
+        </SeekBar>
+        -->
+        <!--
+        <LinearLayout
+            android:layout_width ="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight       ="1"
+            android:orientation  ="vertical"
+            android:gravity      ="bottom"
+        >
+            <ListView></ListView>
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width ="fill_parent"
+                android:text         ="Inner"
+            >
+            </Button>
+            <ListView
+                android:id           ="@+id/PlayListList"
+                android:layout_width ="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight       ="1"
+            >
+            </ListView>
+            <SeekBar
+                android:layout_width ="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding      ="30dip"
+            >
+            </SeekBar>
+        </LinearLayout>
+        -->
+        <!--
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width ="fill_parent"
+            android:text         ="Cancel"
+        >
+        </Button>
+        -->
+</LinearLayout>

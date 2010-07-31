@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    package="in.tsuyabu.umezo.android.directron"
+    android:versionCode="1003" 
+    android:versionName="PROTOTYPE"
+    android:minSdkVersion="7"
+>
+    <uses-sdk android:minSdkVersion="7"></uses-sdk>
+    <application 
+        android:debuggable="false" 
+        android:label="@string/AppName"
+        android:icon="@drawable/directron_icon"
+    >
+
+        <activity android:name="FileListActivity"><intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".app.PlayerActivity"   android:configChanges="keyboard|keyboardHidden|orientation"></activity>
+        <activity android:name=".app.PlaylistActivity" android:configChanges="keyboard|keyboardHidden|orientation"></activity>
+
+        <service android:label="@string/AppName" android:name=".app.DirectronMusicService">
+            <intent-filter>
+                <action android:name="in.tsuyabu.umezo.android.directron.app.DirectronMusicService.ACTION_PLAY"></action>
+            </intent-filter>
+        </service>
+
+
+
+
+        <receiver android:name=".appwidget.PlayerWidget" android:label="PlayerWidget">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/playerwidget"></meta-data>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
+                <action android:name="PAUSE"></action>
+            </intent-filter>
+        </receiver>
+</application>
+
+
+
+
+</manifest>

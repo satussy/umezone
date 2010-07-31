@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@+id/LinearLayout01" 
+    android:layout_height="fill_parent" 
+    android:layout_width ="fill_parent" 
+    android:gravity      ="bottom|center_horizontal">
+        <ImageView 
+            android:src="@drawable/violet" 
+            android:baselineAlignBottom="true" 
+            android:id="@+id/InfoAlbumArt" 
+            android:layout_height="fill_parent" 
+            android:layout_width="fill_parent" 
+            android:layout_gravity="bottom">
+        </ImageView>
+        <LinearLayout>
+            <ListView></ListView>
+            <SeekBar></SeekBar>
+        </LinearLayout>
+        <Button></Button>
+</LinearLayout>

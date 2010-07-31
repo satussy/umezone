@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical" 
+    android:gravity="bottom"
+>
+        <LinearLayout 
+            android:layout_height="wrap_content" 
+            android:gravity="center_horizontal" 
+            android:layout_width="fill_parent"
+        >
+            <Button 
+                android:layout_height="wrap_content" 
+                android:id="@+id/PlayerPrev" 
+                android:text="@string/playerPrev" 
+                android:layout_width="wrap_content">
+            </Button>
+            <Button 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="@string/playerStop" 
+                android:id="@+id/PlayerStop">
+            </Button>
+            <Button 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="@string/playerPause" 
+                android:id="@+id/PlayerPause">
+            </Button>
+            <Button 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:id="@+id/PlayerPlay" 
+                android:text="@string/playerPlay">
+            </Button>
+            <Button 
+                android:layout_height="wrap_content" 
+                android:id="@+id/PlayerNext" 
+                android:text="@string/playerNext" 
+                android:layout_width="wrap_content">
+            </Button>
+        </LinearLayout> 
+</LinearLayout>
