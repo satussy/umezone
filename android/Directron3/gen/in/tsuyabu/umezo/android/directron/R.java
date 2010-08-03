@@ -16,47 +16,67 @@ public final class R {
     public static final class color {
         public static final int directory=0x7f050001;
         public static final int file=0x7f050002;
+        public static final int none=0x7f050003;
         /**  Retrieved via Resources.getColor() and friends. 
          */
         public static final int red=0x7f050000;
     }
     public static final class drawable {
-        public static final int directron_icon=0x7f020000;
-        public static final int icon=0x7f020001;
+        public static final int bg=0x7f020000;
+        public static final int bg_layout=0x7f020001;
+        public static final int bg_player=0x7f020002;
+        public static final int directron_icon=0x7f020003;
+        public static final int icon=0x7f020004;
+        public static final int nocolor=0x7f020005;
         /**  Retrieved via Resources.getDrawable() and friends. 
          */
-        public static final int semi_black=0x7f020003;
-        public static final int violet=0x7f020002;
+        public static final int semi_black=0x7f02000d;
+        public static final int tab_folder=0x7f020006;
+        public static final int tab_folderx24=0x7f020007;
+        public static final int tab_headphones=0x7f020008;
+        public static final int tab_headphonesx24=0x7f020009;
+        public static final int tab_note=0x7f02000a;
+        public static final int tab_notex24=0x7f02000b;
+        public static final int violet=0x7f02000c;
     }
     public static final class id {
-        public static final int InfoAlbum=0x7f090011;
-        public static final int InfoAlbumArt=0x7f09000c;
-        public static final int InfoArtist=0x7f090010;
-        public static final int InfoTitle=0x7f090012;
-        public static final int LinearLayout01=0x7f090009;
-        public static final int LinearLayout02=0x7f09000a;
-        public static final int LinearLayout03=0x7f09000b;
-        public static final int LinearLayout04=0x7f09000e;
+        public static final int InfoAlbum=0x7f090019;
+        public static final int InfoAlbumArt=0x7f090015;
+        public static final int InfoArtist=0x7f090018;
+        public static final int InfoTitle=0x7f09001a;
+        public static final int LinearLayout01=0x7f090014;
+        public static final int LinearLayout03=0x7f09001d;
+        public static final int LinearLayout04=0x7f090016;
         public static final int ListView01=0x7f090000;
-        public static final int PlayListItemAlbum=0x7f09001a;
-        public static final int PlayListItemTitle=0x7f09001b;
-        public static final int PlayListList=0x7f090019;
-        public static final int PlayerNext=0x7f090018;
-        public static final int PlayerPause=0x7f090015;
-        public static final int PlayerPlay=0x7f090016;
-        public static final int PlayerPrev=0x7f090014;
-        public static final int PlayerStop=0x7f090017;
-        public static final int PlayerView=0x7f09000d;
-        public static final int PlayerViewController=0x7f090013;
-        public static final int PlayerViewInfo=0x7f09000f;
+        public static final int PlayListItemAlbum=0x7f090023;
+        public static final int PlayListItemTitle=0x7f090024;
+        public static final int PlayListList=0x7f090022;
+        public static final int PlayerNext=0x7f090021;
+        public static final int PlayerPause=0x7f09001e;
+        public static final int PlayerPlay=0x7f09001f;
+        public static final int PlayerPrev=0x7f09001c;
+        public static final int PlayerStop=0x7f090020;
+        public static final int PlayerView=0x7f090012;
+        public static final int PlayerViewController=0x7f09001b;
+        public static final int PlayerViewInfo=0x7f090017;
         public static final int RelativeLayout01=0x7f090001;
         public static final int TextView01=0x7f090002;
         public static final int TextView02=0x7f090004;
+        public static final int btnFolder=0x7f09000b;
+        public static final int btnHeadphone=0x7f09000a;
+        public static final int btnNote=0x7f09000c;
+        public static final int container=0x7f09000d;
         public static final int fileCount=0x7f090005;
         public static final int fileListDialog=0x7f090006;
         public static final int fileListDialogPlay=0x7f090007;
         public static final int fileListDialogPlayFromThis=0x7f090008;
         public static final int fileName=0x7f090003;
+        public static final int folderView=0x7f09000e;
+        public static final int playListView=0x7f090010;
+        public static final int playerContainer=0x7f090011;
+        public static final int playlistContainer=0x7f09000f;
+        public static final int seekBar=0x7f090013;
+        public static final int tabs=0x7f090009;
     }
     public static final class layout {
         public static final int file_list_activity=0x7f030000;
@@ -97,6 +117,7 @@ public final class R {
         public static final int TextAppearance_PlayerTime=0x7f080004;
     }
     public static final class xml {
-        public static final int playerwidget=0x7f040000;
+        public static final int listview_state=0x7f040000;
+        public static final int playerwidget=0x7f040001;
     }
 }

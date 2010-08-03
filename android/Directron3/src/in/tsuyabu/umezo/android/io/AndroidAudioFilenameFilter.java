@@ -21,7 +21,7 @@ public class AndroidAudioFilenameFilter implements FilenameFilter {
 			}
 			return true ;
 		}
-		
+		if( filename.startsWith(".") ){ return false; }
 		for( int i = 0 , n = list.length ; i < n ; i++ ){
 			if( filename.endsWith( list[i]) ){ return true ; }
 		}

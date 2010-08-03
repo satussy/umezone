@@ -22,7 +22,9 @@ public class ApplicationUtil {
 		File [] list ;
 		if( f.isDirectory() ){
 			list = f.listFiles(filter);
-			Arrays.sort( list , comparator );
+			if( list != null ){
+				Arrays.sort( list , comparator );
+			}
 		}else{
 			list= new File[]{};
 		}

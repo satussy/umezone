@@ -1,37 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper 
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent" 
+	android:orientation="vertical"
+	android:background="@drawable/bg_layout"
+>
+<LinearLayout
+	android:id="@+id/tabs"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:paddingTop="10dip"
+	android:paddingBottom="5dip"
+>
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:gravity="center"
+	>
+		<Button
+			android:id="@+id/btnHeadphone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/tab_headphones"
+		></Button>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:gravity="center"
+	>
+		<Button
+			android:id="@+id/btnFolder"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/tab_folder"
+		></Button>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:gravity="center"
+	>
+		<Button
+			android:id="@+id/btnNote"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/tab_note"
+		></Button>
+	</LinearLayout>
+</LinearLayout>
+<ViewFlipper 
+	android:id="@+id/container"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:layout_weight="1" 
+	android:background="@drawable/semi_black"
 >
 	<LinearLayout 
-		android:id="@+id/LinearLayout01" 
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 	>
-		<Button
+		<in.tsuyabu.umezo.android.directron.view.FileListView
+			android:id="@+id/folderView"
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-		></Button>
+			android:layout_height="fill_parent">
+		</in.tsuyabu.umezo.android.directron.view.FileListView>
 	</LinearLayout>
 	<LinearLayout 
-		android:id="@+id/LinearLayout02" 
+		android:id="@+id/playlistContainer"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 	>
-		<Button
+		<in.tsuyabu.umezo.android.directron.view.PlayListView
+			android:id="@+id/playListView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-		></Button>
+		>
+		</in.tsuyabu.umezo.android.directron.view.PlayListView>
 	</LinearLayout>
 	<LinearLayout 
-		android:id="@+id/LinearLayout03" 
+		android:id="@+id/playerContainer"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 	>
-		<Button
+		<in.tsuyabu.umezo.android.directron.view.PlayerView
+			android:id="@+id/PlayerView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-		></Button>
+		>
+		</in.tsuyabu.umezo.android.directron.view.PlayerView>
 	</LinearLayout>
 </ViewFlipper>
+<SeekBar 
+	android:id="@+id/seekBar" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:padding="5dip"
+	android:background="@drawable/semi_black"
+	
+></SeekBar>
+</LinearLayout>

@@ -216,8 +216,7 @@ public class DirectronMusicService extends Service {
     
     
     
-    private static void setCurrentList(File dir , File target ){
-//		list = new PlayOrderManager( f.isFile() ? f : f.getParentFile() );    	
+    private static void setCurrentList(File dir , File target ){//		list = new PlayOrderManager( f.isFile() ? f : f.getParentFile() );    	
 		list = new PlayOrderManager( dir , target );    	
     }
     
@@ -229,8 +228,12 @@ public class DirectronMusicService extends Service {
     	return currentFile;
     }
 
-    public static List getCurrentList(){
-        return list.getCurrentList();
+    public static List<File> getCurrentList(){
+    	if( list == null ){
+    		return null;
+    	}else{
+    		return list.getCurrentList();
+    	}
     }
 }
 

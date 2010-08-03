@@ -10,7 +10,7 @@
             android:layout_width="fill_parent" 
             android:gravity="bottom|center_horizontal">
                 <ImageView 
-                    android:src="@drawable/violet" 
+                    android:src="@drawable/bg_player" 
                     android:baselineAlignBottom="true" 
                     android:id="@+id/InfoAlbumArt" 
                     android:layout_height="fill_parent" 

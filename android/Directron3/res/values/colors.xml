@@ -27,4 +27,5 @@
     <drawable name="semi_black">#80000000</drawable>
     <color name="directory">#6DBEE3</color>
     <color name="file">#FFF</color>
+<color name="none">#0000</color>
 </resources>
