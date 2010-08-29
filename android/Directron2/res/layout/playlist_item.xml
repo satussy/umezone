@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_height="fill_parent" 
+	android:layout_width ="fill_parent"
+    android:orientation  ="vertical"
+>
+		<TextView 
+            android:text="Album" 
+            android:id="@+id/PlayListItemAlbum" 
+            android:layout_height="wrap_content" 
+            android:layout_width="fill_parent" 
+            android:visibility  ="invisible"
+            android:height      ="30dip"
+            android:background  ="@color/directory"
+            android:textColor   ="#000000"
+            android:paddingLeft   ="10dip"
+            android:paddingTop    ="5dip"
+            android:paddingBottom ="5dip"
+        />
+		<TextView 
+            android:text="title" 
+            android:id="@+id/PlayListItemTitle" 
+            android:layout_height="wrap_content" 
+            android:layout_width="fill_parent" 
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            style="@style/TextAppearance.ListItem"
+        />
+</LinearLayout>
+
+	
+
+

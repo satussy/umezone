@@ -31,6 +31,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -46,10 +47,13 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  */
 public class Main extends Activity {
 	
-	private boolean isSeeking;
+	private boolean isSeeking = false;
 	private SeekBar seekBar ;
 
     private static ViewFlipper flipper;
+    
+    private static TimerTask timertask = null;
+    private static Timer     timer = null;
 
     private static final Animation inFromLeft = AnimationHelper.inFromLeftAnimation();
     private static final Animation outToRight = AnimationHelper.outToRightAnimation();
@@ -118,9 +122,9 @@ public class Main extends Activity {
         //Initialze folder view
         //-----------------------------
         String startPath = getResources().getString( R.string.defaultPath ) ;
-        if( savedInstanceState != null){
-            startPath = savedInstanceState.getString("path");
-        }
+        //if( savedInstanceState != null){
+        //    startPath = savedInstanceState.getString("path");
+        //}
 
         FileListView folderView = (FileListView) findViewById(R.id.folderView);
         folderView.setCurrentDirectory(startPath);
@@ -140,21 +144,42 @@ public class Main extends Activity {
         //Initialze seek bar
         //	set timer for automatic update
         //-----------------------------
-        final android.os.Handler handler = new android.os.Handler();
+		seekBar = (SeekBar)findViewById(R.id.seekBar);
+		seekBar.setOnSeekBarChangeListener( seekOnChange );
+
+		final android.os.Handler handler = new android.os.Handler();
         final Runnable timer = new ProgressTimer();
-		Timer t = new Timer( );
-		t.schedule( new TimerTask() {
+        
+        Main.timertask = new TimerTask() {
 
 			@Override
 			public void run() {
 				handler.post( timer );
-
 			}
-		} , 100 , 100 );
+		};
 		
-		seekBar = (SeekBar)findViewById(R.id.seekBar);
-		seekBar.setOnSeekBarChangeListener( seekOnChange );
+		Main.timer = new Timer( );
+		
+		
+		
+		
+		
+		Main.startTimer();
 
+		
+
+    }
+    
+    private static void startTimer(){
+    	if( Main.timer != null && Main.timertask != null ){
+    		Main.timer.schedule( Main.timertask , 100 , 500 );
+    	}
+    }
+    
+    private static void stopTimer(){
+    	if( Main.timer != null ){
+    		Main.timer.cancel();
+    	}
     }
     
     /**
@@ -283,10 +308,19 @@ public class Main extends Activity {
 		// TODO Auto-generated method stub
 		seekBar.setMax( MP.getDuration() );
 		seekBar.setProgress( MP.getPosition() );
+		this.onPause();
 	}
 	
 	private void seekTo( int pos ){
 		MP.seekTo( pos );		
+	}
+	
+	
+	
+	protected void onStop(){
+		super.onStop();
+		Main.stopTimer();
+		
 	}
 
 

@@ -2,8 +2,8 @@
 <manifest 
     xmlns:android="http://schemas.android.com/apk/res/android" 
     package="in.tsuyabu.umezo.android.directron"
-    android:versionCode="1010" 
-    android:versionName="PROTOTYPE"
+    android:versionCode="1011" 
+    android:versionName="PROTOTYPE3"
     android:minSdkVersion="7"
 >
     <uses-sdk android:minSdkVersion="7"></uses-sdk>

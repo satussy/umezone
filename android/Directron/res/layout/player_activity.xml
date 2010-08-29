@@ -1,24 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-
-
-<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/PlayerView">
-
-
-
-
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="bottom|center_horizontal"><ImageView android:src="@drawable/violet" android:baselineAlignBottom="true" android:id="@+id/InfoAlbumArt" android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom"></ImageView></LinearLayout><LinearLayout android:id="@+id/LinearLayout04" android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="bottom|right" android:paddingBottom="20dip"><LinearLayout android:id="@+id/PlayerViewInfo" android:layout_width="fill_parent" android:gravity="bottom|right" android:orientation="vertical" android:layout_height="wrap_content" android:paddingRight="30dip" android:background="#30202020" android:paddingLeft="30dip"><TextView style="@style/TextAppearance.PlayerTime" android:id="@+id/InfoArtist" android:text="@string/Artist"></TextView><TextView style="@style/TextAppearance.PlayerTime" android:id="@+id/InfoAlbum" android:text="Album" android:marqueeRepeatLimit="marquee_forever"></TextView><TextView style="@style/TextAppearance.PlayerTime" android:text="Title" android:id="@+id/InfoTitle"></TextView>
-
-
-
-</LinearLayout></LinearLayout><LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_vertical|center_horizontal" android:id="@+id/PlayerViewController" android:fadingEdge="horizontal|vertical" android:fadingEdgeLength="100dip" android:background="#80000000" android:visibility="invisible"><LinearLayout android:id="@+id/LinearLayout02" android:layout_width="wrap_content" android:layout_height="wrap_content"></LinearLayout><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerPrev" android:text="          &lt;&lt;            "></Button><LinearLayout android:id="@+id/LinearLayout03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="visible" android:gravity="center_horizontal"><Button android:layout_height="wrap_content" android:id="@+id/PlayerPause" android:text="Pause" android:layout_width="wrap_content"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerPlay" android:text="Play"></Button>
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/PlayerStop" android:text="Stop"></Button>
-</LinearLayout><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/LinearLayout01" android:id="@+id/PlayerNext" android:text="          &gt;&gt;          "></Button>
-
-
-
-
-
-
-</LinearLayout>
+<?xml version="1.0" encoding="UTF-8"?> 
+<AbsoluteLayout 
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+xmlns:android="http://schemas.android.com/apk/res/android" 
+android:id="@+id/PlayerView">
+    <LinearLayout 
+        android:layout_height="fill_parent" 
+        android:layout_width="fill_parent" 
+        android:gravity="bottom|center_horizontal">
+            <ImageView 
+                android:src="@drawable/violet" 
+                android:baselineAlignBottom="true" 
+                android:id="@+id/InfoAlbumArt" 
+                android:layout_height="fill_parent" 
+                android:layout_width="fill_parent" 
+                android:layout_gravity="bottom">
+            </ImageView>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="fill_parent" 
+        android:layout_width="fill_parent" 
+        android:gravity="bottom|right" 
+        android:paddingBottom="20dip">
+            <LinearLayout 
+                android:id="@+id/PlayerViewInfo" 
+                android:layout_width="fill_parent" 
+                android:gravity="bottom|right" 
+                android:orientation="vertical" 
+                android:layout_height="wrap_content" 
+                android:paddingRight="30dip" 
+                android:background="#30202020" 
+                android:paddingLeft="30dip">
+                    <TextView 
+                        style="@style/TextAppearance.PlayerTime" 
+                        android:id="@+id/InfoArtist" 
+                        android:text="@string/Artist">
+                    </TextView>
+                    <TextView 
+                        style="@style/TextAppearance.PlayerTime" 
+                        android:id="@+id/InfoAlbum" 
+                        android:text="Album" 
+                        android:marqueeRepeatLimit="marquee_forever">
+                    </TextView>
+                    <TextView 
+                        style="@style/TextAppearance.PlayerTime" 
+                        android:text="Title" 
+                        android:id="@+id/InfoTitle">
+                    </TextView> 
+            </LinearLayout>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="fill_parent" 
+        android:layout_width="fill_parent" 
+        android:gravity="center_vertical|center_horizontal" 
+        android:id="@+id/PlayerViewController" 
+        android:fadingEdge="horizontal|vertical" 
+        android:fadingEdgeLength="100dip" 
+        android:background="#80000000" 
+        android:visibility="invisible">
+            <LinearLayout 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+            </LinearLayout>
+            <Button 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:id="@+id/PlayerPrev" 
+                android:text="          &lt;&lt;            ">
+            </Button>
+            <LinearLayout 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:orientation="vertical" 
+                android:visibility="visible" 
+                android:gravity="center_horizontal">
+                    <Button 
+                        android:layout_height="wrap_content" 
+                        android:id="@+id/PlayerPause" 
+                        android:text="Pause" 
+                        android:layout_width="wrap_content">
+                    </Button>
+                    <Button 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:id="@+id/PlayerPlay" 
+                        android:text="Play">
+                    </Button>
+                    <Button 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:id="@+id/PlayerStop" 
+                        android:text="Stop">
+                    </Button>
+            </LinearLayout>
+            <Button 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:id="@+id/PlayerNext" 
+                android:text="          &gt;&gt;          ">
+            </Button>
+    </LinearLayout>
 </AbsoluteLayout>

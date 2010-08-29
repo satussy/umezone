@@ -158,6 +158,9 @@ public class PlayerView extends LinearLayout {
 //				Log.d("UMEZO" , "--------- prev");
 				action = DirectronMusicService.ACTION_PREV;
 				break;
+			case R.id.PlayerPause:
+				action = DirectronMusicService.ACTION_PAUSE;
+				break;
 			
 		}
 		

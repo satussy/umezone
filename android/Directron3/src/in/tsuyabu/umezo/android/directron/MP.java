@@ -9,14 +9,23 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.util.Log;
 
 public class MP {
+	private static boolean isPrepared = false;
 	private static MediaPlayer mp ;//= new MediaPlayer();
 	private static MediaPlayer getMediaplayPlayer(){
 		if( mp == null ){
 			mp = new MediaPlayer();
+			mp.setOnPreparedListener( new OnPreparedListener() {
+				
+				@Override
+				public void onPrepared(MediaPlayer mp) {
+					isPrepared = true;
+				}
+			});
 		}
 		return mp;
 	}
@@ -29,6 +38,9 @@ public class MP {
 
 		}
 		mp.reset();
+		
+		isPrepared = false;
+		
 	}
 	
 	public static void setDataSource( Context c , Uri uri ){
@@ -90,11 +102,11 @@ public class MP {
 	}
 	
 	public static int getDuration(){
-		return getMediaplayPlayer().getDuration();
+		return isPrepared ? getMediaplayPlayer().getDuration() : 0;
 	}
 	
 	public static int getPosition(){
-		return getMediaplayPlayer().getCurrentPosition();
+		return isPrepared ? getMediaplayPlayer().getCurrentPosition() : 0;
 	}
 	
 	public static void setOnCompletionListener( OnCompletionListener l){

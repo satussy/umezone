@@ -46,6 +46,8 @@ public class DirectronMusicService extends Service {
 	public  static final String ACTION_PLAY_AT      = "5";
 	private static final int    ACTION_CODE_PLAY_AT =  5 ;
 
+	public static final String ACTION_PAUSE         = "6";
+	public static final int    ACTION_CODE_PAUSE    =  6 ;
 
     public static final int    OPTION_PLAY_THIS          = 0; //play specified file
     public static final int    OPTION_PLAY_DIR           = 1; //play directory including specified file
@@ -124,10 +126,11 @@ public class DirectronMusicService extends Service {
 
                 break;
 
-                case ACTION_CODE_NEXT: next(); break;
-                case ACTION_CODE_PREV: prev(); break;
-                case ACTION_CODE_STOP: stop(); break;
-                case ACTION_CODE_PLAY: play(); break;
+                case ACTION_CODE_NEXT : next(); break;
+                case ACTION_CODE_PREV : prev(); break;
+                case ACTION_CODE_STOP : stop(); break;
+                case ACTION_CODE_PLAY : play(); break;
+                case ACTION_CODE_PAUSE: pause(); break;
 
             }
         }
@@ -198,6 +201,9 @@ public class DirectronMusicService extends Service {
     	changeSource( list.getPrev() );
     	
     	wasPrev = true;
+    }
+    public static void pause(){
+    	MP.pause();
     }
 	/////////////////////////////////////////////////////////////////////
 	// COMPLETE

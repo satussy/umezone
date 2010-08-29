@@ -17,6 +17,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -249,6 +250,11 @@ public class PlayerActivity extends Activity{
         	img.setVisibility( View.INVISIBLE );
         }
 
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent( KeyEvent e ){
+		
 	}
 
 

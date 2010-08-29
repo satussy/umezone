@@ -23,21 +23,22 @@ public final class R {
     }
     public static final class drawable {
         public static final int bg=0x7f020000;
-        public static final int bg_layout=0x7f020001;
-        public static final int bg_player=0x7f020002;
-        public static final int directron_icon=0x7f020003;
-        public static final int icon=0x7f020004;
-        public static final int nocolor=0x7f020005;
+        public static final int bg2=0x7f020001;
+        public static final int bg_layout=0x7f020002;
+        public static final int bg_player=0x7f020003;
+        public static final int directron_icon=0x7f020004;
+        public static final int icon=0x7f020005;
+        public static final int nocolor=0x7f020006;
         /**  Retrieved via Resources.getDrawable() and friends. 
          */
-        public static final int semi_black=0x7f02000d;
-        public static final int tab_folder=0x7f020006;
-        public static final int tab_folderx24=0x7f020007;
-        public static final int tab_headphones=0x7f020008;
-        public static final int tab_headphonesx24=0x7f020009;
-        public static final int tab_note=0x7f02000a;
-        public static final int tab_notex24=0x7f02000b;
-        public static final int violet=0x7f02000c;
+        public static final int semi_black=0x7f02000e;
+        public static final int tab_folder=0x7f020007;
+        public static final int tab_folderx24=0x7f020008;
+        public static final int tab_headphones=0x7f020009;
+        public static final int tab_headphonesx24=0x7f02000a;
+        public static final int tab_note=0x7f02000b;
+        public static final int tab_notex24=0x7f02000c;
+        public static final int violet=0x7f02000d;
     }
     public static final class id {
         public static final int InfoAlbum=0x7f090019;

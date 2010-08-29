@@ -27,6 +27,7 @@ public final class R {
         public static final int violet=0x7f020000;
     }
     public static final class id {
+        public static final int Button01=0x7f090018;
         public static final int InfoAlbum=0x7f09000d;
         public static final int InfoAlbumArt=0x7f090009;
         public static final int InfoArtist=0x7f09000c;
@@ -45,6 +46,7 @@ public final class R {
         public static final int PlayerViewController=0x7f09000f;
         public static final int PlayerViewInfo=0x7f09000b;
         public static final int RelativeLayout01=0x7f090001;
+        public static final int SeekBar01=0x7f090017;
         public static final int TextView01=0x7f090002;
         public static final int TextView02=0x7f090004;
         public static final int fileCount=0x7f090005;
@@ -56,7 +58,8 @@ public final class R {
         public static final int file_list_item=0x7f030001;
         public static final int file_list_long_click_dialog=0x7f030002;
         public static final int player_activity=0x7f030003;
-        public static final int player_widget=0x7f030004;
+        public static final int player_playlist=0x7f030004;
+        public static final int player_widget=0x7f030005;
     }
     public static final class string {
         /**  Simple strings. 
