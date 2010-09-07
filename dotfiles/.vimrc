@@ -1,9 +1,8 @@
-colorscheme asmdev                                            " color setting
 syntax on                                                     " enable syntax hilighting
 
 filetype plugin on                                            " enable filetype plugin
 
-let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
+"let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
 set hlsearch                                                  " hilight words in search
 set incsearch                                                 " use incremental search
@@ -46,7 +45,7 @@ nmap ,w :w<CR>
 
 
 " open current directory in tab (need push enter
-nmap t :tabedit .
+nmap t :tabedit +tabmove .
 
 " open current directory in current buffer (need push enter
 nmap e :e .
@@ -73,10 +72,13 @@ nmap <C-j> <C-e>
 nmap <C-k> <C-y>
 
 " insert comment out
-nmap <silent> q 0i//<ESC>
+nmap <silent> q I//<ESC>
 
 " remove comment out
-nmap <silent> Q 0xx<ESC>
+nmap <silent> Q ^xx<ESC>
+
+" cd to directory containing current file
+nmap <C-c><C-d> :cd %:h<CR>
 
 " insert comment out to multi line
 vmap <silent> Q :s/^\/\///g<CR>:nohl<CR>
@@ -85,19 +87,12 @@ vmap <silent> Q :s/^\/\///g<CR>:nohl<CR>
 vmap <silent> q :s/^/\/\//g<CR>:nohl<CR>
 
 " show undo list by F2
-nmap <F2> :undolist<CR>
-
-" run php by F5
-nmap <F5> :!php -n %<CR>
+" nmap <F2> :undolist<CR>
 
 " open home directory in new tab by F9
-nmap <F9> :tabedit ~/<CR>
-
-" check syntax for javascript by F11
-nmap <F11> :!jslint -l %<CR>
-
-" check syntax for php by F12
-nmap <F12> :!php -l %<CR>
+nmap <F9>  :tabedit ~/<CR>
+nmap <F10> :tabedit ~/.vimrc<CR>
+nmap <F11> :source ~/.vimrc<CR>
 
 " move cursor by jkhl with Control holding in insert mode
 imap <C-j> <Down>
@@ -106,11 +101,16 @@ imap <C-h> <Left>
 imap <C-l> <Right>
 
 " use C-y and C-u as BS and Del in insert mode
-imap <C-y> <BS>
-imap <C-u> <Del>
+imap <C-u> <BS>
+imap <C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
+
+
+
+
+
 
 
 """"""""""""""""""""""""""""""""""
@@ -121,3 +121,4 @@ inoremap (<CR> (<CR><C-t>
 
 
 
+colorscheme asmdev                                            " color setting

@@ -12,7 +12,7 @@ export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
-export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin/:/Users/umezo/Library/eclipse:/Users/umezo/Library/android_sdk/tools:$PATH
 export MANPATH=/opt/local/man:$MANPATH
 
 ##############################################

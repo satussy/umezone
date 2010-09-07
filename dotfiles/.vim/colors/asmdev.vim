@@ -84,8 +84,8 @@ hi Visual	 cterm=reverse
 hi VisualNOS	 cterm=bold,underline
 hi WarningMsg	 ctermfg=1
 hi WildMenu	 ctermfg=0 ctermbg=3
-hi Folded	 ctermfg=darkgrey ctermbg=NONE
-hi FoldColumn	 ctermfg=darkgrey ctermbg=NONE
+hi Folded	 ctermfg=darkgray ctermbg=NONE
+hi FoldColumn	 ctermfg=darkgray ctermbg=NONE
 hi DiffAdd	 ctermbg=4
 hi DiffChange	 ctermbg=5
 hi DiffDelete	 cterm=bold ctermfg=4 ctermbg=6
@@ -101,5 +101,10 @@ hi Underlined	 cterm=underline ctermfg=5
 hi Ignore	 cterm=bold ctermfg=7
 hi Error	 cterm=bold ctermfg=7 ctermbg=1
 
+" color popup window
+hi Pmenu    ctermfg=5 ctermbg=darkgray
+hi PmenuSel ctermfg=0 ctermbg=5
 
-"vim: sw=4
+" color tabbar
+hi TabLine    ctermfg=white ctermbg=black
+hi TabLineSel ctermfg=white ctermbg=blue

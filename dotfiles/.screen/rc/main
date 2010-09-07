@@ -3,6 +3,8 @@ escape ^ q
 defscrollback 8195
 bind s split
 bind f eval "encoding UTF-8"
+bind ^n prev 
+bind ^p next
 term screen
 caption always "%{=r dd}%-Lw%40L>%?%F%{=b dR}%:[%? %n%f %t %?%F%{-}%:]%?%+Lw %?%F%-024=GNU Screen of Git master%:%=%?"
 sorendition "+rb .G"
