@@ -103,7 +103,7 @@ hi htmlArg         ctermfg=white
 hi htmlComment     ctermfg=cyan
 hi htmlCommentPart ctermfg=cyan
 
-hi javascriptOperator ctermfg=darkgray
+
 
 
 

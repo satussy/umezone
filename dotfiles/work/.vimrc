@@ -1,8 +1,41 @@
 syntax on                                                     " enable syntax hilighting
 
 filetype plugin on                                            " enable filetype plugin
+set t_Co=16
+colorscheme asmdev                                            " color setting
 
-let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
+let g:fuf_keyOpenTabpage = '<CR>'
+let g:user_zen_leader_key = '<c-f>'
+
+let &tags='~/.tags'
+
+function! s:InitBzrDir ()
+    "let l:bzr_root = system('bzr root|sed -e s/$//')
+    let l:bzr_root = system('bzr root')
+    let l:bzr_root = strpart( l:bzr_root , 0 , strlen( l:bzr_root ) - 1 )
+    
+    if( matchstr( l:bzr_root , "ERROR" ) == "ERROR" )
+    else
+        let g:fuf_coveragefile_exclude = 'model/om/|model/map/|'
+        let g:fuf_coveragefile_globPatterns = [ '**/*' ]
+        let &tags=l:bzr_root.'/.tags'
+    endif
+endfunction
+
+function! s:InitSvnDir ()
+    "let l:bzr_root = system('bzr root|sed -e s/$//')
+    let l:bzr_root = "/home/osuga-h/project"
+    
+    if( matchstr( l:bzr_root , "ERROR" ) == "ERROR" )
+    else
+        let g:fuf_coveragefile_exclude = 'model/om/|model/map/|'
+        let g:fuf_coveragefile_globPatterns = [ '**/*' ]
+        let &tags=l:bzr_root.'/.tags'
+    endif
+endfunction
+
+"call s:InitBzrDir()
+call s:InitSvnDir()
 
 set hlsearch                                                  " hilight words in search
 set incsearch                                                 " use incremental search
@@ -36,13 +69,15 @@ set nowrap                                                    " disable line wra
 set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set laststatus=2                                              " always show status line
 
+
 set foldmethod=marker
+
 " start search by Space
 nmap <Space> /
 
 " short cuts
-nmap ,q :q<CR>
-nmap ,w :w<CR>
+nmap <silent> ,q :q<CR>
+nmap <silent> ,w :w<CR>
 
 
 " open current directory in tab (need push enter
@@ -52,13 +87,13 @@ nmap t :tabedit +tabmove .
 nmap e :e .
 
 " move to next tab
-nmap <C-p> :tabnext<CR>
+nmap <silent> <C-p> :tabnext<CR>
 
 " move to previous tab
-nmap <C-n> :tabprevious<CR>
+nmap <silent> <C-n> :tabprevious<CR>
 
 " off search hiligh
-nmap <C-h> :nohl<CR>
+nmap <silent> <C-h> :nohl<CR>
 
 " window expanding
 nmap > <C-w>>
@@ -79,7 +114,7 @@ nmap <silent> q I//<ESC>
 nmap <silent> Q ^xx<ESC>
 
 " cd to directory containing current file
-nmap <C-c><C-d> :cd %:h<CR>
+nmap <silent> <C-c><C-d> :cd %:h<CR>
 
 " insert comment out to multi line
 vmap <silent> Q :s/^\/\///g<CR>:nohl<CR>
@@ -91,9 +126,10 @@ vmap <silent> q :s/^/\/\//g<CR>:nohl<CR>
 " nmap <F2> :undolist<CR>
 
 " open home directory in new tab by F9
-nmap <F9>  :tabedit ~/<CR>
-nmap <F10> :tabedit ~/.vimrc<CR>
-nmap <F11> :source ~/.vimrc<CR>
+nmap <silent> <F9>  :tabedit ~/<CR>
+nmap <silent> <F10> :tabedit ~/.vimrc<CR>
+"nmap <silent> <F11> :source ~/.vimrc<CR>:echo "updated"<CR>
+nnoremap  <F11> :source ~/.vimrc<CR>:echo "updated"<CR>
 
 " move cursor by jkhl with Control holding in insert mode
 imap <C-j> <Down>
@@ -109,10 +145,9 @@ imap <C-i> <Del>
 imap <C-o> <ESC>o
 
 
-
-
-
-
+nmap <silent> <C-f><C-f> :FufCoverageFile<CR>
+nmap <silent> <C-f><C-]> :FufTagWithCursorWord<CR>
+nmap <silent> <C-f><C-l> :FufLine<CR>
 
 """"""""""""""""""""""""""""""""""
 " experimental setting
@@ -122,4 +157,3 @@ inoremap (<CR> (<CR><C-t>
 
 
 
-colorscheme asmdev                                            " color setting
