@@ -16,6 +16,10 @@ set fileencoding=utf-8                                        " set file encodin
 set fileencodings=utf-8,euc-jp,iso-2022-jp,ucs2le,ucs-2       " set priority to detect file encoding 
 set fileformat=unix                                           " set line break charactor
 
+let g:use_xhtml = 1
+let g:html_use_css = 1
+let g:html_no_pre = 1
+
 
 set nocompatible                                              " disable vi compatibility
 set number                                                    " show line number on left side
@@ -36,13 +40,26 @@ set nowrap                                                    " disable line wra
 set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set laststatus=2                                              " always show status line
 
-set foldmethod=marker
+
+"set foldmethod=marker
+set foldmethod=indent
+set foldminlines=10
+set foldlevel=1
+set foldnestmax=2
+set foldtext=MyFoldText()
+set fillchars=fold:\ ,vert:\|
+function! MyFoldText()
+    "let line = getline(v:foldstart)
+    "let sub = substitute( line , ' *', '', '')
+    return '        {{{{{{{{{{{{{{{{{{{{{ (>_< ) }}}}}}}}}}}}}}}}}}}}}'
+endfunction
+
 " start search by Space
 nmap <Space> /
 
 " short cuts
-nmap ,q :q<CR>
-nmap ,w :w<CR>
+nmap <silent> ,q :q<CR>
+nmap <silent> ,w :w<CR>
 
 
 " open current directory in tab (need push enter
@@ -52,13 +69,13 @@ nmap t :tabedit +tabmove .
 nmap e :e .
 
 " move to next tab
-nmap <C-p> :tabnext<CR>
+nmap <silent> <C-p> :tabnext<CR>
 
 " move to previous tab
-nmap <C-n> :tabprevious<CR>
+nmap <silent> <C-n> :tabprevious<CR>
 
 " off search hiligh
-nmap <C-h> :nohl<CR>
+nmap <silent> <C-h> :nohl<CR>
 
 " window expanding
 nmap > <C-w>>
@@ -79,7 +96,7 @@ nmap <silent> q I//<ESC>
 nmap <silent> Q ^xx<ESC>
 
 " cd to directory containing current file
-nmap <C-c><C-d> :cd %:h<CR>
+nmap <silent> <C-c><C-d> :cd %:h<CR>
 
 " insert comment out to multi line
 vmap <silent> Q :s/^\/\///g<CR>:nohl<CR>
@@ -91,9 +108,10 @@ vmap <silent> q :s/^/\/\//g<CR>:nohl<CR>
 " nmap <F2> :undolist<CR>
 
 " open home directory in new tab by F9
-nmap <F9>  :tabedit ~/<CR>
-nmap <F10> :tabedit ~/.vimrc<CR>
-nmap <F11> :source ~/.vimrc<CR>
+nmap <silent> <F9>  :tabedit ~/<CR>
+nmap <silent> <F10> :tabedit ~/.vimrc<CR>
+"nmap <silent> <F11> :source ~/.vimrc<CR>:echo "updated"<CR>
+nnoremap  <F11> :source ~/.vimrc<CR>:echo "updated"<CR>
 
 " move cursor by jkhl with Control holding in insert mode
 imap <C-j> <Down>
@@ -107,7 +125,6 @@ imap <C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
-
 
 
 

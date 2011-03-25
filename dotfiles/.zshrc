@@ -53,7 +53,7 @@ local BLUE=$'%{\e[1;34m%}'
 local COMMAND=""
 local COMMAND_TIME=""
 precmd() { 
-    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007\a" 
+    #echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007\a" 
     if [ "$COMMAND_TIME" -ne "0" ] ; then 
         local d=`date +%s`
         d=`expr $d - $COMMAND_TIME`

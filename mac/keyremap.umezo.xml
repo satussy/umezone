@@ -1,7 +1,6 @@
 <item>
   <name>umezo hentai key mapping</name>
   <list>
-    <item/>
     <item>
         <name>Command_R to Control_L</name>
         <sysctl>remap.umezo_command_r_to_control_l</sysctl>
@@ -11,10 +10,9 @@
       <name># KANA/EISUU 1</name>
       <sysctl>remap.umezo_kana_eisuu2kana_1</sysctl>
       <autogen>--KeyOverlaidModifier-- KeyCode::JIS_KANA , VK_SHIFT, KeyCode::SHIFT_L , ModifierFlag::SHIFT_L, KeyCode::JIS_KANA</autogen>
-      <autogen>--KeyOverlaidModifier-- KeyCode::JIS_EISUU, VK_SHIFT, KeyCode::SHIFT_L , ModifierFlag::SHIFT_L, KeyCode::JIS_KANA</autogen>
+      <autogen>--KeyOverlaidModifier-- KeyCode::JIS_EISUU, VK_SHIFT, KeyCode::SHIFT_L , ModifierFlag::SHIFT_L, KeyCode::JIS_EISUU</autogen>
       <autogen>--KeyToKey-- KeyCode::JIS_EISUU, KeyCode::ESCAPE</autogen>
       <autogen>--KeyToKey-- KeyCode::JIS_KANA , KeyCode::ESCAPE</autogen>
-      <autogen>--KeyToKey-- KeyCode::ESCAPE   , KeyCode::JIS_EISUU</autogen>
     </item>
 
     
@@ -30,6 +28,8 @@
       <sysctl>remap.umezo_basic_shortcuts</sysctl>
       <block>
         <not>TERMINAL</not>
+        <not>VI</not>
+        <not>VIRTUALMACHINE</not>
         <autogen>--KeyToKey-- KeyCode::V, VK_CONTROL, KeyCode::V, ModifierFlag::COMMAND_L</autogen>
         <autogen>--KeyToKey-- KeyCode::N, VK_CONTROL, KeyCode::N, ModifierFlag::COMMAND_L</autogen>
         <autogen>--KeyToKey-- KeyCode::W, VK_CONTROL, KeyCode::W, ModifierFlag::COMMAND_L</autogen>
@@ -65,16 +65,36 @@
     </item>
 
     <item>
-        <name># space vi mode only terminal</name>
+        <name># aaa space vi mode only terminal</name>
         <appendix>u/i to BS/del</appendix>
         <sysctl>remap.umezo_space_vi_mode</sysctl>
-        <autogen>--KeyToKey-- KeyCode::U, VK_OPTION, KeyCode::DELETE</autogen>
-        <autogen>--KeyToKey-- KeyCode::I, VK_OPTION, KeyCode::FORWARD_DELETE</autogen>
-        <autogen>--KeyToKey-- KeyCode::H, VK_OPTION, KeyCode::CURSOR_LEFT</autogen>
-        <autogen>--KeyToKey-- KeyCode::J, VK_OPTION, KeyCode::CURSOR_DOWN</autogen>
-        <autogen>--KeyToKey-- KeyCode::K, VK_OPTION, KeyCode::CURSOR_UP</autogen>
-        <autogen>--KeyToKey-- KeyCode::L, VK_OPTION, KeyCode::CURSOR_RIGHT </autogen>
-        <autogen>--KeyOverlaidModifier-- KeyCode::SPACE, KeyCode::OPTION_L, KeyCode::SPACE</autogen>
+        <block>
+            <not>VIRTUALMACHINE</not>
+            <not>REMOTEDESKTOPCONNECTION</not>
+            <autogen>--KeyToKey-- KeyCode::U, VK_OPTION, KeyCode::DELETE</autogen>
+            <autogen>--KeyToKey-- KeyCode::I, VK_OPTION, KeyCode::FORWARD_DELETE</autogen>
+            <autogen>--KeyToKey-- KeyCode::H, VK_OPTION, KeyCode::CURSOR_LEFT</autogen>
+            <autogen>--KeyToKey-- KeyCode::J, VK_OPTION, KeyCode::CURSOR_DOWN</autogen>
+            <autogen>--KeyToKey-- KeyCode::K, VK_OPTION, KeyCode::CURSOR_UP</autogen>
+            <autogen>--KeyToKey-- KeyCode::L, VK_OPTION, KeyCode::CURSOR_RIGHT </autogen>
+            <autogen>--KeyOverlaidModifier-- KeyCode::SPACE, KeyCode::OPTION_L, KeyCode::SPACE</autogen>
+        </block>
+    </item>
+
+    <item>
+        <name>#VM setting</name>
+        <appendix>for vm</appendix>
+        <sysctl>remap.umezo_item_for_vm</sysctl>
+        <block>
+            <only>VIRTUALMACHINE</only>
+            <autogen>--KeyToKey-- KeyCode::H, VK_CONTROL, KeyCode::CURSOR_LEFT</autogen>
+            <autogen>--KeyToKey-- KeyCode::J, VK_CONTROL, KeyCode::CURSOR_DOWN</autogen>
+            <autogen>--KeyToKey-- KeyCode::K, VK_CONTROL, KeyCode::CURSOR_UP</autogen>
+            <autogen>--KeyToKey-- KeyCode::L, VK_CONTROL, KeyCode::CURSOR_RIGHT</autogen>
+            <autogen>--KeyToKey-- KeyCode::I, VK_CONTROL, KeyCode::FORWARD_DELETE</autogen>
+            <autogen>--KeyToKey-- KeyCode::U, VK_CONTROL, KeyCode::DELETE</autogen>
+            <autogen>--KeyToKey-- KeyCode::P, VK_CONTROL, KeyCode::SPACE , ModifierFlag::CONTROL_L</autogen>
+        </block>
     </item>
 
     <item>

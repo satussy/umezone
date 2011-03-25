@@ -1,7 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/Users/umezo'
 let g:netrw_dirhist_2='/Users/umezo/w'
 let g:netrw_dirhist_3='/Users/umezo/w/vol3'
 let g:netrw_dirhist_4='/Users/umezo/Library/Application Support/Firefox/Profiles/su9vsxhl.default/itsalltext'
 let g:netrw_dirhist_5='/Users/umezo'
+let g:netrw_dirhist_6='/Users/umezo/Library/Application Support/Firefox/Profiles/su9vsxhl.default/itsalltext'

@@ -1,18 +1,12 @@
 {
-    "name": "DMM Advanced Favorit",
+    "name": "DMM Advanced Favorite",
     "version": "0.1",
-    "description": "make your favorit on DMM richer",
+    "description": "make your favorite on DMM richer",
     "permissions" : [
         "http://www.dmm.co.jp/digital/videoa/-/bookmark*" ,
         "http://www.dmm.co.jp/digital/-/bookmark*" 
 
     ] ,
-//    "icons" : {
-//         "16" : "ScheduleCompiler_016.png" ,
-//         "48" : "ScheduleCompiler_048.png" ,
-//        "128" : "ScheduleCompiler_128.png" 
-//    } ,
-//    "options_page" : "options.html" ,
     "content_scripts": [ {
         "matches": [ 
             "http://www.dmm.co.jp/digital/videoa/-/bookmark*" ,
@@ -22,11 +16,5 @@
         "js"     : [ "jquery.js" , "page.js" ]
     } ] 
 
-//    "background_page" : "background.html" ,
-//
-//    "page_action": {
-//        "default_icon" : "cybozuoffice.ico" ,
-//        "default_title": "Compile your schedule" 
-//    }
 }
 
