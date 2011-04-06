@@ -28,7 +28,7 @@ hi IncSearch	 cterm=NONE ctermfg=yellow  ctermbg=green
 hi Search	     cterm=NONE ctermfg=darkred ctermbg=red
 hi MoreMsg	                ctermfg=darkgreen
 hi ModeMsg       cterm=NONE ctermfg=darkmagenta
-hi LineNr	                ctermfg=darkgray
+hi LineNr	                ctermfg=magenta
 hi Question	                ctermfg=green
 hi VertSplit	 cterm=reverse
 hi Title	                ctermfg=5
