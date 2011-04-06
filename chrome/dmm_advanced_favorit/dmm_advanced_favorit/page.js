@@ -1,5 +1,5 @@
 (function($){
-    var lists = $( "#mu table.text tr.text" ) ,
+    var lists = $( "#mu tr.text" ) ,
         links = $( "#mu td > a").map( (function(){
             var hash = {};
             return function( i , elem ){
@@ -100,9 +100,9 @@
         var hash = {} , frame = $('<div id="dmmab_frame"></div>').insertBefore( document.body.firstChild ) , current = null , total = 0;
         function parseDetail( html , href , row , callback ){
             var base   = $( '<div class="dmmab_popup"></div>' ),
-                data   = getTags( getTag( html , "table" , "float-l mg-b20" ) , "tr" ) ,
-                tag    = $( getTags( data[ 8] , "td" )[1] ).html() ,
-                rate   = $( getTags( data[10] , "td" )[1] ).find("img")[0] ,
+                data   = getTags( getTag( html , "table" , "mg-b20" ) , "tr" ) ,
+                tag    = $( getTags( data[ 9] , "td" )[1] ).html() ,
+                rate   = $( getTags( data[11] , "td" )[1] ).find("img")[0] ,
                 id     = href.split("=").pop().replace("/" , "" ) ,
                 desc   = $( getTags( html , "div" , "mg-b20 lh4" )[0] ) , 
                 images = $( "<span></span>" ) ,
@@ -199,7 +199,9 @@
                                 frame.html( hash[ index ] );
                             }
                         });
+                        localStorage[ href ] = html ;
                     }catch( e ){
+                        console.log("parse error");
                         hash[ index ] = null;
                     }
 

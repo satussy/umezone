@@ -4,14 +4,14 @@
 #export LANG=ja_JP.UTF-8
 export EDITOR=vim
 export PYTHONPATH=$HOME/local/lib/python
-export PATH=$PATH:$HOME/local/bin:$HOME/Library/flex_sdk/bin:/opt/local/bin:/opt/local/sbin/:$HOME/Library/eclipse:$HOME/Library/android_sdk/tools:$HOME/.work/chromium/depot_tools
 export PERL5LIB=/home/cocoromi/perl/lib/perl:/home/bashi/perl/share/perl
 export LD_LIBRARY_PATH="$HOME/local/lib"
 export EDITOR=vim
-#export TERM=xterm-16color
-export LSCOLORS=ExFxCxdxBxegedabagacad
+#export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+
+export PATH=$PATH:$HOME/local/bin:$HOME/Library/flex_sdk/bin:/opt/local/bin:/opt/local/sbin/:$HOME/Library/eclipse:$HOME/Library/android_sdk/tools:$HOME/.work/chromium/depot_tools
 
 export MANPATH=/opt/local/man:$MANPATH
 
@@ -78,12 +78,14 @@ local BLUE=$'%{\e[1;34m%}'
 
 
 HOSTNAME=`hostname`
+PROMPT=$DEFAULT'[$CYAN${USER}$DEFAULT@$CYAN${HOSTNAME}$DEFAULT]$CYAN$AGENT_MARK$YELLOW$TITLE$DEFAULT%(!.#.$) '
+RPROMPT=$PURPLE'[%~]'$DEFAULT
 if [ -z "$SSH_CLIENT" ] ; then
     HOSTNAME=""
+    PROMPT=$DEFAULT'[$GREEN${USER}$DEFAULT@$GREEN${HOSTNAME}$DEFAULT]${AGENT_MARK}%(!.#.$) '
+    RPROMPT=$CYAN'[%~]'$DEFAULT
 fi
 
-PROMPT=$DEFAULT'[$GREEN${USER}$DEFAULT@$GREEN${HOSTNAME}$DEFAULT] %(!.#.$) '
-RPROMPT=$CYAN'[%~]'$DEFAULT
 
 setopt PROMPT_SUBST
 
@@ -132,3 +134,6 @@ setopt complete_aliases # aliased ls needs if file/dir completions work
 
 compinit
 
+
+
+#export TERM=xterm-16color

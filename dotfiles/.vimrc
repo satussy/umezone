@@ -1,6 +1,7 @@
 syntax on                                                     " enable syntax hilighting
 
 filetype plugin on                                            " enable filetype plugin
+set t_Co=16
 
 let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
