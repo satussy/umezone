@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:mx="library://ns.adobe.com/flex/mx"
+applicationComplete="onInit(event);"
+>
+<mx:VBox width="100%" height="100%">
+	
+<fx:Script>
+	<![CDATA[
+	import adobe.utils.MMExecute;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	import flash.external.ExternalInterface;
+	private function onButtonClick(event:*):void{
+	}
+	
+	private var timer:Timer;
+	private function onInit(event:*):void {
+		timer = new Timer( 1000 );
+		timer.addEventListener(TimerEvent.TIMER, onTimer);
+		timer.start();
+		
+		ExternalInterface.addCallback("log", log); 
+		ExternalInterface.addCallback("onGetSelection", onGetSelection); 
+	}
+	private function onGetSelection( argString:String ):void {
+		var args:Array = argString.split(",");
+		var top　　　:Number = args[0];
+		var left　　:Number = args[1];
+		var bottom:Number = args[2];
+		var right　:Number = args[3];
+		var name  :String = args[4];
+		
+		text.text = [ (name!=""?"#":"")+name+"{" ,
+			"    top   :" + Math.ceil(top)  + "px;" ,
+			"    left  :" + Math.ceil(left) + "px;" ,
+			"    width :" + Math.ceil( right - left ) + "px;" ,
+			"    height:" + Math.ceil( bottom - top ) + "px;" ,
+		"}"].join( "\n");
+	}
+	private function onTimer(event:*):void {
+		this.getSelection();
+	}
+	
+	public function log( v:* ):void{
+		MMExecute("fl.outputPanel.trace('"+v+"');");
+	}
+	
+	public function getSelection():void {
+		MMExecute( "var a = (function(){" +
+						"var doc = fl.getDocumentDOM();" +
+						"if(!doc){return {top:0,left:0,bottom:0,right:0}; }" +
+						"var rect = doc.getSelectionRect();" +
+						"/* fl.outputPanel.trace(rect.left); */" +
+						"return rect;" +
+					"})();" );
+		MMExecute( "var b = (function(){" +
+						"var doc = fl.getDocumentDOM();" +
+						"if(!doc || doc.selection.length != 1 ){return ''; }" +
+						"var item = doc.selection[0];" + 
+						"var name = item.name;" +
+						"return name;" + 
+					"})();" );
+		callMe( "onGetSelection" , [ "[a.top,a.left,a.bottom,a.right,b].join(',')" ]);
+	}
+	
+	private function callMe( funcName:String , args:Array = null ):void {
+		var ag:String;
+		if ( args != null ) {
+			ag = "," + args.join(",");
+		}else {
+			ag = "";
+		}
+		text.text = ag;
+		MMExecute("for( var i = 0 ; i < fl.swfPanels.length ; i++){if( fl.swfPanels[i].name=='html5Panel' ){fl.swfPanels[i].call('"+funcName+"'"+ag+"); } }");
+	}
+	]]>
+</fx:Script>
+
+<mx:TextArea id="text" width="100%" height="100%"></mx:TextArea>
+</mx:VBox>
+</s:Application>

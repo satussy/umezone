@@ -1,0 +1,1 @@
+copy bin\html5Panel.swf into C:\Documents and Settings\%%USER%%\Local Settings\Application Data\Adobe\Flash CS5\ja_JP\Configuration\WindowSWF
