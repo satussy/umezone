@@ -1,0 +1,20 @@
+{
+    "name": "DMM Advanced Favorite",
+    "version": "0.2",
+    "description": "make your favorite on DMM richer",
+    "permissions" : [
+        "http://www.dmm.co.jp/digital/videoa/-/bookmark*" ,
+        "http://www.dmm.co.jp/digital/-/bookmark*" 
+
+    ] ,
+    "content_scripts": [ {
+        "matches": [ 
+            "http://www.dmm.co.jp/digital/videoa/-/bookmark*" ,
+            "http://www.dmm.co.jp/digital/-/bookmark*" 
+        ] ,
+        "css"    : [ "page.css" ],
+        "js"     : [ "jquery.js" , "page.js" ]
+    } ] 
+
+}
+

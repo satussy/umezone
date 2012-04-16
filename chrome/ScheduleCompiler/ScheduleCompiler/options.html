@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="template.css" type="text/css"></link>
+    </head>
+    <body>
+<div id="overlay"></div>
+<!--
+<div id="overlay_box" class="on">
+<div id="overlay_content" style="">
+<header><div>aaa</div></header>
+</div>
+</div>
+-->
+
+<div id="template" style="display:none;">
+    <div id="template_content">
+    <!--
+        <div class="week">
+            <header><h2>{{$start_date}} - {{$end_date}}</h2><div>{{$time}}h</div></header>
+            <table cellspacing=0 cellpadding=0 border=0 class="list" >
+                <tr class="head" >
+                    <th class="edit">
+                        <img  class="menu_trigger"      alt="編集"       src="image/ico_32x32_edit_2.png"
+                        ><img class="menu" cmd="cancel" alt="キャンセル" src="image/ico_32x32_back.png"
+                        ><img class="menu" cmd="merge"  alt="マージする" src="image/ico_32x32_merge_1.png"
+                        ><img class="menu" cmd="remove" alt="削除する"   src="image/ico_32x32_delete_2.png"
+                        ><img class="menu" cmd="check"  alt="削除する"   src="image/ico_32x32_check.png"
+                        >
+                    </th>
+                    <th class="time" ><img alt="Time" src="image/ico_32x32_time.png" ></th>
+                    <th class="detail" >Detail</th>
+                </tr>
+                {{$table_content}}
+                <tr>
+                    <td class="numeric time" style="padding-right:2px;" colspan="2">Total: <span class="weekTime">{{$time}}</span></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    -->
+    </div>
+    <!--
+    <td colspan="2"><span cmd="addRow" class="btn btn_add" >+</span><span cmd="removeRow" class="btn btn_remove">-</span></td>
+    -->
+
+    <div id="template_tr">
+    <!--
+        <tr class="dataRow">
+            <td class="edit">
+                <input type="checkbox"></input>
+            </td>
+            <td class="numeric time" ><input cmd="time"   value="{{$schedule_time}}" ></input></td>
+            <td class="detail"       ><input cmd="detail" value="{{$schedule_name}}" placeholder="←スケジュールが確定していない時間" ></input></td>
+        </tr>
+    -->
+    </div>
+</div>
+<div id="main">
+    <header><h1>Schedule Compiler</h1><div>by <author>osuga-h</author></div></header>
+    <div id="message" style="display:none;"></div>
+    <div id="content"></div>
+</div>
+
+    </body>
+    <script src="jquery.js"></script>
+    <script src="template.js"></script>
+    <script src="template.ui.js"></script>
+    <script src="id.js"></script>
+</html>
+

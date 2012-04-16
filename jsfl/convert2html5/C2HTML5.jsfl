@@ -386,6 +386,14 @@ function eachFrame( func ){
 
         return resultLayer;
 }
+
+function getDocumentFolderURI( doc ){
+    if( !doc ){
+        doc = fl.getDocumentDOM();
+    }
+    var lastIndex = doc.pathURI.lastIndexOf( "/" );
+    return doc.pathURI.substr( 0 , lastIndex );
+}
 ///------------ end library      ----------------------------------------
 
 //あるレイヤーのタイムライン上のフレームを処理する
@@ -401,6 +409,8 @@ function processFrame( frame , layerIndex , layer ) {
             left              : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
             scaleX            : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
             scaleY            : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
+            skewX             : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
+            skewY             : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
             rotation          : function( p1 , p2 , duration ){ return (p2-p1)/duration    ; } ,
             colorAlphaPercent : function( p1 , p2 , duration ){ return (p2-p1)/duration/100; }
     } , 
@@ -410,6 +420,8 @@ function processFrame( frame , layerIndex , layer ) {
         left              : "x" ,
         scaleX            : "scaleX" ,
         scaleY            : "scaleY" ,
+        skewX             : "skewX" ,
+        skewY             : "skewY" ,
         rotation          : "rotation" ,
         colorAlphaPercent : "opacity" 
     } , 
@@ -419,13 +431,15 @@ function processFrame( frame , layerIndex , layer ) {
         left              : 0 , 
         scaleX            : 1 , 
         scaleY            : 1 , 
+        skewX             : 0 ,
+        skewY             : 0 ,
         rotation          : 0 , 
         colorAlphaPercent : 0
     } , 
     //JSにエクスポートするFlashのインスタンスのプロパティ
-    ExportKeys = [ "top" , "left" , "x" , "y" , "scaleX" , "scaleY" , "height" , "width" , "name" , "colorAlphaPercent" , "rotation" ] , 
+    ExportKeys = [ "top" , "left" , "x" , "y" , "skewX" , "skewY" , "scaleX" , "scaleY" , "height" , "width" , "name" , "colorAlphaPercent" , "rotation" ] , 
     //Tween対応するFlashインスタンスのプロパティ
-    TweenKeys  = [ "top" , "left"             , "scaleX" , "scaleY" , "rotation"                  , "colorAlphaPercent" ] ;
+    TweenKeys  = [ "top" , "left"             , "skewX" , "skewY" , "scaleX" , "scaleY" , "rotation"                  , "colorAlphaPercent" ] ;
 
 
     var 
@@ -533,10 +547,7 @@ function processFrame( frame , layerIndex , layer ) {
 } 
 
 function exportSymbol( symbolList ){
-    var k , v , item , elements , e , lib = doc.library , timeline = doc.getTimeline() , tempDoc , tempRect , img_dir = doc.pathURI+".dir" ;
-    if( !FLfile.exists( img_dir) ){
-        FLfile.createFolder( img_dir );
-    }
+    var k , v , item , elements , e , lib = doc.library , timeline = doc.getTimeline() , tempDoc , tempRect , img_dir = "images" ;
     if( lib.itemExists("________workingplace") ){
         lib.deleteItem("________workingplace");
     }
@@ -565,15 +576,13 @@ function exportSymbol( symbolList ){
         
         tempDoc.selectNone();
 
-        var fileName = item.name.replace(/\//g,"_") ;
-        fl.saveDocument( tempDoc , doc.pathURI + "." + fileName + ".fla" );
+        var fileName = encodeURIComponent( item.name.replace(/\//g,"_") );
+        fl.saveDocument( tempDoc , documentFolder + "/fla/" + fileName + ".fla" );
 
-        console.log( "Start exporting : " + fileName );
-        tempDoc.exportPNG( img_dir + "/" + fileName + ".png" , true , true );
-        console.log( "End   exporting : " + fileName );
+        tempDoc.exportPNG( documentFolder + "/" + img_dir + "/" + fileName + ".png" , true , true );
 
-        v.imagePath = fileName+".png" ;
-        imageList.push( fileName+".png" );
+        v.imagePath = img_dir + "/" + fileName + ".png" ;
+        imageList.push( img_dir + "/" + fileName+".png" );
 
 
         fl.openDocument( doc.pathURI );
@@ -597,7 +606,16 @@ function exportSymbol( symbolList ){
 console.clear();
 
 
-var doc = fl.getDocumentDOM() ;
+var doc = fl.getDocumentDOM() , documentFolder = getDocumentFolderURI( doc );
+if( !FLfile.exists( documentFolder + "/data" ) ){
+    FLfile.createFolder( documentFolder + "/data" );
+}
+if( !FLfile.exists( documentFolder + "/images" ) ){
+    FLfile.createFolder( documentFolder + "/images" );
+}
+if( !FLfile.exists( documentFolder + "/fla" ) ){
+    FLfile.createFolder( documentFolder + "/fla" );
+}
 var symbolList = {} ;
 var imageList = [] ;
 
@@ -616,10 +634,7 @@ var stageData = {
 
 console.clear();
 console.log( "var stageData = " + JSON.stringify( stageData ) );
-if( !FLfile.exists( doc.pathURI + ".data" ) ){
-    FLfile.createFolder( doc.pathURI + ".data" );
-}
-console.save( doc.pathURI + ".data/data.js" );
+console.save( documentFolder + "/data/data.js" );
 
 
 

@@ -1,0 +1,21 @@
+{
+    "name": "Cybozu schedule util",
+    "version": "1.3",
+    "description": "Show icon as Browser action to watch your shcedule",
+    "permissions" : [
+        "tabs" ,
+        "http://intra.klab.org/*" 
+    ] ,
+    //"background_page" : "bg.html" ,
+    "icons" : {
+         "16" : "cybozuoffice.ico" ,
+         "48" : "cybozuoffice.ico" ,
+        "128" : "cybozuoffice.ico" 
+    },
+    "browser_action": {
+        "default_icon": "cybozuoffice.ico", // required
+        "default_title": "Cybozu schedule",      // optional; shown in tooltip
+        "default_popup": "popup.html"        // optional
+    }
+}
+

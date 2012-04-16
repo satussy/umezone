@@ -1,0 +1,13 @@
+.dummy:focus + .page .as4 > div {
+    -webkit-animation: as4_sample 1s linear infinite;
+}
+@-webkit-keyframes as4_sample {
+    0%{  -webkit-transform:translateY( -300px ); -webkit-animation-timing-function:ease-in ;}
+   30%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out;}
+   40%{  -webkit-transform:translateY(  -30px ); -webkit-animation-timing-function:ease-in;}
+   50%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out;}
+   55%{  -webkit-transform:translateY(  -10px ); -webkit-animation-timing-function:ease-in;}
+   60%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out ;}
+  100%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-in ;}
+}
+

@@ -1,4 +1,4 @@
+stageData.layer[0] = null ;
 var g = Converter.convert( stageData );
 
-g.onload=function(){}
 g.start();

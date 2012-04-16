@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+
+
+<style type="text/css">
+.tab_contents { 
+    width:500px;
+    overflow:hidden;
+}
+ul.tab_header {
+    display:-webkit-box;
+    list-style:none;
+    margin:0px;
+}
+
+ul.tab_header > li {
+    cursor:pointer;
+
+    border-radius:5px 5px 0 0;
+    border:1px solid #000 ;
+    border-bottom:none;
+    
+    width:100px;
+    margin:0 10px ;
+    text-align:center;
+
+    -webkit-transition:background-color .1s linear;
+
+}
+
+ul.tab_header > li:hover { background-color:#CCF; } 
+ul.tab_header > li:active{ background-color:#FCF; }
+
+div.tab_body {
+    width : 100%;
+    min-height:500px;
+    display:-webkit-box;
+    -webkit-transition:margin-left .3s linear;
+}
+div.tab_body > div {
+    border:2px solid #FCC;
+    width:100%;
+    box-sizing:border-box;
+}
+div.tab_body > div > a {
+    display:block;
+}
+
+
+.tab_contents.guild  > .tab_header > .guild { background-color:#CFC; }
+.tab_contents.friend > .tab_header > .friend{ background-color:#CFC; }
+.tab_contents.event  > .tab_header > .event { background-color:#CFC; }
+
+
+.tab_contents.guild  > .tab_body { margin-left:0; }
+.tab_contents.friend > .tab_body { margin-left:-100%;}
+.tab_contents.event  > .tab_body { margin-left:-200%;}
+
+</style>
+
+<div class="tab_contents">
+    <ul class="tab_header">
+        <li class="guild" ><a href="/guild"  data-request-type="ajax">ギルド</a></li>
+        <li class="friend"><a href="/friend" data-request-type="ajax">フレンド</a></li>
+        <li class="event" ><a href="/event"  data-request-type="ajax">イベント</a></li>
+    </ul>
+    <div class="tab_body">
+        <div class="guild" >guildguildguildguildguildguildguildguildguildguildguildguild</div>
+        <div class="friend">friendfriendfriendfriendfriendfriendfriendfriendfriend</div>
+        <div class="event" >eventeventeventeventeventeventeventeventeventeventeventevent</div>
+    </div>
+</div>
+
+	
+</body>
+<script type="text/javascript">
+window.addEventListener( "hashchange" , onHashChange , false );
+document.body.addEventListener( "click" , onClick , false );
+function onClick( e ){
+    var target = e.target , tag_name = target.tagName;
+
+    if( !TagEventHandler[ tag_name ] ){ return ;}
+
+    return TagEventHandler[ tag_name ]( e , target );
+}
+
+function onHashChange( e ){
+    var prev = getHash( e.oldURL ) , next = getHash( e.newURL );
+    if( !HashEventHandler[ next ] ){ return; }
+
+    return HashEventHandler[ next ]( e );
+}
+
+var TagEventHandler = (function(){
+    return {
+        A : function ( e , target ){
+            var request_type = target.getAttribute( "data-request-type" );
+            if( !request_type ){ return ; }
+
+            e.preventDefault();
+
+            location.hash = "#" + target.getAttribute( "href" ) ;
+        }
+    };
+})();
+
+function getHash( urlText ){
+    return urlText.split("#")[1];
+}
+
+var HashEventHandler = (function(){
+    var tab_content = null ;
+    function getTabContent(){
+        if( !tab_content ){ tab_content = document.querySelector(".tab_contents"); }
+        return tab_content;
+    }
+
+    function changeTabTo( next ){
+        var tab = getTabContent() , current_tab = tab.getAttribute( "data-current-tab" )
+
+        removeClass( tab , current_tab );
+        addClass( tab , next );
+        tab.setAttribute( "data-current-tab" , next );
+
+    }
+
+    return {
+        "/friend" : function ( e ){ changeTabTo( "friend" ); } ,
+        "/guild"  : function ( e ){ changeTabTo( "guild"  ); } ,
+        "/event"  : function ( e ){ changeTabTo( "event"  ); }
+
+
+
+    };
+})();
+
+//要素 elem に class clsを追加する
+function addClass( elem , cls ){
+    if( !containsClass( elem , cls ) ){
+        elem.className += " "+cls;
+    }
+}
+
+//要素 elem から class clsを取り除く
+function removeClass( elem , cls ){
+    if( containsClass( elem , cls ) ){
+        elem.className = (" "+elem.className+" ").replace( " "+cls+" " , "" ).trim();
+    }
+}
+
+
+//要素 elem に class clsがあればremoveなければadd
+function toggleClass( elem , cls ){
+    if( containsClass( elem , cls ) ){
+        removeClass( elem , cls );
+    }else{
+        addClass( elem , cls );
+    }
+}
+
+//要素 elem に class clsがあるかどうか
+function containsClass( elem , cls ){
+    return  (" "+elem.className+" ").indexOf( " "+cls+" " ) >= 0 ;
+}
+
+
+
+
+</script>
+</html>

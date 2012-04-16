@@ -1,0 +1,650 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+
+<input class="grid" value="Thumbail">
+<div id="stage" class="main">
+    <div id="slide">
+        <input class="dummy">
+        <div class="page title">
+            <div>
+                <h1>FlashのJS化</h1>
+                <h2>A possibility of Cascading Style Sheet version 3</h2>
+                <div class="author">Klab Hiroshi OSUGA</div>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="font-size:100px;padding-top:250px;">プラットフォームの<br>スマートフォン対応</h1>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="font-size:100px;padding-top:320px;">迫られるアプリの対応</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:250px;">課題</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:50px;">無理</h1>
+                <img src="02e3c0ffc6ad6b3c110d981cd366bc08.png">
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style=" padding-top:50px;">無能</h1>
+                <img src="android.jpeg" style="zoom:1.8;">
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title flash_is_dead">
+            <div style="width:100%">
+                <h1 style="padding-top:240px;">Flash</h1>
+                <hr class="hr1" style="height:25px;position:relative;top:-160px;background-color:#F00;-webkit-transform:rotate(30deg);">
+                <hr class="hr2" style="height:25px;position:relative;top:-160px;background-color:#F00;-webkit-transform:rotate(-30deg);">
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>目次</h1>
+                <ol>
+                    <li>概要</li>
+                    <ol>
+                        <li>Flashとの違い</li>
+                        <li>基本方針</li>
+                    </ol>
+                    <li>実装</li>
+                    <ol>
+                        <li>レイヤー</li>
+                        <li>アニメーション</li>
+                    </ol>
+                    <li>Appendix</li>
+                </ol>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:250px;">概要</h1>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>Flashとの比較(1/2)</h1>
+                <ul style="font-size:90%">
+                	<li>複雑なアニメが難しい</li>
+                    <ul>
+                    	<li>任意の曲線に沿って移動・回転できない</li>
+                    	<li>無理すればできない事はない</li>
+                    	<li>シンプルなアニメの組み合わせに落としこむ</li>
+                    </ul>
+                </ul>
+                <ul style="font-size:90%">
+                	<li>ベクターグラフィックが無い</li>
+                    <ul>
+                    	<li>素材を作る時に大きさの決めが必要</li>
+                    	<li>Canvasとかで無理すれば・・・</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>Flashとの比較(2/2)</h1>
+                <ul style="font-size:90%">
+                	<li>オーサリングツールが無い</li>
+                    <ul>
+                    	<li>レイアウト調整のコストが高い</li>
+                    	<li>コードとブラウザを行き来して調整<br>→ CSSの習熟必須</li>
+                    </ul>
+                </ul>
+                <ul style="font-size:90%">
+                	<li>ブラウザ・バージョン依存</li>
+                    <ul>
+                    	<li>割と多い</li>
+                        <ul>
+                        	<li>OSが古いと動かない</li>
+                        	<li>アニメーションが同じにならない</li>
+                        	<li>なんかバグってる</li>
+                        </ul>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>基本方針</h1>
+                <ul>
+                	<li>HTML+CSS+Javascript</li>
+                </ul>
+                <ul>
+                	<li>CSS</li>
+                    <ul>
+                    	<li>素材のレイアウト</li>
+                    	<li>パーツ毎のアニメーション</li>
+                    </ul>
+                </ul>
+                <ul>
+                	<li>JavaScript</li>
+                    <ul>
+                    	<li>ロジック(ゲーム、UIアクション） </li>
+                    	<li>アニメーションの連携</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:250px;">実装</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>レイヤー</h1>
+                <ul><!-- style="margin-top:10px; margin-bottom:30px;"> -->
+                    <li>Flashのレイヤー機能の再現</li>
+                    <ul>
+                        <li>HTMLは基本自動レイアウト</li>
+                        <li>divの入れ子</li>
+                        <li>position:absolute;</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal layer_sample">
+            <div>
+                <h1>レイヤー:サンプル(1/3)</h1>
+                <div class="htmlCode" style="margin-top:2em;">
+                    <span class="htmlTag">&lt;</span><span class="Statement">style</span><span class="htmlTag">&nbsp;</span><span class="htmlArg">type</span><span class="htmlTag">=</span><span class="htmlString">&quot;text/css&quot;</span><span class="htmlTag">&gt;</span><br />
+                    <span style="color:#FFF; border-bottom:3px solid #F00;">#stage&nbsp;&nbsp;&nbsp;&nbsp; { position:<span style="color:red">relative</span>; }</span><br />
+                    <span style="color:#FFF; border-bottom:3px solid #F00; ">#stage &gt; * { position:<span style="color:red">absolute</span>; }</span><br />
+                    <br />
+                    <span class="Identifier">#stage</span>&nbsp;<span class="Identifier">{</span>&nbsp;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="Type">width</span>:<span class="Constant">420px</span>; <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="Type">height</span>:<span class="Constant">420px</span>; <br />
+                    <span class="Identifier">}</span><br />
+                    <span class="Identifier">#bg</span>&nbsp;&nbsp; <span class="Identifier">{</span>&nbsp;<span class="Type">width</span>:<span class="Constant">100%</span>; <span class="Type">height</span>:<span class="Constant">100%</span>; <span class="Type">background-color</span>:<span class="Constant">#d9d</span>; <span class="Identifier">}</span><br />
+                    <span class="Identifier">#moge</span>&nbsp;<span class="Identifier">{</span>&nbsp;<span class="Type">width</span>:<span class="Constant">40px</span>; <span class="Type">height</span>:<span class="Constant">40px</span>; <span class="Type">background-color</span>:<span class="Constant">#0d0</span>; <span class="Identifier">}</span><br />
+                    <span class="Identifier">#hoge</span>&nbsp;<span class="Identifier">{</span>&nbsp;<span class="Type">bottom</span>:<span class="Constant">50px</span>; <span class="Type">right</span>:<span class="Constant">50px</span>; <span class="Type">font-size</span>:<span class="Constant">40px</span>;<span class="Identifier">}</span><br />
+                    <span class="htmlEndTag">&lt;/</span><span class="Statement">style</span><span class="htmlEndTag">&gt;</span><br />
+                    <span class="htmlTag">&lt;</span><span class="htmlTagName">div</span><span class="htmlTag">&nbsp;</span><span class="htmlArg">id</span><span class="htmlTag">=</span><span class="htmlString">&quot;stage&quot;</span><span class="htmlTag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="htmlTag">&lt;</span><span class="htmlTagName">div</span><span class="htmlTag">&nbsp;</span><span class="htmlArg">id</span><span class="htmlTag">=</span><span class="htmlString">&quot;bg&quot;</span><span class="htmlTag">&gt;</span><span class="htmlEndTag">&lt;/</span><span class="htmlTagName">div</span><span class="htmlEndTag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="htmlTag">&lt;</span><span class="htmlTagName">div</span><span class="htmlTag">&nbsp;</span><span class="htmlArg">id</span><span class="htmlTag">=</span><span class="htmlString">&quot;moge&quot;</span><span class="htmlTag">&gt;</span><span class="htmlEndTag">&lt;/</span><span class="htmlTagName">div</span><span class="htmlEndTag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="htmlTag">&lt;</span><span class="htmlTagName">div</span><span class="htmlTag">&nbsp;</span><span class="htmlArg">id</span><span class="htmlTag">=</span><span class="htmlString">&quot;hoge&quot;</span><span class="htmlTag">&gt;</span>テキスト。<span class="htmlEndTag">&lt;/</span><span class="htmlTagName">div</span><span class="htmlEndTag">&gt;</span><br />
+                    <span class="htmlEndTag">&lt;/</span><span class="htmlTagName">div</span><span class="htmlEndTag">&gt;</span><br />
+                </div>
+            </div>
+        </div>
+
+
+
+        <input class="dummy">
+        <div class="page normal layer_sample">
+            <div>
+                <h1>レイヤー:サンプル(2/3)</h1>
+                <style type="text/css">
+                    .layer_sample .stage { width:420px; height:420px; position:relative; border:1px solid #000;}
+                    .layer_sample .stage > * { position:absolute; }
+            
+                    .layer_sample .bg   { width:100%; height:100%; background-color:#d9d; }
+                    .layer_sample .moge { width:80px; height:80px; background-color:#0d0; }
+                    .layer_sample .hoge { bottom:50px; right:50px; font-size:40px;}
+                </style>
+                <div style="zoom:1.2;">
+                    <div class="stage" style="margin-top:50px;">
+                        <div class="bg"></div>
+                        <div class="moge"></div>
+                        <div class="hoge">テキスト。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal ls2">
+            <div>
+                <h1>レイヤー:サンプル (3/3)</h1>
+                <style type="text/css">
+                    .ls2 .stage { width:420px; height:420px; position:relative;}
+                    .ls2 .stage > * { position:absolute; }
+                    .ls2 .stage > * > * { position:absolute; }
+                    .ls2 .stage > * { width:100%; height:100%; -webkit-transform-origin:left bottom; border:1px #000 solid; -webkit-transition:-webkit-transform 0.7s linear ; }
+                    .ls2 .bg   div { width:100%; height:100%; background-color:#d9d; }
+                    .ls2 .moge div { width:80px; height:80px; background-color:#0d0; }
+                    .ls2 .hoge div { bottom:50px; right:50px; font-size:40px;        }
+
+                    .dummy:focus + .ls2 .bg   { -webkit-transform: translateY(    0px ) scaleY( 0.6 ) skew( -40deg ); } 
+                    .dummy:focus + .ls2 .moge { -webkit-transform: translateY( -100px ) scaleY( 0.6 ) skew( -40deg ); } 
+                    .dummy:focus + .ls2 .hoge { -webkit-transform: translateY( -200px ) scaleY( 0.6 ) skew( -40deg ); } 
+                </style>
+                <div class="stage" style="zoom:1.2;margin-top:50px;">
+                    <div class="bg">
+                        <div></div>
+                    </div>
+                    <div class="moge">
+                        <div></div>
+                    </div>
+                    <div class="hoge" >
+                        <div>テキスト。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page normal">
+            <div>
+                <h1>レイヤー:レイアウトのポイント</h1>
+                <ul> 
+                    <li>位置調節は topかbottom と leftかrightを組み合わせる</li>
+                </ul>
+                <ul> 
+                    <li>見た目の幅は<br>margin + border + padding + width</li>
+                    <ul> 
+                        <li>width,heightの%指定はクセが多い</li>
+                    </ul>
+                </ul>
+                <ul> 
+                    <li>一番外側のdivには必要に応じてposition:relativeを</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:310px;font-size:120px">アニメーション</h1>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page normal as1">
+            <div>
+                <h1>アニメーション</h1>
+                <ul> 
+                    <li>CSSのtranstionかanimation</li>
+                    <ul>
+                        <li>特定のCSSのプロパティを自動で変化させてくれる</li>
+                    	<li>transtion → 動的に変化するアニメ</li>
+                        <ul>
+                        	<li>ex) 体力ゲージ</li>
+                        </ul>
+                    	<li>animation → 固定のアニメ</li>
+                        <ul>
+                        	<li>ex) 攻撃モーション</li>
+                        </ul>
+                    </ul>
+                </ul>
+                <style type="text/css">
+                    .as1 .guage { width:100%; height:40px; border:1px solid #000; -webkit-box-shadow:#000 2px 2px 3px; position:relative;}
+                    .as1 .guage > * { position:absolute; }
+                    .as1 .guage .guage_base { width:100%; height:100%; background-color:#F00;}
+                    .as1 .guage .guage_bar  { width:100%; height:100%; background-color:#00F; -webkit-transform-origin:left center;}
+                    .dummy:focus + .as1 .guage .guage_bar { 
+                        -webkit-animation:as1 3s ease-out infinite 1s ; 
+                    }
+                    @-webkit-keyframes as1{
+                        0%{ -webkit-transform:scaleX( 1 ); }
+                       50%{ -webkit-transform:scaleX( 0 ); }
+                      100%{ -webkit-transform:scaleX( 1 ); }
+                    }
+                </style>
+                <div class="guage">
+                    <div class="guage_base"></div>
+                    <div class="guage_bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>アニメ:transition</h1>
+                <ul style="font-size:90%">
+                    <li>指定方法</li>
+                    <ul>
+                        <li style="font-size:90%;">transition: CSSプロパティ 時間 補間関数 [遅延] ;</li>
+                        <ul>
+                            <li style="color:red">指定しただけではアニメーションしない</li>
+                            <ul>
+                                <li>プロパティの変化が必要</li>
+                                <li>classの付け替え</li>
+                                <li>Javascriptによる書き換え</li>
+                            </ul>
+                        </ul>
+                    </ul>
+                	<li>ex)</li>
+                    <ul>
+                    	<li>transition: opacity 1s ease-in; </li>
+                        <li>不透明度が変化するときに１秒かけて変化</li>
+                    </ul>
+                	<li>実際には <span style="color:red">-webkit-transtion</span> を使う</li>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>アニメ:transitionサンプル</h1>
+                <style type="text/css">
+                    .as3 > div       + ul { 
+                        -webkit-transition:-webkit-transform 0.5s ease-in-out;
+                        -webkit-transform-origin:center top;
+                    }
+
+                    .as3 > div       + ul { -webkit-transform:scaleY(0); } 
+                    .as3 > div:hover + ul { -webkit-transform:scaleY(1); }
+                </style>
+                <div class="htmlCode">
+                    <span class="Identifier">.as3</span>&nbsp;<span class="Special">&gt;</span>&nbsp;<span class="Statement">div</span> <span class="Special">+</span>&nbsp;<span class="Statement">ul</span>&nbsp;<span class="Identifier">{</span>&nbsp;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">-webkit-transition</span>:<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">/* transform プロパティに変化が発生するとアニメ発動 */</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-webkit-transform <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0.5s</span>&nbsp;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ease-in-out;<br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;-webkit-transform-origin:<span class="Type">center</span>&nbsp;<span class="Type">top</span>;<br />
+                    <span class="Identifier">}</span><br />
+                    <span class="Identifier">.as3</span>&nbsp;<span class="Special">&gt;</span>&nbsp;<span class="Statement">div</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="Special">+</span>&nbsp;<span class="Statement">ul</span>&nbsp;<span class="Identifier">{</span>&nbsp;-webkit-transform:scaleY(<span class="Constant">0</span>); <span class="Identifier">}</span>&nbsp;<br />
+                    <span class="Identifier">.as3</span>&nbsp;<span class="Special">&gt;</span>&nbsp;<span class="Statement">div</span>:<span class="PreProc">hover</span>&nbsp;<span class="Special">+</span>&nbsp;<span class="Statement">ul</span>&nbsp;<span class="Identifier">{</span>&nbsp;-webkit-transform:scaleY(<span class="Constant">1</span>); <span class="Identifier">}</span><br />
+                </div>
+                <div style="width:300px; margin-top:10px; " class="as3">
+                    <div style="border:1px solid #000; width:298px;text-align:center;background-color:#FAA;">Menu</div>
+                    <ul style="width:243px;margin-top:0;border:1px solid #000;border-top:none;">
+                    	<li>Item</li>
+                    	<li>Save</li>
+                    	<li>Equip</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>アニメ:animation</h1>
+                <ul style="font-size:90%">
+                    <li>指定方法</li>
+                    <ul>
+                        <li style="font-size:90%;">animation: アニメ名 時間 補間関数 [回数 遅延] ;</li>
+                        <ul>
+                            <li>回数に'infinite'を指定すると無限ループ</li>
+                        </ul>
+                    </ul>
+                    <li>@keyframes</li>
+                    <ul>
+                    	<li>アニメを定義</li>
+                        <li>一連のプロパティの変化を記述</li>
+                    </ul>
+                	<li>ex)</li>
+                    <ul>
+                    	<li>animation: sample 1s ease-in infinite; </li>
+                        <li>@keyframes sample { ..... }</li>
+                    </ul>
+                	<li><span style="color:red">-webkit-animation,@-webkit-keyframes</span> を使う</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>アニメ:animationサンプル</h1>
+                <style type="text/css">
+                    .dummy:focus + .page .as4 > div {
+                        -webkit-animation: as4_sample1 1s linear infinite ;
+                    }
+                    @-webkit-keyframes as4_sample1 {
+                        0%{  -webkit-transform:translateY( -300px ); -webkit-animation-timing-function:ease-in ;}
+                       30%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out;}
+                       40%{  -webkit-transform:translateY(  -30px ); -webkit-animation-timing-function:ease-in;}
+                       50%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out;}
+                       55%{  -webkit-transform:translateY(  -10px ); -webkit-animation-timing-function:ease-in;}
+                       60%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-out ;}
+                      100%{  -webkit-transform:translateY(    0px ); -webkit-animation-timing-function:ease-in ;}
+                    }
+                </style>
+                <div class="htmlCode" >
+                    <span class="Identifier">.dummy</span>:<span class="PreProc">focus</span>&nbsp;<span class="Special">+</span>&nbsp;<span class="Identifier">.page</span>&nbsp;<span class="Identifier">.as4</span>&nbsp;<span class="Special">&gt;</span>&nbsp;<span class="Statement">div</span>&nbsp;<span class="Identifier">{</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;-webkit-animation: as<span class="Constant">4</span>_sample <span class="Constant">1s</span>&nbsp;linear infinite;<br />
+                    <span class="Identifier">}</span><br />
+                    @-webkit-keyframes as4_sample <span class="Identifier">{</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0%</span>{&nbsp;&nbsp;-webkit-transform:translateY( <span class="Constant">-300px</span>&nbsp;); ... <span class="Identifier">}</span><br />
+                    &nbsp;&nbsp; 30%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0px</span>&nbsp;); ... <span class="Identifier">}</span><br />
+                    &nbsp;&nbsp; 40%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;<span class="Constant">-30px</span>&nbsp;); ... <span class="Identifier">}</span><br />
+                    &nbsp;&nbsp; 50%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0px</span>&nbsp;); ... <span class="Identifier">}</span><br />
+                    &nbsp;&nbsp; 55%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;<span class="Constant">-10px</span>&nbsp;); ... <span class="Identifier">}</span><br />
+                    &nbsp;&nbsp; 60%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0px</span>&nbsp;); ...<span class="Identifier">}</span><br />
+                    &nbsp;&nbsp;100%<span class="Identifier">{</span>&nbsp;&nbsp;-webkit-transform:translateY(&nbsp;&nbsp;&nbsp;&nbsp;<span class="Constant">0px</span>&nbsp;); ...<span class="Identifier">}</span><br />
+                    <span class="Identifier">}</span><br />
+                </div>
+                <div style="height:240px; margin-top:10px; width:100px; margin:0 auto;position:relative;" class="as4">
+                    <div style="position:absolute;bottom:0;border-radius:50px;background-color:#F0F;width:80px;height:80px;border:10px solid #D0D; "></div>
+                </div>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page normal as2">
+            <div style="width:95%;">
+                <h1>アニメーションの注意点</h1>
+                <ul style="margin-bottom:25px;margin-top:10px;">
+                	<li>移動、幅・高さはtransformを使う</li>
+                    <ul>
+                    	<li>widthやheightはパフォーマンスが悪い</li>
+                        <ul>
+                        	<li>iPhoneで顕著</li>
+                        	<li>Androidはどっちでもよさそう</li>
+                        </ul>
+                    </ul>
+                </ul>
+                <style type="text/css">
+                    .dummy:focus + .as2 .b1 { -webkit-animation:as2_b1 2s linear infinite; }
+                    @-webkit-keyframes as2_b1{
+                        0%{ -webkit-transform:scaleX(  0 ); }
+                       50%{ -webkit-transform:scaleX(  6 ); }
+                      100%{ -webkit-transform:scaleX(  0 ); }
+                    }
+
+                    .dummy:focus + .as2 .b2 { -webkit-animation:as2_b2 2s linear infinite; position:absolute;}
+                    @-webkit-keyframes as2_b2{
+                        0%{ width:0px; }
+                       50%{ width:900px;  }
+                      100%{ width:0px; }
+                    }
+
+                    .dummy:focus + .as2 .stage > div { width:150px; height:100px; background-color:#F00; margin-bottom:10px; -webkit-animation-delay:3s; -webkit-transform-origin:left center; }
+                
+                </style>
+                <div class="stage">
+                    transform
+                    <div class="b1"></div>
+                    width
+                    <div class="b2"></div>
+                </div>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div style="width:95%;">
+                <h1>アニメーションで使えるプロパティ</h1>
+                <div style="font-size:90%;">
+                    <ul style="margin-top:20px">
+                        <li>opacity 不透明度</li>
+                        <ul>
+                            <li>ex) opacity:0.75;</li>
+                        </ul>
+                        <li>transform 変形</li>
+                        <ul>
+                            <li>ex) transform:translateX( 0 ) rotate( 45deg );</li>
+                            <ul>
+                                <li>移動 translate</li>
+                                <li>回転 rotate</li>
+                                <li>伸縮 scale</li>
+                            </ul>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li>その他</li>
+                        <ul>
+                            <li>background-position</li>
+                            <li>color</li>
+                            <li>...</li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:310px;font-size:120px">まとめ</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title">
+            <div style="width:100%">
+                <h1 style="padding-top:310px;font-size:120px">Appendix</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal">
+            <div style="width:95%;">
+                <h1>まとめ</h1>
+                <ul style="font-size:90%">
+                    <li>Flashより作業は大変</li>
+                    <li>マメに実機で確認</li>
+                    <li>positionを駆使してパーツをレイアウト</li>
+                    <li>-webkit-animation,-webkit-transition,-webkit-transform</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <input class="dummy">
+        <div class="page normal">
+            <div style="width:95%;">
+                <h1>ツール関連</h1>
+                <ul style="font-size:90%">
+                	<li><a href="http://ja.spritegen.website-performance.org/">CSS Sprite Generator</a></li>
+                    <ul>
+                    	<li>zipをポストするとCSSとpngをつくってくれる</li>
+                    </ul>
+                	<li><a href="http://closure-compiler.appspot.com/home">Closure Compiler</a></li>
+                    <ul>
+                    	<li>JSのコンパクション</li>
+                    </ul>
+                    <li><a href="http://matthewlein.com/ceaser/">Ceaser</a></li>
+                    <ul>
+                    	<li>補間関数の調整をGUIで出来る</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>参考文献</h1>
+                <ul>
+                	<li>W3C:CSS3</li>
+                    <ul>
+                        <li><a href="http://www.w3.org/TR/css3-animations/" >animation</a></li>
+                        <li><a href="http://www.w3.org/TR/css3-transitions/">transition</a></li>
+                    </ul>
+                    <li><a href="http://www.slideshare.net/h_kishi/2552-6154484">HTML5@iPhoneゲーム開発</a></li>
+                    <ul>
+                    	<li>DeNAの発表資料</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page normal" style="">
+            <div style="width:95%;">
+                <h1>Javascriptメモ</h1>
+                <ul>
+                	<li>アニメーション関連イベント</li>
+                    <ul>
+                        <li>webkitTransitionEnd</li>
+                        <li>webkitAnimationEnd</li>
+                    </ul>
+                    <ul>transformの書き換え</ul>
+                    <li>
+                    	<ul>element.webkitTransform="rotate(" + X + "deg)";</ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title" >
+            <div style="width:95%;">
+                <h1 style="font-size:400%;padding-top:360px;">ご清聴ありがとうございました。</h1>
+            </div>
+        </div>
+
+        <input class="dummy">
+        <div class="page title" >
+            <div style="width:95%;">
+                <h1 style="font-size:400%;padding-top:360px;">質疑応答</h1>
+            </div>
+        </div>
+    </div>
+</div>
+	
+</body>
+</html>
