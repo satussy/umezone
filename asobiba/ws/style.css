@@ -1,0 +1,127 @@
+
+body {
+    padding-top:100px;
+    font-family : sans-serif ; 
+}
+
+#container { 
+    display:-webkit-box; 
+    width:720px;
+    margin: 0 auto;
+}
+
+/**********************************************/
+/* カードのデフォルト状態 */
+/* ------------------------------------------ */
+
+.card {
+    margin:20px 45px;
+    width : 200px ;
+    height: 280px ;
+    box-sizing:border-box;
+}
+
+
+.card img { 
+    -webkit-transition: 
+        -webkit-transform .1s linear ,
+        box-shadow        .1s linear ;
+
+    -webkit-transition-duration:.1s;
+    -webkit-transform-origin:center bottom;
+
+    width:100%;
+    height:100%;
+
+    border-radius:10px; 
+
+    -webkit-transform: rotate( 0deg ) translate(0) scale(1) ; 
+    box-shadow:rgba( 0,0,0, 1) 0 1px 2px ;
+}
+
+/**********************************************/
+/* カードの回転 */
+/* ------------------------------------------ */
+.card.rotate img { 
+    -webkit-transform-origin:center;
+    -webkit-transform: rotate( 90deg ) ; 
+    box-shadow:rgba( 0,0,0, .5) 2px 0 2px ;
+}
+
+/**********************************************/
+/* カードのフォーカス時 */
+/* focus状態の方が、回転より優先度が高い */
+/* ------------------------------------------ */
+.card.focus img { 
+    -webkit-transform: scale( 1.1 ) ;
+    box-shadow:rgba( 0,0,0, .5) 0 10px 10px ;
+}
+
+
+
+
+
+/* ----------------------------------------------- */
+/* 攻撃方法選択UI */
+/* ----------------------------------------------- */
+
+/* 基本設定 */
+.attack {
+    text-align:center; 
+
+
+    /* 位置はJSで合わせる */
+    position:absolute;
+
+    /* デフォルトは非表示 */
+    /* 必要に応じて出てくる */
+    opacity:0;
+
+    -webkit-transition: 
+        opacity           .5s ease-out, 
+        -webkit-transform .5s ease-out;
+
+    -webkit-transition-duration:.2s;
+
+    border-radius:10px;
+    font-size:70px;
+    padding:10px 50px; 
+}
+
+/* 表示状態 */
+.attack.in {
+    opacity:1;
+    -webkit-transition-duration:.7s;
+    -webkit-transition-timing-function: cubic-bezier(0.210, 0.920, 0.385, 0.975) ;
+    -webkit-transform: translateX( 0 ); 
+}
+
+/* 選択状態 */
+.attack.in.hilight {
+    background-color:rgba( 0,0,0,.5 );
+}
+
+    /* spanで囲っただけで文字を小さく */
+    .attack span{ font-size:80%; }
+
+
+/* 攻撃方法毎の設定 */
+
+/* - front attack - */
+.front_attack{
+    -webkit-transform: translateX( -100px );
+    text-shadow: 
+        #F00 0 0 4px ,
+        rgba( 0,0,0,.5) 0 10px 10px
+    ;
+}
+
+/* - side attack - */
+.side_attack{
+    -webkit-transform: translateX(  100px );
+    text-shadow: 
+        #00F 0 0 4px ,
+        rgba( 0,0,0,.5) 0 10px 10px
+    ;
+}
+

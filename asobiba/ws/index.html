@@ -3,322 +3,88 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 
+
+<div id="container" ></div>
+
+
 <style type="text/css">
-body {
-    padding-top:100px;
-    font-family : sans-serif ; 
-}
-.playmat { 
-    text-align:center; 
-    display:-webkit-box;
-    display:box;
-}
-
-
-
-.card {
-    margin:20px 45px;
+#deck { 
+    position:absolute; 
     width : 200px ;
     height: 280px ;
-    box-sizing:border-box;
-
-    -webkit-transition:-webkit-transform .1s linear ;
-    -webkit-transform: rotateZ( 0deg ); 
-
 }
 
-.card img { 
-    border-radius:10px; 
-    -webkit-transition:-webkit-transform .1s linear , box-shadow .1s linear ;
-    -webkit-transition-duration:.1s;
-    -webkit-transform: scale( 1 ) ;
-    -webkit-transform-origin:center bottom;
-    box-shadow:rgba( 0,0,0, 1) 0 1px 2px ;
-}
-
-.card.rotate img { 
-    box-shadow:rgba( 0,0,0, 1) 1px 0 2px ;
-}
-
-.card.focus img { 
-    -webkit-transform: scale( 1.1 ) ;
-    box-shadow:rgba( 0,0,0, .5) 0 10px 10px ;
-}
-
-.card.rotate { -webkit-transform: rotateZ( 90deg ); }
-
-</style>
-
-<style type="text/css">
-
-div.card > article     { position:relative; width:100%; height:100%; padding:5px; box-sizing:border-box; }
-div.card > article > * { }
-
-div.card header { text-align:center; width:100%; }
-div.card       article{ opacity:0; -webkit-transition: opacity .3s linear ;  background-color: rgba( 0,0,0,0.75 ); color:#FFF; }
-div.card:hover article{ opacity:1; }
-div.card article section { font-size:8px; height:90%; position:relative; }
-div.card article section .text { bottom:4em; position:absolute; }
-
-
-article.chara {
-    box-sizing:border-box;
-    width:400px; 
-    padding:10px;
-    border:1px solid #000 ;
-}
-
-article.chara header { text-align:center; }
-
-</style>
-<style type="text/css">
-#container { 
-    display:-webkit-box; 
-    width:720px;
-    margin: 0 auto;
-}
-
-
-</style>
-<div id="container" >
-    <div class="card"><img src="card.gif"></div>
-    <div class="card"><img src="card.gif"></div>
-    <div class="card"><img src="card.gif"></div>
-</div>
-
-<style type="text/css">
-.attack {
-    text-align:center; 
+#deck .card {
+    margin:0;
     position:absolute;
-    opacity:0;
-    -webkit-transition: opacity .5s ease-out, -webkit-transform .5s ease-out;
-    -webkit-transition-duration:.2s;
+    top:0;
+    left:0;
 
-    border-radius:10px;
+    -webkit-transition: -webkit-transform .1s linear ;
 
-    font-size:70px;
-
-    padding:10px 50px; 
+    -webkit-transform-origin : center 2000% ;
 }
 
-.attack span{
-    font-size:80%;
-}
-.front_attack{
-    -webkit-transform: translateX( -100px );
-    text-shadow: 
-        #F00 0 0 4px ,
-        rgba( 0,0,0,.5) 0 10px 10px
-    ;
-}
 
-.attack.in {
-    opacity:1;
-    -webkit-transition-duration:.7s;
-    -webkit-transition-timing-function: cubic-bezier(0.210, 0.920, 0.385, 0.975) ;
-}
-
-.front_attack.in{
-    -webkit-transform: translateX( 0 );
-}
-
-.attack.in.hilight {
-    background-color:rgba( 0,0,0,.5 );
-}
-
-.side_attack{
-    -webkit-transform: translateX(  100px );
-    text-shadow: 
-        #00F 0 0 4px ,
-        rgba( 0,0,0,.5) 0 10px 10px
-    ;
-}
-
-.side_attack.in{
-    -webkit-transform: translateX( 0 );
-}
 
 </style>
-<div class="attack front_attack">
-FRONT<br/>
-<span>ATTACK</span>
-</div>
-<div class="attack side_attack">
-SIDE<br/>
-<span>ATTACK</span>
-</div>
-<!--
-<article class="chara" >
-    <header><ruby>“単純な馬鹿”ゆっこ<rt>“タンジュンナバカ”ユッコ</rt></ruby></header>
-    <section>
-        <div class="text">
-            <p>【永】 あなたのターン中、他のあなたのキャラすべてに、パワーを＋500。</p>
-            <p>【起】［(2) このカードを【レスト】する］ あなたは自分の山札を見て《漫画》か《仏像》のキャラを1枚まで選んで相手に見せ、手札に加える。その山札をシャッフルする。</p>
-        </div>
-        <ul>
-            <li class="level"  >0</li>
-            <li class="cost"   >0</li>
-            <li class="power"  >5000</li>
-            <li class="soul"   ><img src="soul.png"></li>
-            <li class="trigger">0</li>
-        </ul>
-    </section>
-    <section>
-あ…あ、ああ…<br />
-あ、あ…くっ…くくくくく…くっ…
-    </section>
-</article>
--->
+<button onclick="Deck.shuffule(1);">デッキをシャッフル</button>
 
+<div id="deck" ></div>
+
+
+<script type="text/javascript" src="touch.js"></script>
+<script type="text/javascript" src="deck.json"></script>
 <script type="text/javascript">
-document.body.addEventListener( "mousedown" , onFocusStart , false );
-document.addEventListener( "mouseup"   , onFocusEnd   , false );
-
-var focused_node = null;
-
-
-var front_attack;
-function getFrontAttack(){
-    if( !front_attack ){
-        front_attack = document.querySelector( ".front_attack" );
-        front_attack.addEventListener( "webkitTransitionEnd" , frontAttackTransitionEnd , false );
+var ImagePath = {
+    small : function( info ){
+        return "http://www.nagato.asia/img/card/" + info.img_file ;
+    },
+    secret : function ( info ){
+        return "http://www.nagato.asia/img/card/secret.gif";
     }
+};
+</script>
+<script type="text/javascript" src="Deck.js"></script>
+<script type="text/javascript">
 
-
-    function frontAttackTransitionEnd( e ){
-        if( front_attack.classList.contains( "in" ) ){
-            return;
-        }
-
-        front_attack.style.top  = "-999999px";
-        front_attack.style.left = "-999999px";
+var deck_list = JSON.parse( JSON.stringify( deck_json ) );
+Deck.init( "deck" , deck_list , {
+    onLoad : function(){
+    } ,
+    onProgress : function ( img , max , loaded ){
+        console.log( arguments );
     }
-
-    return front_attack ;
-}
-
-var side_attack;
-function getSideAttack(){
-    if( !side_attack ){
-        side_attack = document.querySelector( ".side_attack" );
-        side_attack.addEventListener( "webkitTransitionEnd" , sideAttackTransitionEnd , false );
-    }
-
-
-    function sideAttackTransitionEnd( e ){
-        if( side_attack.classList.contains( "in" ) ){
-            return;
-        }
-
-        side_attack.style.top  = "-999999px";
-        side_attack.style.left = "-999999px";
-    }
-
-    return side_attack ;
-}
-
-function onFocusStart( e ){
-    var target = searchCardNode( e.target );
-    if( !target ){ return; }
-
-    focused_node = target ;
-
-    document.addEventListener( "mousemove" , onMove , false );
-
-    e.preventDefault();
-
-    target.classList.add( "focus" );
-    var front_attack = getFrontAttack();
-    front_attack.classList.add( "in" );
-
-    front_attack.style.top  = target.offsetTop  + (target.offsetHeight - front_attack.offsetHeight )/2 + "px" ;
-    front_attack.style.left = (target.offsetLeft + target.offsetWidth )   + "px" ;
+} );
 
 
 
 
-    var side_attack = getSideAttack();
-    side_attack.classList.add( "in" );
-
-    side_attack.style.top  = target.offsetTop  + (target.offsetHeight - side_attack.offsetHeight )/2 + "px" ;
-    side_attack.style.left = (target.offsetLeft - side_attack.offsetWidth )   + "px" ;
-
-    is_focusing = true;
-}
-
-function onFocusEnd(e){
-    document.removeEventListener( "mousemove" , onMove , false );
-    if( !focused_node ){ return; }
-
-    var target = focused_node ;
-    focused_node = null;
-
-
-    e.preventDefault();
-
-    target.classList.remove( "focus" );
-    var front_attack = getFrontAttack();
-    var side_attack = getSideAttack();
-
-    if( front_attack.classList.contains( "hilight" ) || side_attack.classList.contains( "hilight" ) ){
-        target.classList.add("rotate");
-    }
 
 
 
-    front_attack.classList.remove( "in" );
-    front_attack.classList.remove( "hilight" );
 
-    side_attack.classList.remove( "in" );
-    side_attack.classList.remove( "hilight" );
-}
-
-function onMove ( e ){
-    var x = focused_node.offsetLeft + focused_node.offsetWidth/2 , pointerX = e.clientX ;
-    if( Math.abs( pointerX - x ) < focused_node.offsetWidth/2 ){
-        getSideAttack().classList.remove( "hilight" );
-        getFrontAttack().classList.remove( "hilight" );
-        //cancel
-        return;
-    }
-
-
-
-    var hilight , opposite ;
-
-    if( x < pointerX ){
-        //front_attack
-        hilight  = getFrontAttack();
-        opposite = getSideAttack();
-    }else if( pointerX < x ){
-        //side_attack
-        hilight  = getSideAttack();
-        opposite = getFrontAttack();
-    }
-
-    hilight .classList.   add( "hilight" );
-    opposite.classList.remove( "hilight" );
-
-}
-
-function searchCardNode( target ){
-    while( target ){
-        if( target.classList && target.classList.contains( "card" ) ){
-            break;
-        }
-        target = target.parentNode ;
-    }
-
-    return target ;
-}
 
 
 
 
 </script>
+
+<div class="attack front_attack">
+    FRONT<br/>
+    <span>ATTACK</span>
+</div>
+
+<div class="attack side_attack">
+    SIDE<br/>
+    <span>ATTACK</span>
+</div>
+
+<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
