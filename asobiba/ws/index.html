@@ -25,9 +25,12 @@
     top:0;
     left:0;
 
-    -webkit-transition: -webkit-transform .1s linear ;
+    border:2px solid #000;
 
-    -webkit-transform-origin : center 2000% ;
+    -webkit-transition: -webkit-transform 1s linear ;
+
+    -webkit-transform-origin : center bottom;
+    background-color:#FFF;
 }
 
 
@@ -58,7 +61,6 @@ Deck.init( "deck" , deck_list , {
     onLoad : function(){
     } ,
     onProgress : function ( img , max , loaded ){
-        console.log( arguments );
     }
 } );
 

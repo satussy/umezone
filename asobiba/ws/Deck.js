@@ -18,6 +18,7 @@ var Deck = (function(){
             
             if( onload ){
                 img.onload = _onload ;
+                img.onerror = _onload ;
             }
             
             image_amount++;
@@ -30,11 +31,72 @@ var Deck = (function(){
     }
 
 
+    //広げたときの中央の座標にする
+    var  initial_point = null ;
+    var selected_index = null ;
+    var view_width = 700 ;
+    var width = 200 ;
+
+    function initDeckView( point ){
+        initial_point = point ;
+        var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" ) , length = cards.length ;
+        var 
+            card_width  = width , 
+            left_point  = point - view_width/2 ,
+            right_point = left_point + view_width , 
+            goal_x      = right_point - card_width ,
+            logical_view_width = ( goal_x - left_point ),
+            dx          =  logical_view_width / ( length - 1)
+        ;
+
+
+        deck.style.left = (point - card_width/2) + "px" ;
+
+        //初期の選択位置は中央
+        var selected_index = Math.floor( length / 2 ) ;
+
+        var i = 0 , n = length , card , temp_x = left_point ;
+        for( ; i < n ; i++ ){
+            card = cards[i] ;
+            //card.style.left = ( left_point + dx * i ) + "px" ;
+            card.style.left = ( dx * ( i - selected_index )  ) + "px" ;
+
+            if( i == selected_index ){
+                card.style.borderColor = "#F00" ;
+            }else{
+                card.style.borderColor = "#000" ;
+            }
+            dir = 0;
+            if( i < selected_index ){
+                dir = -1 ;
+            }else{
+                dir = 1 ;
+            }
+            //card.style.webkitTransform = getTransform( selected_index , i ) ;
+
+
+
+        }
+    }
+
+
 
     //デッキを表にして、扇状に広げる
     //@param selected_index 選択状態にあるカードの番号
-    function startDeckView( selected_index ){
-        var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" );
+    function updateDeckView( point ){
+        return;
+        var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" ) , length = cards.length 
+
+        var card_width  = width ,
+            left_point  = point - view_width/2 ,
+            right_point = left_point + view_width , 
+            goal_x      = right_point - card_width ,
+            dx          = ( goal_x - left_point ) / ( length - 1)
+        ;
+
+        //初期の選択位置は中央
+        var selected_index = Math.floor( point / dx ) ;
+
 
         var i = 0 , n = cards.length , card , dir , deg , style ;
         for( ; i < n ; i++ ){
@@ -48,19 +110,21 @@ var Deck = (function(){
                 dir =  0 ;
             }
             
-            deg = dir * Math.log( 1 + Math.abs( selected_index - i ) );
-            
-            style = "rotate(" + deg + "deg)";
-            if( dir == 0 ){
-                style += " translateY( -100px )" ;
-            }
-            
-            card.style.webkitTransform = style ;
+            card.style.webkitTransform = getTransform( selected_index , i ) ;
         }
+    }
+
+    function getTransform( selected_index , i ){
+
+        var rad = (Math.PI/2) / ( 50 - selected_index - 1 ) * ( i - selected_index ) ;
+        console.log( rad );
+        
+        return "translateX(" + Math.sin( rad ) * 1 + "px)" ;
     }
 
     //デッキを表にして重ねた状態にする
     function endDeckView( ){
+        return;
         var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" );
 
 
@@ -126,13 +190,17 @@ var Deck = (function(){
                 }
             }
 
-            
             handlers = handlers || {} ;
             
             setDeckElement( deck_element );
             setDeckList( l );
 
             loadImage( list,onCardImageLoaded );
+
+
+//            setTimeout( function(){
+//                if( handlers.onLoad ){ handlers.onLoad( ); }
+//            } , 1 );
 
             function onCardImageLoaded( ){
                 if( handlers.onProgress ){
@@ -149,8 +217,9 @@ var Deck = (function(){
             }
         } ,
 
-        startSearch : startDeckView ,
-          endSearch :   endDeckView ,
+        startSearch :   initDeckView ,
+       updateSearch : updateDeckView ,
+          endSearch :    endDeckView ,
         shuffule : shuffule 
     };
 })();
@@ -165,12 +234,7 @@ function onDeckStart( e ){
     if( e.target.tagName == "BUTTON" ){ return; }
     e.preventDefault(); 
 
-    var deck = Deck.elem , pos = getInputPositionFromEvent( e );
-
-    deck.style.left = pos.x - ( deck.offsetWidth  ) /2 + "px" ;
-    deck.style.top  = pos.y - ( deck.offsetHeight ) /2 + "px" ;
-
-    Deck.startSearch( getSelectedIndex( window.innerWidth , getInputPositionFromEvent( e ).x , 50 ) );
+    Deck.startSearch( getInputPositionFromEvent( e ).x );
 
     document.addEventListener( INPUT_DEVICE_MOVE , onDeckMove , false );
     document.addEventListener( INPUT_DEVICE_END  , onDeckEnd  , false );
@@ -181,26 +245,9 @@ var prev_index = null ;
 function onDeckMove( e ){ 
     e.preventDefault(); 
 
-    var w = window.innerWidth , x = getInputPositionFromEvent(e).x , index = getSelectedIndex( w,x,50 );
-
-    if( prev_index != index ){
-        Deck.startSearch( index );
-
-        prev_index = index ;
-    }
+    Deck.updateSearch(getInputPositionFromEvent(e).x);
 }
 
-function getSelectedIndex( w , x , max ){
-    var range = 300/max , distance = x - w/2 , index = Math.floor( distance/range ) ;
-
-    if( index < 0 ){
-        index = 0 ;
-    }else if( max < index ){
-        index = max ;
-    }
-
-    return index ;
-}
 
 function onDeckEnd( e ){
     Deck.endSearch( "deck" );
