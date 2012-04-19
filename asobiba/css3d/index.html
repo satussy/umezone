@@ -1,171 +1,63 @@
 <!DOCTYPE HTML>
-<html lang="jp">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-    <style type="text/css">
-    body {
-        text-align:center;
-        background-color:#000;
-    }
-
-    * {
-        /* アニメーションする要素の親に設定しないといけない */
-        -webkit-transform-style:preserve-3d;
-        -webkit-perspective: 1000;    
-
-    }
-
-
-    #magic_spel { 
-        margin-top :100px;
-        margin-left:100px;
-        width :500px;
-        height:500px;
-        position:relative;
-        -webkit-transform : rotateX( 60deg ) ;
-    }
-
-    #magic_spel .c1 ,
-    #magic_spel .c2 ,
-    #magic_spel .c3 {
-        font-size:20px;
-        color:#000;
-        text-shadow : #FFF 0px 0px 5px ;
-    }
-
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    #magic_spel > .c1 > .inner { 
-        -webkit-animation : rotate1 4s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-    @-webkit-keyframes rotate1{
-         0% { -webkit-transform : rotateZ(   0deg ) ; } 
-       100% { -webkit-transform : rotateZ( 360deg ) ; }
-    }
-
-    #magic_spel > .c1 { 
-        -webkit-animation : rotate1_1 7s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-    @-webkit-keyframes rotate1_1{
-         0% { -webkit-transform : rotateX(   0deg ) ; } 
-       100% { -webkit-transform : rotateX( 360deg ) ; }
-    }
-
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    #magic_spel > .c2 > .inner { 
-        -webkit-animation : rotate2 4s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-    @-webkit-keyframes rotate2{
-         0% { -webkit-transform : rotateZ(    0deg ) ; } 
-       100% { -webkit-transform : rotateZ( -360deg ) ; }
-    }
-    
-    #magic_spel > .c2 { 
-        -webkit-animation : rotate2_1 5s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-    @-webkit-keyframes rotate2_1{
-         0% { -webkit-transform : rotateX(    0deg ) ; } 
-       100% { -webkit-transform : rotateX( -360deg ) ; }
-    }
-
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    /* ----------------------------------------------------- */
-    #magic_spel > .c3 > .inner { 
-        -webkit-animation : rotate1 4s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-    #magic_spel > .c3 { 
-        -webkit-animation : rotate1_1 3s linear infinite ;
-        -webkit-transform-origin : 250px 250px ;
-    }
-
-
-    #magic_spel *{
-        position:absolute;
-    }
-
-    </style>
 </head>
 <body>
 
+<style type="text/css">
+div.poly {
+    width:100px;
+    height:100px;
 
-<div id="magic_spel"><div class="c1">hogehogehogehogehogehogehogehoge</div><div class="c2">hogehogehogehogehogehogehogehoge</div><div class="c3">hogehogehogehogehogehogehogehoge</div></div>
+    border-top   :1px solid #000;
+    border-left  :1px solid #F00;
+    border-right :1px solid #0F0;
+    border-bottom:1px solid #00F;
 
-<script type="text/javascript">
-function q( selector , elem ){ return (elem || document).querySelectorAll( selector ); }
+    position:absolute;
+    top:0;
+    left:0;
+}
 
-var magic_spel = q( "#magic_spel" )[0];
-
-decorate( magic_spel );
-
-
-
-function decorate( div ){
-    
-    var base_w = div.offsetWidth  ;
-    var base_h = div.offsetHeight ;
-
-    circlize( q( ".c1" , div )[0] , base_w/2 -  40 );
-    circlize( q( ".c2" , div )[0] , base_w/2 -  80 );
-    circlize( q( ".c3" , div )[0] , base_w/2 - 120 );
-    
-
-
-    function circlize( div , radius ){
-        var text = div.innerHTML.split("");
-        text = text.map( function( elem , index ){
-            return '<div class="char">' + elem + "</div>" ;
-        } );
-
-        div.innerHTML = '<div class="inner">' + text.join("") + "</div>" ;
-
-        var list = q( ".char" , div );
-
-        for( i = 0 , n = list.length ; i < n ; i++ ){
-            elem = list[ i ];
-            initPositionAt( elem , i , n );
+div.poly:nth-child(1){ }
+div.poly:nth-child(2){ -webkit-transform: rotateY(  90deg ) translateX( 50px ) ; -webkit-transform-origin : center ; }
+/*
+div.poly:nth-child(3){ -webkit-transform: translateX( -100px ) rotateY(  90deg ) ; }
+*/
 
 
-            var deg = 360 / n * i ;
-            elem.style.webkitTransform = "rotateZ("+deg+"deg) translateY( -"+radius+"px) " ;
-        } 
-    }
 
-    function initPositionAt( elem , index , total ){
-        var w , h ;
-        
-        w = elem.offsetWidth  ;
-        h = elem.offsetHeight ;
+div.camera {
+    position:absolute;
+    width:500px;
+    height:500px;
+     top:100px;
+    left:100px;
+}
+div.camera * {
+    -webkit-transform-style:preserve-3d;
+    -webkit-perspective : 500 ;
+    -webkit-perspective-origin : 50% 50% ;
 
-        var x = ( base_w - w ) / 2 ;
-        var y = ( base_h - h ) / 2 ;
-
-        elem.style.left = x + "px" ;
-        elem.style.top  = y + "px" ;
-
-    }
 }
 
 
-</script>
 
+
+</style>
+
+<div class="camera">
+    <div class="stage">
+        <div class="poly"></div>
+        <div class="poly"></div>
+        <div class="poly"></div>
+        <div class="poly"></div>
+        <div class="poly"></div>
+        <div class="poly"></div>
+    </div>
+</div>
 	
 </body>
 </html>

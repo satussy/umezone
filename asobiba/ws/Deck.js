@@ -39,43 +39,49 @@ var Deck = (function(){
 
     function initDeckView( point ){
         initial_point = point ;
-        var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" ) , length = cards.length ;
-        var 
-            card_width  = width , 
-            left_point  = point - view_width/2 ,
-            right_point = left_point + view_width , 
-            goal_x      = right_point - card_width ,
+        var deck    = getDeckElement() , 
+            cards   = deck.querySelectorAll( ".card" ) , 
+            length  = cards.length ,
+            card_width         = width , 
+
+            //見た目の左はじの座標
+            left_point         = point - view_width/2 ,
+
+            //見た目の右はじの座標
+            right_point        = left_point + view_width , 
+
+            //一番右のカードのX座標
+            goal_x             = right_point - card_width ,
+
+            //1番左のカードのX座標と1番右のカードのX座標の距離
             logical_view_width = ( goal_x - left_point ),
-            dx          =  logical_view_width / ( length - 1)
+
+            //隣り合ったカードのX座標の距離
+            dx                 =  logical_view_width / ( length - 1)
         ;
 
 
+        //デッキをクリック位置を中心になるように置く
         deck.style.left = (point - card_width/2) + "px" ;
 
+        
         //初期の選択位置は中央
         var selected_index = Math.floor( length / 2 ) ;
 
-        var i = 0 , n = length , card , temp_x = left_point ;
+        var i = 0 , n = length , card , new_x ;
         for( ; i < n ; i++ ){
             card = cards[i] ;
-            //card.style.left = ( left_point + dx * i ) + "px" ;
-            card.style.left = ( dx * ( i - selected_index )  ) + "px" ;
 
             if( i == selected_index ){
                 card.style.borderColor = "#F00" ;
             }else{
                 card.style.borderColor = "#000" ;
             }
-            dir = 0;
-            if( i < selected_index ){
-                dir = -1 ;
-            }else{
-                dir = 1 ;
-            }
-            //card.style.webkitTransform = getTransform( selected_index , i ) ;
 
 
+            new_x = dx * ( i - selected_index );
 
+            card.style.webkitTransform = "translateX("+new_x+"px)";
         }
     }
 
@@ -84,42 +90,70 @@ var Deck = (function(){
     //デッキを表にして、扇状に広げる
     //@param selected_index 選択状態にあるカードの番号
     function updateDeckView( point ){
-        return;
-        var deck = getDeckElement() , cards = deck.querySelectorAll( ".card" ) , length = cards.length 
+        var deck    = getDeckElement() , 
+            cards   = deck.querySelectorAll( ".card" ) , 
+            length  = cards.length ,
+            card_width         = width , 
 
-        var card_width  = width ,
-            left_point  = point - view_width/2 ,
-            right_point = left_point + view_width , 
-            goal_x      = right_point - card_width ,
-            dx          = ( goal_x - left_point ) / ( length - 1)
+            //見た目の左はじの座標
+            left_point         = initial_point - view_width/2 ,
+
+            //見た目の右はじの座標
+            right_point        = left_point + view_width , 
+
+            //一番右のカードのX座標
+            goal_x             = right_point - card_width ,
+
+            //1番左のカードのX座標と1番右のカードのX座標の距離
+            logical_view_width = ( goal_x - left_point ),
+
+            //隣り合ったカードのX座標の距離
+            dx                 =  logical_view_width / ( length - 1)
         ;
 
         //初期の選択位置は中央
-        var selected_index = Math.floor( point / dx ) ;
+        var selected_index = Math.max( 0 , Math.min( length - 1 , Math.floor( ( point - left_point ) / dx ) ) );
 
 
         var i = 0 , n = cards.length , card , dir , deg , style ;
         for( ; i < n ; i++ ){
             card = cards[i] ;
 
-                  if( i > selected_index ){
-                dir =  1 ;
-            }else if( i < selected_index ){
-                dir = -1 ;
+            if( i == selected_index ){
+                card.style.borderColor = "#F00" ;
+                new_y = 100 ;
             }else{
-                dir =  0 ;
+                card.style.borderColor = "#000" ;
+                new_y = 0 ;
             }
-            
-            card.style.webkitTransform = getTransform( selected_index , i ) ;
+
+            if( i >= selected_index ){
+                dir =  1 ;
+            }else{
+                dir = -1 ;
+            }
+
+            new_x = ( 
+                dir * Math.log( 1 + Math.abs( i - selected_index ) * 10 ) * 3 + 
+                ( i - Math.floor( length/2) ) 
+            ) * dx ;
+
+            deg = ( 
+                dir * Math.log( 1 + Math.abs( i - selected_index ) ) + 
+                ( i - Math.floor( length/2) ) 
+            ) * 0.2 ;
+
+
+            //card.style.webkitTransform = "rotate(" + deg + "deg) translateX(" + new_x + "px) translateY(-"+new_y+"px)";
+            card.style.webkitTransform = "translateX("+new_x+"px) translateY(-"+new_y+"px)";
+            //card.style.webkitTransform = "rotate("+new_x+"deg)";
         }
     }
 
-    function getTransform( selected_index , i ){
+    function getTransform( selected_index , i , left_point , right_point , card_amount ){
 
-        var rad = (Math.PI/2) / ( 50 - selected_index - 1 ) * ( i - selected_index ) ;
-        console.log( rad );
-        
-        return "translateX(" + Math.sin( rad ) * 1 + "px)" ;
+        var rad = (Math.PI/2) / ( card_amount - selected_index - 1 ) * ( i - selected_index ) ;
+        return "translateX(" + Math.sin( rad ) * 350 + "px)" ;
     }
 
     //デッキを表にして重ねた状態にする
