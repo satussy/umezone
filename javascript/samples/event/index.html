@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<h1>How to implement custome event</h1>
+
+<button onclick="fireCustomEvent()">dispatch!</button>
+
+	
+<script type="text/javascript">
+function createApplicationEvent( name , canBubble , canCancel ){
+    var evt = document.createEvent("CustomEvent");
+    
+    //http://www.w3.org/TR/2011/WD-DOM-Level-3-Events-20110531/#interface-CustomEvent
+    evt.initCustomEvent( name , canBubble , canCancel , null );
+
+    return evt ;
+}
+
+
+function handleApplicationStateChange( e ){
+    console.log( e );
+}
+
+
+var customEventTarget = document.createElement("application_event_target");
+customEventTarget.addEventListener( "applicationStateChange" , handleApplicationStateChange , false );
+
+
+function fireCustomEvent(){
+    var e = createApplicationEvent( "applicationStateChange" , false , false );
+    customEventTarget.dispatchEvent( e );
+}
+
+
+
+
+</script>
+</body>
+</html>
