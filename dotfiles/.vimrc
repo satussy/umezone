@@ -1,3 +1,44 @@
+" ---------------------------------------
+" NeoBundle
+"     https://github.com/Shougo/neobundle.vim
+"     mkdir -p ~/.vim/bundle
+"     git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+" ---------------------------------------
+set nocompatible
+filetype off                   " required!
+filetype plugin indent off     " required!
+
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+
+  call neobundle#rc(expand('~/.bundle'))
+endif
+
+NeoBundle 'git://github.com/h1mesuke/vim-alignta.git'
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+NeoBundle 'git://repo.or.cz/vcscommand'
+
+filetype plugin on
+filetype indent on
+" ------------------------- end NeoBundle
+" ---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 syntax on                                                     " enable syntax hilighting
 
 filetype plugin on                                            " enable filetype plugin
@@ -29,9 +70,9 @@ set nobackup                                                  " disable backup
 set ignorecase                                                " ignore case in search
 set smartindent                                               " enable smart indent
 set autoindent                                                " enable auto indent
-set tabstop=4                                                 " set tab stop to 4
+set tabstop=2                                                 " set tab stop to 2
 set sts=2                                                     " soft tab stop
-set sw=4                                                      " shift width 
+set sw=2                                                      " shift width 
 set splitright                                                " split window to right   (:sp
 set splitbelow                                                " split window to bellow  (:vs
 set backspace=2                                               " delete indent , eol and start by Back space
