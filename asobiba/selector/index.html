@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+
+
+<style type="text/css">
+
+div.root {
+    border : 1px solid #000 ;
+}
+
+
+/* div.root div とは違うのだよ */
+div.root > div {
+    background-color:#FCC;
+    border-bottom:1px solid #AAA;
+    -webkit-transition:background-color 0.2s linear;
+}
+
+
+div.root > div:nth-child(2n){
+    background-color:#CCF;
+}
+
+
+div.root > div:last-child {
+    border-bottom:none;
+}
+
+div.root > div:hover {
+    background-color:#CFC;
+}
+
+div.root > div:first-child {
+    background-color:#000 ;
+    color:#FFF;
+}
+
+div.root > div.child {
+    background-color:#000 ;
+}
+
+
+div.root > div.child .jiro {}
+div.root > div.child.jiro {
+    background-color:#F00 ;
+}
+
+
+
+
+</style>
+
+<div class="root">
+    <div class="child">1</div>
+    <div class="child subro">2</div>
+    <div class="child">3</div>
+    <div class="jiro">4</div>
+    <div class="child jiro">5</div>
+    <div class="child">6</div>
+    <div class="child taro">7</div>
+    <div class="child">8</div>
+    <div class="child">9</div>
+    <div class="child">A</div>
+</div>
+	
+</body>
+</html>

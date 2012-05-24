@@ -1,3 +1,6 @@
+/*
+<div id="deck" ></div>
+*/
 var Deck = (function(){
     var deck_element , deck_list , image_amount = 0 , image_loaded = 0 ;
 
@@ -17,17 +20,32 @@ var Deck = (function(){
             img.src = ImagePath.small( info );
             
             if( onload ){
-                img.onload = _onload ;
-                img.onerror = _onload ;
+                img.onload  = (function( info ){
+                    return function(){
+                        _onload.apply( this , [ info ] );
+                    };
+                })( info ); 
+                
+                img.onerror = (function( info ){
+                    return function(){
+                        _onerror.apply( this , [ info ] );
+                    };
+                })( info );
             }
             
             image_amount++;
         }
 
-        function _onload(){
+        function _onload( info ){
             image_loaded++;
-            onload.apply( this , arguments );
+            onload.apply( this , [ info ] );
         }
+
+        function _onerror ( info ){
+            info.has_image_error = true;
+            _onload.apply( this , [ info ] );
+        }
+        
     }
 
 
@@ -189,14 +207,13 @@ var Deck = (function(){
     }
 
     function setHTML( ){
-        var html = [] , list = getDeckList() , i , n , info ;
+        var list = getDeckList() , i , n , info , deck = getDeckElement() ;
+
         for( i = 0 , n = list.length ; i < n ; i++ ){
-            info = list[i].master ;
+            info = list[i] ;
 
-            html.push( '<div class="card"><img src="'+ImagePath.small( info )+'"></div>' );
+            deck.appendChild( info.elem );
         }
-
-        getDeckElement().innerHTML = html.join("\n");
     }
 
     return {
@@ -212,6 +229,7 @@ var Deck = (function(){
         get count() { return getDeckList().length ; } ,
 
         //@param list 北ちーのツールから出力されたJSONをparseしたもの
+        //@param handlers event handler { onProgress , onLoad }  
         init : function( deck_id , list , handlers ){
             var deck_element = document.getElementById( deck_id ) , i , l = [] , info ;
 
@@ -232,9 +250,6 @@ var Deck = (function(){
             loadImage( list,onCardImageLoaded );
 
 
-//            setTimeout( function(){
-//                if( handlers.onLoad ){ handlers.onLoad( ); }
-//            } , 1 );
 
             function onCardImageLoaded( ){
                 if( handlers.onProgress ){
@@ -242,6 +257,22 @@ var Deck = (function(){
                 }
                 
                 if( image_loaded < image_amount ){ return; }
+
+                var html = [] , list = getDeckList() , i , n , info , deck = getDeckElement() , elem ;
+                for( i = 0 , n = list.length ; i < n ; i++ ){
+                    list[i].id = i ;
+                    info = list[i].master ;
+                    elem = document.createElement( "div" );
+                    elem.className = "card" ;
+                    if( info.has_image_error ){
+                        elem.innerHTML = '<img src="card.gif">' ;
+                    }else{
+                        elem.innerHTML = '<img src="'+ImagePath.small( info )+'">' ;
+                    }
+
+                    elem.info = list[i];
+                    list[i].elem = elem ;
+                }
 
                 setHTML();
 
@@ -254,7 +285,21 @@ var Deck = (function(){
         startSearch :   initDeckView ,
        updateSearch : updateDeckView ,
           endSearch :    endDeckView ,
-        shuffule : shuffule 
+           shuffule : shuffule ,
+               draw : function (){
+                   var info = getDeckList().pop();
+                   info.elem.setAttribute( "style" , "" );
+                   info.elem.parentNode.removeChild( info.elem );
+
+                   //デッキが表示状態の場合は再描画が必要だけど
+                   //ここではいわゆるデッキからのドローを想定しているので
+                   //単純にトップから1枚わたす
+                   return  info;
+                } ,
+        //選択中の1枚を抜いて返す
+        drawSelected : function (){
+            throw new Exception( "まだむりぽ" );
+        },
     };
 })();
 
@@ -291,7 +336,7 @@ function onDeckEnd( e ){
     document.removeEventListener( INPUT_DEVICE_END   , onDeckEnd   , false );
 }
 
-    document.addEventListener( INPUT_DEVICE_START , onDeckStart , false );
+    //document.addEventListener( INPUT_DEVICE_START , onDeckStart , false );
 
 
 

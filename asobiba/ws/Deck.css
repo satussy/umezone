@@ -1,0 +1,20 @@
+
+#deck { 
+    position:absolute; 
+    width : 200px ;
+    height: 280px ;
+}
+
+#deck .card {
+    margin:0;
+    position:absolute;
+    top:0;
+    left:0;
+
+    border:2px solid #000;
+
+    -webkit-transition: -webkit-transform .2s linear ;
+
+    -webkit-transform-origin : left center ;
+    background-color:#FFF;
+}

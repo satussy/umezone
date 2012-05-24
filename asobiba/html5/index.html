@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+
+<style type="text/css">
+#test ,
+#test0 ,
+#test1 ,
+#test2 ,
+#test3 ,
+#test4 ,
+#test5 { 
+    border:2px solid #000;
+    border-radius:10px;
+
+
+    position:absolute;
+
+     top:100px;
+    left:100px;
+
+
+    width :200px;
+    height:200px;
+
+    box-sizing:border-box;
+
+    -webkit-transition: top 1s ease-out, left 1s ease-out;
+}
+/*
+#test0 {  -webkit-transition-duration:  .2s ; }
+#test1 {  -webkit-transition-duration:  .4s ; }
+#test2 {  -webkit-transition-duration:  .6s ; }
+#test3 {  -webkit-transition-duration:  .8s ; }
+#test4 {  -webkit-transition-duration: 1.0s ; }
+#test5 {  -webkit-transition-duration: 1.2s ; }
+*/
+#test0 {  -webkit-transition-delay:  .0s ; }
+#test1 {  -webkit-transition-delay:  .2s ; }
+#test2 {  -webkit-transition-delay:  .4s ; }
+#test3 {  -webkit-transition-delay:  .6s ; }
+#test4 {  -webkit-transition-delay:  .8s ; }
+#test5 {  -webkit-transition-delay: 1.0s ; }
+
+@-webkit-keyframes test_rotation {
+    0% { -webkit-transform : rotate(   0    ) scale( 1 ) ; }
+  100% { -webkit-transform : rotate( 360deg ) scale( 1 ) ; }
+}
+
+
+
+
+
+
+
+</style>
+<div id="test0"></div>
+<div id="test1"></div>
+<div id="test2"></div>
+<div id="test3"></div>
+<div id="test4"></div>
+<div id="test5"></div>
+
+
+
+
+<script type="text/javascript">
+
+//document.addEventListener( "mousedown" , onMouseDown , false );
+document.addEventListener( "mousemove" , onMouseDown , false );
+
+
+function onMouseDown ( e ){
+    var x = e.clientX , y = e.clientY ;
+
+    for( var i = 0 , n = 6 ; i < n ; i++ ){
+        var style = document.getElementById( "test"+i ).style ;
+
+        style.top  = y + "px" ;
+        style.left = x + "px" ;
+    }
+}
+
+
+
+</script>
+
+
+
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

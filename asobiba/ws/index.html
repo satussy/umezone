@@ -3,90 +3,110 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css"  />
+    <link rel="stylesheet" href="Deck.css"   />
+    <link rel="stylesheet" href="Hand.css"   />
+    <link rel="stylesheet" href="Attack.css" />
 </head>
 <body>
 
+<div>
+    <button onclick="this.parentNode.style.display='none';main()">Duel</button>
+</div>
 
 
-<div id="container" ></div>
+<div class="phase_init">
+    <p class="label">先攻はXXXXです。</p>
+    <button onclick="Application.agreePlayerOrder()">OK</button>
+</div>
 
 
-<style type="text/css">
-#deck { 
-    position:absolute; 
-    width : 200px ;
-    height: 280px ;
-}
-
-#deck .card {
-    margin:0;
-    position:absolute;
-    top:0;
-    left:0;
-
-    border:2px solid #000;
-
-    -webkit-transition: -webkit-transform .2s linear ;
-
-    -webkit-transform-origin : left center ;
-    background-color:#FFF;
-}
+<div class="phase_marigan">
+    Select cards you want change<br/>
+    <button onclick="Application.endMarigan()">OK</button>
+</div>
 
 
+<div class="phase_draw">
+    <button onclick="Application.endDraw()">Draw</button>
+</div>
 
-</style>
-<button onclick="Deck.shuffule(1);">デッキをシャッフル</button>
+<div class="phase_clock">
+    <div class="announce" >
+        <p class="label">Clock Phase !</p>
+        <button onclick="UIPhaseClock.startClock()">Clock</button> / <button onclick="UIPhaseClock.skipClock()">Skip</button>
+    </div>
+    <div class="select" style="display:none";>
+        <p class="label">Select a card to clock !</p>
+        <button onclick="UIPhaseClock.doClock()">OK</button> / <button onclick="UIPhaseClock.skipClock()">Skip</button>
 
-<div id="deck" ></div>
+    </div>
+</div>
 
 
-<script type="text/javascript" src="touch.js"></script>
-<script type="text/javascript" src="deck.json"></script>
+
+<div id="deck"></div>
+<div id="hand"></div>
+
+<script type="text/javascript" src="touch.js"    ></script>
+
+
+
+<script type="text/javascript" src="oop_util.js"          ></script>
+<script type="text/javascript" src="dom_util.js"          ></script>
+<script type="text/javascript" src="CustomEventTarget.js" ></script>
+<script type="text/javascript" src="PhaseEvent.js"        ></script>
+<script type="text/javascript" src="Phase.js"             ></script>
+
+
+
+<script type="text/javascript" src="UIPhaseInitial.js"    ></script>
+<script type="text/javascript" src="UIPhaseMarigan.js"    ></script>
+<script type="text/javascript" src="UIPhaseDraw.js"       ></script>
+<script type="text/javascript" src="UIPhaseClock.js"      ></script>
+
+<script type="text/javascript" src="PhaseChangeHandler.js" ></script>
+<script type="text/javascript" src="Application.js"        ></script>
 <script type="text/javascript">
-var ImagePath = {
-    small : function( info ){
-        return "http://www.nagato.asia/img/card/" + info.img_file ;
-    },
-    secret : function ( info ){
-        return "http://www.nagato.asia/img/card/secret.gif";
-    }
-};
+function isCard( elem ){
+    return elem.classList.contains( "card" );
+}
 </script>
-<script type="text/javascript" src="Deck.js"></script>
-<script type="text/javascript">
 
+
+
+<script type="text/javascript" src="deck.json"   ></script>
+
+<script type="text/javascript" src="ImagePath.js"></script>
+<script type="text/javascript" src="Deck.js"     ></script>
+<script type="text/javascript" src="Hand.js"     ></script>
+<script type="text/javascript" src="BackYard.js" ></script>
+<script type="text/javascript" src="Attack.js"   ></script>
+
+<script type="text/javascript">
 var deck_list = JSON.parse( JSON.stringify( deck_json ) );
-Deck.init( "deck" , deck_list , {
-    onLoad : function(){
-    } ,
-    onProgress : function ( img , max , loaded ){
+</script>
+
+
+<script type="text/javascript">
+
+var Debugger = (function(){
+    var elem = document.createElement("div");
+    elem.style.position = "absolute" ;
+    document.body.appendChild( elem );
+    
+    function phaseHandler(e){
+        elem.innerHTML += "PHASE CHANGE:" + e.newPhase + "<br/>";
     }
-} );
+    
+    Application.addEventListener( PhaseEvent.CHANGE , phaseHandler , false );
+})();
 
-
-
-
-
-
-
-
-
-
-
+function main(){
+    Application.start( deck_list );
+}
 
 </script>
 
-<div class="attack front_attack">
-    FRONT<br/>
-    <span>ATTACK</span>
-</div>
-
-<div class="attack side_attack">
-    SIDE<br/>
-    <span>ATTACK</span>
-</div>
-
-<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

@@ -1,0 +1,105 @@
+    body {
+        text-align:center;
+        background-color:#000;
+    }
+
+    body * {
+        /* アニメーションする要素の親に設定しないといけない */
+        -webkit-transform-style:preserve-3d;
+    }
+
+
+    #magic_spel {
+        margin-top :80px;
+        margin-left:80px;
+        width :300px;
+        height:300px;
+        position:relative;
+        -webkit-perspective: 20;
+    	-webkit-transform:scale( 2.2 );
+    }
+
+    #magic_spel .c1 ,
+    #magic_spel .c2 ,
+    #magic_spel .c3 {
+        font-size:20px;
+        color:#FFF;
+        text-shadow : #FFF 0px 0px 5px , #F0F 0px 0px 10px ; */
+    }
+
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    #magic_spel > .c1 > .inner {
+        -webkit-animation : rotate1 4s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+    @-webkit-keyframes rotate1{
+         0% { -webkit-transform : rotateZ(   0deg ) ; }
+       100% { -webkit-transform : rotateZ( 360deg ) ; }
+    }
+
+    #magic_spel > ._c1 {
+        -webkit-animation : rotate1_1 7s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+    @-webkit-keyframes rotate1_1{
+         0% { -webkit-transform : rotateX(   0deg ) ; }
+       100% { -webkit-transform : rotateX( 360deg ) ; }
+    }
+
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    #magic_spel > .c2 > .inner {
+        -webkit-animation : rotate2 4s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+    @-webkit-keyframes rotate2{
+         0% { -webkit-transform : rotateZ(    0deg ) ; }
+       100% { -webkit-transform : rotateZ( -360deg ) ; }
+    }
+
+    #magic_spel > ._c2 {
+        -webkit-animation : rotate2_1 5s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+    @-webkit-keyframes rotate2_1{
+         0% { -webkit-transform : rotateX(    0deg ) ; }
+       100% { -webkit-transform : rotateX( -360deg ) ; }
+    }
+
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* ----------------------------------------------------- */
+    #magic_spel > .c3 > .inner {
+        -webkit-animation : rotate1 4s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+    #magic_spel > .c3 {
+        -webkit-animation : rotate1_1 3s linear infinite ;
+        -webkit-transform-origin : 150px 150px ;
+    }
+    #magic_spel > ._c3 {
+        -webkit-transform : rotateX( 45deg );
+        -webkit-transform-origin : 150px 150px ;
+    }
+
+
+    #magic_spel *{
+        position:absolute;
+    }
+
+
+
+
+
+
