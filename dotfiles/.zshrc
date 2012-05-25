@@ -12,6 +12,7 @@ export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
 export PATH=$PATH:$HOME/local/bin:$HOME/Library/flex_sdk/bin:/opt/local/bin:/opt/local/sbin/:$HOME/Library/eclipse:$HOME/Library/android_sdk/tools:$HOME/.work/chromium/depot_tools
+export NODE_PATH=/usr/local/lib/node_modules
 
 export MANPATH=/opt/local/man:$MANPATH
 
@@ -34,6 +35,7 @@ alias grep="egrep -ir --color"
 #alias gd='dirs -v;echo -n "select number: "; read newdir; cd -"$newdir"'
 #alias du="du -h"
 #alias df="df -h"
+alias smb='convert_smb_url'
 
 ##############################################
 # prompt 
@@ -137,3 +139,39 @@ compinit
 
 
 #export TERM=xterm-16color
+
+function convert_smb_url() {
+  local file_path=''
+  if [ -n "$1" ] ; then
+    file_path=$1
+  else
+    file_path=`print -R $(pbpaste)`
+  fi
+
+  if [ -n $file_path ] ; then
+    local prefix=`echo $1|egrep "^smb://" -o`
+    local direction=''
+    local sed1=''
+    local sed2=''
+
+    print -R convert $file_path
+    # case samba to win
+    if [ -n "$prefix" ] ; then
+      direction="mac–>win"
+      sed1='s/\//\\/g'
+      sed2='s/smb://'
+    # case win to samba 
+    else
+      direction="win->mac"
+      sed1='s/\\/\//g'
+      sed2='s/^/smb:/' 
+    fi
+
+    #echo $direction
+    #print -R "$file_path" | sed -e "$sed1" -e "$sed2"
+    print -R "$file_path" | sed -e "$sed1" -e "$sed2" | pbcopy
+
+    #print convert result will be copied into clipboard
+  fi
+}
+

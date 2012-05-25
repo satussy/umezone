@@ -18,8 +18,7 @@ NeoBundle 'git://github.com/h1mesuke/vim-alignta.git'
 NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 NeoBundle 'git://repo.or.cz/vcscommand'
 
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 " ------------------------- end NeoBundle
 " ---------------------------------------
 
@@ -39,10 +38,11 @@ filetype indent on
 
 
 
-syntax on                                                     " enable syntax hilighting
 
+filetype on
 filetype plugin on                                            " enable filetype plugin
-set t_Co=16
+syntax on                                                     " enable syntax hilighting
+set t_Co=256
 
 let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
@@ -98,11 +98,6 @@ endfunction
 
 " start search by Space
 nmap <Space> /
-
-" short cuts
-nmap <silent> ,q :q<CR>
-nmap <silent> ,w :w<CR>
-
 
 " open current directory in tab (need push enter
 nmap t :tabedit +tabmove .
@@ -167,17 +162,6 @@ imap <C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
-
-
-
-
-
-
-""""""""""""""""""""""""""""""""""
-" experimental setting
-"_________________________________
-inoremap (<CR> (<CR><C-t>
-
 
 
 
