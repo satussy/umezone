@@ -3,5 +3,5 @@ cp -v ~/.vimrc .
 cp -v ~/.zshrc .
 #cp ~/.screenrc .
 #cp -r ~/.screen .
-
+cp -v ~/.gitconfig .
 
