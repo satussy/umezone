@@ -1,7 +1,48 @@
-syntax on                                                     " enable syntax hilighting
+" ---------------------------------------
+" NeoBundle
+"     https://github.com/Shougo/neobundle.vim
+"     mkdir -p ~/.vim/bundle
+"     git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+" ---------------------------------------
+set nocompatible
+filetype off                   " required!
+filetype plugin indent off     " required!
 
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+
+  call neobundle#rc(expand('~/.bundle'))
+endif
+
+NeoBundle 'git://github.com/h1mesuke/vim-alignta.git'
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+NeoBundle 'git://repo.or.cz/vcscommand'
+
+filetype plugin indent on
+" ------------------------- end NeoBundle
+" ---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+filetype on
 filetype plugin on                                            " enable filetype plugin
-set t_Co=16
+syntax on                                                     " enable syntax hilighting
+set t_Co=256
 
 let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
@@ -29,9 +70,9 @@ set nobackup                                                  " disable backup
 set ignorecase                                                " ignore case in search
 set smartindent                                               " enable smart indent
 set autoindent                                                " enable auto indent
-set tabstop=4                                                 " set tab stop to 4
+set tabstop=2                                                 " set tab stop to 2
 set sts=2                                                     " soft tab stop
-set sw=4                                                      " shift width 
+set sw=2                                                      " shift width 
 set splitright                                                " split window to right   (:sp
 set splitbelow                                                " split window to bellow  (:vs
 set backspace=2                                               " delete indent , eol and start by Back space
@@ -57,11 +98,6 @@ endfunction
 
 " start search by Space
 nmap <Space> /
-
-" short cuts
-nmap <silent> ,q :q<CR>
-nmap <silent> ,w :w<CR>
-
 
 " open current directory in tab (need push enter
 nmap t :tabedit +tabmove .
@@ -126,17 +162,6 @@ imap <C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
-
-
-
-
-
-
-""""""""""""""""""""""""""""""""""
-" experimental setting
-"_________________________________
-inoremap (<CR> (<CR><C-t>
-
 
 
 
