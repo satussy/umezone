@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+      .item_info {
+        position:absolute;
+        margin:0; padding:0 ;
+        border:5px solid #33A;
+        box-shadow:0px 0px 10px #333;
+
+        width:350px;
+      }
+
+      .item_info .title {
+        margin:0; padding:5px;
+        background-image:-webkit-gradient( linear, left top, left bottom, from( #AAAAFF), to( #A9A9EE));
+        color:#FFF;
+        text-shadow:-1px -1px 1px #555;
+        box-shadow:0px 0px 5px #333;
+      }
+      .item_info .inner {
+        padding:5px;
+      }
+
+      .item_info .item_name {
+        margin : 0 ;
+        border-bottom:1px solid #000 ;
+      }
+
+      .item_info .item_name .category {
+        font-size:12px;
+        color:#CCC;
+      }
+
+      .item_info .close_button {
+        width:100%;
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+    <div id="render"></div>
+
+    <div id="template_jquery_template" style="display:none;">
+      <div class="item_info">
+        <h1 class="title">Item info</h1>
+        <div class="inner">
+          <h2 class="item_name"><span class="name">${name}</span>&nbsp;<span class="category">${category}</span></h2>
+          <p class="item_desctiption">${description}</p>
+          <button class="close_button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="template_domapi" style="display:none;">
+      <div class="item_info">
+        <h1 class="title">Item info</h1>
+        <div class="inner">
+          <h2 class="item_name"><span class="name">Item name</span>&nbsp;<span class="category">Item category</span></h2>
+          <p class="item_desctiption">
+          Item description.<br />
+          Item description.<br />
+          Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description. Item description.<br />
+          </p>
+          <button class="close_button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="template_engine" style="display:none;">
+      <!--
+      <div class="item_info">
+        <h1 class="title">Item info</h1>
+        <div class="inner">
+          <h2 class="item_name"><span class="name">{{$name}}</span>&nbsp;<span class="category">{{$category}}</span></h2>
+          <p class="item_desctiption">{{$description}}</p>
+          <button class="close_button">Close</button>
+        </div>
+      </div>
+      -->
+    </div>
+
+  </body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="../../template.js"></script>
+<script type="text/javascript">
+
+var mock = { name : "Sample item" , category : "sample" , description : "moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>" };
+
+var MyTemplateEngine = (function(){
+  var template = getTemplate(["template_engine"]).template_engine ;
+  var render = document.getElementById( "render" );
+  function update(){ render.innerHTML = template( mock ); } 
+
+  return { update : update };
+})();
+
+var JQueryTemplate = (function(){
+  var template = $("#template_jquery_template") ,
+        render = $("#render" );
+
+  return {
+    update : function (){
+      render.empty().append( template.tmpl( mock ) );
+    }
+  } ;
+})();
+
+
+var JQueryAPITemplate = (function(){
+  var template = $("#template_domapi").children().first() , 
+        render = $("#render" );
+
+  return {
+    update : function () {
+      var t = template.clone();
+      t.find( ".name"             ).text( mock.name        );
+      t.find( ".category"         ).text( mock.category    );
+      t.find( "item_desctiption" ).text( mock.description );
+
+      render.empty().append( t );
+
+    }
+  };
+})();
+
+var DOMApiTemplate = (function(){
+    var template = document.getElementById( "template_domapi" ).children[0].cloneNode(1) ,
+        render = document.getElementById( "render" );
+
+    template.style.display = "block" ;
+
+    function update (){
+      debugger;
+      var t = template.cloneNode(1);
+      t.getElementsByClassName( "name"             )[0].innerText = mock.name     ;
+      t.getElementsByClassName( "category"         )[0].innerText = mock.category ;
+      t.getElementsByClassName( "item_desctiption" )[0].innerText = mock.description ;
+
+
+      render.innerHTML = "" ;
+      render.appendChild( t );
+    }
+
+
+    return {
+      update : update ,
+      template : template 
+
+    };
+})();
+
+
+
+var Profiler = (function(){
+  var DEFAULT_BENCH_COUNT= 10 * 1000 ; //10sec
+
+  var counter , timer_id , onComplete , duration , past_time , start_at ;
+
+  function bench( func , counter ){
+    var total = counter ;
+
+
+    var start_at = new Date();
+    while( --counter ){
+      func();
+    }
+    var end_at = new Date();
+    var duration = (Number)(end_at) - (Number)(start_at);
+
+    var result = {
+      per_sec : total / duration * 1000 ,
+      average : duration / total ,
+      duration: duration
+    };
+
+    onComplete( result );
+  }
+  return {
+    bench : function ( func, _count, _onComplete ){
+
+      counter = _count | DEFAULT_BENCH_COUNT ;
+      onComplete = _onComplete||console.log;
+
+
+      bench( func , counter  );
+    } ,
+    get counter(){
+      return counter ;
+    }
+  };
+})();
+var targets = [ MyTemplateEngine.update , DOMApiTemplate.update , JQueryAPITemplate.update , JQueryTemplate.update ];
+var results = [] ;
+
+profTarget();
+
+
+function profTarget(){
+  if( targets.length <= 0 ){
+    printResult();
+    return;
+  }
+
+  var func = targets.shift();
+
+  console.log(func); 
+  Profiler.bench( func , 10 , onResult );
+}
+
+function onResult( r ){
+  results.push( r );
+  profTarget();
+
+  render.innerHTML = "";
+}
+
+function printResult(){
+  for( var i = 0 , n = results.length ; i < n ; i++ ){
+    console.log( results[i].duration + "[ms]" );
+  }
+}
+
+
+</script>
+</html>

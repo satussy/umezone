@@ -1,0 +1,593 @@
+body { overflow-x:hidden; }
+body , div , h1 , h2 , input { margin:0; padding:0; }
+* { color:#000 ; }
+ul { margin-top:0px; }
+
+input { border:none; }
+
+.page { position:absolute;}
+.page { 
+    -webkit-transition : 
+        opacity 0.3s linear 
+    ; 
+    opacity:0;
+}
+.dummy:focus + .page { opacity:1 !important; }
+.dummy { width:10px; height:10px; float:left; }
+.dummy { width:1px; height:1px; position:absolute; }
+/*
+*/
+
+
+/* - 一覧モードの設定 - */
+.grid { position:absolute; right:0; bottom:0; }
+#stage { -webkit-transition: -webkit-transform 1s linear; -webkit-transform:scale(1); -webkit-transform-origin:center top;}
+.grid:focus + #stage { -webkit-transform:scale(0.5); }
+.grid:focus + #stage .page{ position:relative; opacity:1 !important; display:inline-box; margin-top:0px; }
+.grid:focus + #stage .dummy{ position:relative; width:1024px; height:40px; float:none; background-color:#F00; cursor:pointer; }
+/*
+*/
+
+/*
+.page { 
+    -webkit-transition : -webkit-transform 0.3s linear ,
+                         opacity           0.3s linear ;
+    -webkit-transform : translateX( 1024px) ; 
+    opacity:0;
+}
+
+.dummy:focus + .page { 
+    -webkit-transform:translateX(0); 
+    opacity:1;
+}
+*/
+
+/*
+body { background-image: -webkit-gradient( linear, left top , left bottom, from( #111 ), to( #444 ) ); }
+*/
+
+div.page { width:1024px; height:768px; }
+
+/*****************************************************************************/
+/* スライド背景 */
+div.page       { background-image: -webkit-gradient( linear, left top , left bottom, from( #f1f1f1 ), to( #c1c1c1 ) ); }
+div.page.black { background-image: -webkit-gradient( linear, left top , left bottom, from( #000 ), to( #333 ) ); }
+
+/* スライド文字色 */
+div.page.black * { color:#FFF ; }
+
+
+div.page.normal       h1 { border-color:#000; }
+div.page.normal.black h1 { border-color:#FFF; }
+
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+div.htmlCode .PreProc     { color: #f000f0; }
+div.htmlCode .Special     { color: #f000f0; }
+div.htmlCode .htmlArg     { color: #f000f0; }
+div.htmlCode .htmlString  { color: #f0f0f0; }
+div.htmlCode .Constant    { color: #804000; }
+div.htmlCode .lnr         { color: #808080; }
+div.htmlCode .Identifier  { color: #00F0F0; }
+div.htmlCode .htmlTag     { color: #00F000; }
+div.htmlCode .htmlTagName { color: #00F000; }
+div.htmlCode .htmlEndTag  { color: #00F000; }
+div.htmlCode { border:1px solid #ccc; font-size:30px; padding:10px 5px; font-family: monospace; font-weight:thin;}
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+/************************************************************************************/
+/* タイトル系スライド                                                               */
+
+div.page.title {
+    text-align:center;
+}
+
+div.page.title > div {
+    margin:10px auto;
+    width:80%;
+}
+
+div.page.title h1{
+    font-size:230px;
+    padding-top:70px;
+    margin-bottom:50px;
+    line-height:1em;
+}
+
+div.page.title h2{
+    text-align:right;
+}
+
+div.page.title .author {
+    text-align:right;
+    border-top:1px solid #000 ;
+    font-size:80px;
+
+}
+
+
+/************************************************************************************/
+/* 通常スライド                                                               */
+div.page.normal > div {
+    padding:20px;
+    font-size : 50px;
+}
+
+div.page.normal h1 {
+    font-size:50px;
+    border-bottom : 1px solid #000 ;
+}
+
+div.page.normal ol {
+    padding-left : 100px ;
+
+}
+
+
+
+
+/* スライド個別設定 */
+div.page.title.css_is_greate h1{
+    font-size:200px;
+}
+
+
+
+
+/* - 角丸 - */
+div.page.normal.round_corner .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.round_corner .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.round_corner .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.round_corner .sample{ border-radius:0; -webkit-transition: -webkit-border-radius 1s linear; -webkit-transition-delay: 500ms; }
+.dummy:focus + div.page.normal.round_corner .sample.sample1 { border-radius:  0px;}
+.dummy:focus + div.page.normal.round_corner .sample.sample2 { border-radius: 35px;}
+.dummy:focus + div.page.normal.round_corner .sample.sample3 { border-radius: 70px;}
+.dummy:focus + div.page.normal.round_corner .sample.sample4 { border-radius:105px;}
+
+/*
+.dummy:focus + div.page.normal.round_corner .sample{ -webkit-animation-duration:2s; -webkit-animation-delay:1s;}
+
+.dummy:focus + div.page.normal.round_corner .sample.sample1 { -webkit-animation-name : round_corner_sample1 ; }
+.dummy:focus + div.page.normal.round_corner .sample.sample2 { -webkit-animation-name : round_corner_sample2 ; }
+.dummy:focus + div.page.normal.round_corner .sample.sample3 { -webkit-animation-name : round_corner_sample3 ; }
+.dummy:focus + div.page.normal.round_corner .sample.sample4 { -webkit-animation-name : round_corner_sample4 ; }
+
+@-webkit-keyframes round_corner_sample1{ 0%{ border-radius:0px; } 100% { border-radius:  0px;} }
+@-webkit-keyframes round_corner_sample2{ 0%{ border-radius:0px; } 100% { border-radius: 35px;} }
+@-webkit-keyframes round_corner_sample3{ 0%{ border-radius:0px; } 100% { border-radius: 70px;} }
+@-webkit-keyframes round_corner_sample4{ 0%{ border-radius:0px; } 100% { border-radius:105px;} }
+*/
+
+
+
+/* - box shadow - */
+div.page.normal.box_shadow .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.box_shadow .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.box_shadow .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.box_shadow .sample.sample1 { border-radius:  0px;}
+div.page.normal.box_shadow .sample.sample2 { border-radius: 35px;}
+div.page.normal.box_shadow .sample.sample3 { border-radius: 70px;}
+div.page.normal.box_shadow .sample.sample4 { border-radius:105px;}
+
+div.page.normal.box_shadow .sample{ 
+    -webkit-transition: -webkit-box-shadow 1s linear , -webkit-transform 1s linear ; 
+    -webkit-transition-delay:0.5s; 
+}
+
+.dummy:focus + div.page.normal.box_shadow .sample { 
+    -webkit-box-shadow : 10px 10px 10px #000 ; 
+    -webkit-transform  : translate( -5px , -5px );
+}
+
+
+
+
+
+/* - bg gradation - */
+div.page.normal.bg_gradation .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.bg_gradation .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.bg_gradation .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.bg_gradation .sample.sample1 { border-radius:  0px;}
+div.page.normal.bg_gradation .sample.sample2 { border-radius: 35px;}
+div.page.normal.bg_gradation .sample.sample3 { border-radius: 70px;}
+div.page.normal.bg_gradation .sample.sample4 { border-radius:105px;}
+
+div.page.normal.bg_gradation .sample{ 
+    -webkit-transition : background-image 1s linear ;
+    -webkit-transition-delay : 1s ;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#444) , 
+        color-stop( 20% ,#444) , 
+        color-stop( 40% ,#444) , 
+        color-stop( 60% ,#444) , 
+        color-stop( 80% ,#444) , 
+        color-stop(100% ,#444) 
+    );
+}
+
+div.page.normal.bg_gradation .sample { 
+    -webkit-box-shadow : 10px 10px 10px #000 ; 
+    -webkit-transform  : translate( -5px , -5px );
+}
+
+.dummy:focus + div.page.normal.bg_gradation .sample { 
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#F00) , 
+        color-stop( 20% ,#FF0) , 
+        color-stop( 40% ,#0F0) , 
+        color-stop( 60% ,#0FF) , 
+        color-stop( 80% ,#00F) , 
+        color-stop(100% ,#F0F) 
+    );
+}
+
+
+/* - rotate - */
+div.page.normal.rotate .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.rotate .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.rotate .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.rotate .sample.sample1 { border-radius:  0px;}
+div.page.normal.rotate .sample.sample2 { border-radius: 35px;}
+div.page.normal.rotate .sample.sample3 { border-radius: 70px;}
+div.page.normal.rotate .sample.sample4 { border-radius:105px;}
+
+div.page.normal.rotate .sample{ 
+    -webkit-transition : background-image 1s linear ;
+    -webkit-transition-delay : 0s ;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#444) , 
+        color-stop( 20% ,#444) , 
+        color-stop( 40% ,#444) , 
+        color-stop( 60% ,#444) , 
+        color-stop( 80% ,#444) , 
+        color-stop(100% ,#444) 
+    );
+}
+
+div.page.normal.rotate .sample { 
+    -webkit-box-shadow : 10px 10px 10px #000 ; 
+    -webkit-transform  : translate( -5px , -5px );
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-timing-function: linear;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#F00) , 
+        color-stop( 20% ,#FF0) , 
+        color-stop( 40% ,#0F0) , 
+        color-stop( 60% ,#0FF) , 
+        color-stop( 80% ,#00F) , 
+        color-stop(100% ,#F0F) 
+    );
+}
+
+.dummy:focus + div.page.normal.rotate .sample { 
+    -webkit-animation-name : sample_rotate ;
+}
+
+@-webkit-keyframes sample_rotate {
+    0%{ -webkit-transform:rotate(   0    ); }
+  100%{ -webkit-transform:rotate( 359deg ); }
+}
+
+
+
+
+/* - super rotate - */
+div.page.normal.super_rotate .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.super_rotate .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.super_rotate .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.super_rotate .sample.sample1 { border-radius:  0px;}
+div.page.normal.super_rotate .sample.sample2 { border-radius: 35px;}
+div.page.normal.super_rotate .sample.sample3 { border-radius: 70px;}
+div.page.normal.super_rotate .sample.sample4 { border-radius:105px;}
+
+div.page.normal.super_rotate .sample{ 
+    -webkit-transition : background-image 1s linear ;
+    -webkit-transition-delay : 1s ;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#444) , 
+        color-stop( 20% ,#444) , 
+        color-stop( 40% ,#444) , 
+        color-stop( 60% ,#444) , 
+        color-stop( 80% ,#444) , 
+        color-stop(100% ,#444) 
+    );
+}
+
+div.page.normal.super_rotate .sample { 
+    -webkit-box-shadow : 10px 10px 10px #000 ; 
+    -webkit-transform  : translate( -5px , -5px );
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-timing-function: linear;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#F00) , 
+        color-stop( 20% ,#FF0) , 
+        color-stop( 40% ,#0F0) , 
+        color-stop( 60% ,#0FF) , 
+        color-stop( 80% ,#00F) , 
+        color-stop(100% ,#F0F) 
+    );
+}
+
+div.page.normal.super_rotate .sample_container{
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+}
+
+.dummy:focus + div.page.normal.super_rotate .sample ,
+.dummy:focus + div.page.normal.super_rotate .sample_container{
+    -webkit-animation-name : sample_rotate ;
+}
+
+
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - sample last - - - - - - - - - */
+div.page.normal.sample_last .sample_container {
+    width:900px;
+    margin : 0 auto;
+    margin-top:220px;
+}
+
+div.page.normal.sample_last .sample {
+    background-color:#444;
+    float : left ;
+    width :210px;
+    height : 210px;
+    margin-right:20px;
+}
+
+div.page.normal.sample_last .sample:last-child {
+    margin-right:0;
+}
+
+
+div.page.normal.sample_last .sample.sample1 { border-radius:  0px;}
+div.page.normal.sample_last .sample.sample2 { border-radius: 35px;}
+div.page.normal.sample_last .sample.sample3 { border-radius: 70px;}
+div.page.normal.sample_last .sample.sample4 { border-radius:105px;}
+
+div.page.normal.sample_last .sample{ 
+    -webkit-transition : background-image 1s linear ;
+    -webkit-transition-delay : 1s ;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#444) , 
+        color-stop( 20% ,#444) , 
+        color-stop( 40% ,#444) , 
+        color-stop( 60% ,#444) , 
+        color-stop( 80% ,#444) , 
+        color-stop(100% ,#444) 
+    );
+}
+
+div.page.normal.sample_last .sample { 
+    -webkit-box-shadow : 10px 10px 10px #000 ; 
+    -webkit-transform  : translate( -5px , -5px );
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-timing-function: linear;
+    background-image : -webkit-gradient( linear, left top, left bottom, 
+        color-stop(  0% ,#F00) , 
+        color-stop( 20% ,#FF0) , 
+        color-stop( 40% ,#0F0) , 
+        color-stop( 60% ,#0FF) , 
+        color-stop( 80% ,#00F) , 
+        color-stop(100% ,#F0F) 
+    );
+}
+
+div.page.normal.sample_last .sample_container{
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+}
+
+.dummy:focus + div.page.normal.sample_last .sample ,
+.dummy:focus + div.page.normal.sample_last .sample_container{
+    -webkit-animation-name : sample_rotate ;
+}
+div.page.normal.sample_last > div {
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-timing-function: linear;
+}
+
+.dummy:focus + div.page.normal.sample_last > div {
+    -webkit-animation-name : sample_last_anime;
+}
+
+@-webkit-keyframes sample_last_anime{
+    0%{ -webkit-transform:scale(1) }
+   25%{ -webkit-transform:scale(0) }
+   50%{ -webkit-transform:scale(1) }
+   75%{ -webkit-transform:scale(1.5) }
+  100%{ -webkit-transform:scale(1) }
+}
+
+
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - sample code - - - - - - - - - */
+.dummy:focus + div.page.sample_code .s1,
+.dummy:focus + div.page.sample_code .s2{
+    -webkit-animation-name:sample_code;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-duration:2s;
+    -webkit-animation-delay:2s;
+    -webkit-transform:translateX(0);
+    text-shadow: #FFF 0 0 0    ; 
+}
+
+@-webkit-keyframes sample_code{
+    0%{ text-shadow: #FFF 0 0 20px ; }
+   50%{ text-shadow: #FFF 0 0  1px ; }
+  100%{ text-shadow: #FFF 0 0 20px ; }
+}
+
+
+
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - slide transition_1  - - - - - */
+div.page.slide_transition_1 { 
+    -webkit-transition : -webkit-transform 1s ease-out ;
+    -webkit-transform : translateX( 1024px ); 
+}
+.dummy:focus + div.page.slide_transition_1 { -webkit-transform : translateX( 0 ); }
+
+
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - slide transition_2  - - - - - */
+div.page.slide_transition_2 { 
+    -webkit-transition : -webkit-transform 1s linear ;
+    -webkit-transform : scaleY( 0.00001 ); 
+}
+.dummy:focus + div.page.slide_transition_2 { -webkit-transform : scaleY( 1 ); }
+
+
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - */
+/* - slide transition_3  - - - - - */
+div.page.slide_transition_3 { 
+    opacity:0;
+}
+.dummy:focus + div.page.slide_transition_3 { 
+    -webkit-animation: slide_transition_3 1000ms ease-in 1;
+    -webkit-transform : translateY( 0 );
+    opacity:1;
+}
+
+@-webkit-keyframes slide_transition_3 {
+    0% { -webkit-transform:translateY( -768px ); }
+   80% { -webkit-transform:translateY(    0   ); }
+   90% { -webkit-transform:translateY(  -40px ); }
+  100% { -webkit-transform:translateY(    0   ); }
+}
+
+
+
+
+
+
+

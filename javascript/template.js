@@ -1,5 +1,7 @@
 function getTemplate( list ){
-    var id = {} , key , val , doc = document , i , n ;
+    var id = {} , key , val , doc = document , i , n , text = (function(){
+      return 'var text = (function (){var e = document.createElement("e"); return function(text){ e.innerText = text ; return e.innerHTML;};})();' ;
+    })();
     for( i = 0 , n = list.length ; i < n ; i++ ){
         key = list[i];
         val = doc.getElementById( key ).innerHTML.split("<!--")[1].split("-->")[0];
@@ -15,7 +17,7 @@ function getTemplate( list ){
         for( i = 0 , n = parts.length ; i < n ; i++ ){
             t = parts[i].replace(/\n/g,"") ;
             if( t.indexOf("$") == 0 ){
-                src.push( "param." + t.replace( "$" , "" ) );
+                src.push( "text(" + "param." + t.replace( "$" , "" ) + ")" );
             }else{
                 src.push( "'" + t + "'" ) ;
             }
@@ -23,7 +25,7 @@ function getTemplate( list ){
 
         src = src.join( "+" ) ;
 
-        return new Function( "param" , "return " + src  );
+        return new Function( "param" , text+"return " + src  );
     }
 
     return id;
@@ -33,17 +35,17 @@ function getTemplate( list ){
 
 
 //--------- sample code
-var template = getTemplate(["template_content","template_tr"]) ,
-    table_content = template.template_tr({
-        time : 10 ,
-        detail : "shopping"
-    }) ,
-    template_content = template.template_content({
-        title : "my schedule" ,
-        table_content : table_content
-    });
-
-document.getElementById( "render" ).innerHTML = template_content ;
+//var template = getTemplate(["template_content","template_tr"]) ,
+//    table_content = template.template_tr({
+//        time : 10 ,
+//        detail : "shopping"
+//    }) ,
+//    template_content = template.template_content({
+//        title : "my schedule" ,
+//        table_content : table_content
+//    });
+//
+//document.getElementById( "render" ).innerHTML = template_content ;
 
 
 /*****
