@@ -102,12 +102,12 @@ var MyTemplateEngine = (function(){
 })();
 
 var JQueryTemplate = (function(){
-  var template = $("#template_jquery_template") ,
+  var template = $("#template_jquery_template").template() ,
         render = $("#render" );
 
   return {
     update : function (){
-      render.empty().append( template.tmpl( mock ) );
+      render.empty().append( $.tmpl( template , mock ) );
     }
   } ;
 })();
