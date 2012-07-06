@@ -17,8 +17,14 @@ endif
 NeoBundle 'git://github.com/h1mesuke/vim-alignta.git'
 NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 NeoBundle 'git://repo.or.cz/vcscommand'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/thinca/vim-ft-svn_diff.git'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
+NeoBundle 'git@github.com:umezo/vim-unite-vcs.git'
+NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
-filetype plugin indent on
+
+filetype plugin on
 " ------------------------- end NeoBundle
 " ---------------------------------------
 
@@ -44,7 +50,6 @@ filetype plugin on                                            " enable filetype 
 syntax on                                                     " enable syntax hilighting
 set t_Co=256
 
-let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
 set hlsearch                                                  " hilight words in search
 set incsearch                                                 " use incremental search
@@ -158,11 +163,53 @@ imap <C-l> <Right>
 
 " use C-y and C-u as BS and Del in insert mode
 imap <C-u> <BS>
-imap <C-i> <Del>
+inoremap <C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
 
 
+vmap <silent> <C-a>= :Alignta =<CR>
+
+"let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
 colorscheme asmdev                                            " color setting
+
+
+
+
+augroup my-unit
+  autocmd!
+  autocmd FileType unite call g:my_unite_settings()
+augroup END
+function! g:my_unite_settings()
+  imap <buffer><Cr> <Plug>(unite_insert_leave)
+endfunction
+
+
+call unite#custom_default_action('file', 'tabopen')
+
+
+
+
+
+
+
+
+
+let mapleader = "\<TAB>"
+nmap <leader><c-u><c-f> :Unite file_rec/async:. 
+nmap <leader><c-u><c-g> :Unite grep:. 
+
+
+
+
+
+" let g:unite_source_menu_menus={}
+" let g:unite_source_menu_menus.global = { 'description': 'global menu.' }
+" let g:unite_source_menu_menus.cancidates = {
+"   \  'CommandName': 'vim command'
+"   \  }
+" function g:unite_source_menu_menus.global.map(key, value)
+"   return { 'word': a:key, 'kind': 'command', 'action__command': a:value }
+" endfunction
