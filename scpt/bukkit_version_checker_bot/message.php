@@ -8,7 +8,7 @@ if( file_exists( VERSION_FILE ) ){
     $prev_version = file_get_contents( VERSION_FILE );
 }
 
-$latest_version = `curl http://dl.bukkit.org/downloads/craftbukkit/ | grep "th.*a href" | grep '_.*"' -o | sed -e "s/^.//" -e "s/..$//" | uniq | head -n 1`;
+$latest_version = `curl http://dl.bukkit.org/downloads/craftbukkit/ | egrep Recommended -1 | egrep '<td>[0-9]+\.[0-9]+\.[0-9]+-R[0-9]+\.[0-9]+</td>' | egrep '[0-9]+\.[0-9]+\.[0-9]+-R[0-9]+\.[0-9]+' -o | head -n 1`;
 if( $prev_version != $latest_version ){
     sendMessage( $chat_id , "Bukkit sever was updated !!! {$latest_version}" );
     file_put_contents( VERSION_FILE , $latest_version );
