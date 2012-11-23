@@ -84,14 +84,52 @@
       -->
     </div>
 
+    <div id="template_jarty" style="display:none;">
+      <div class="item_info">
+        <h1 class="title">Item info</h1>
+        <div class="inner">
+          <h2 class="item_name"><span class="name">{$name|escape}</span>&nbsp;<span class="category">{$category|escape}</span></h2>
+          <p class="item_desctiption">{$description|escape}</p>
+          <button class="close_button">Close</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="progress"></div>
+    <table id="result">
+        <tr>
+            <th style="text-align:left">name</th>
+            <th>duration[ms]</th>
+        </tr>
+    </table>
+    <div id="result_template">
+        <!--
+        <tr>
+        	<th style="text-align:left">{{$func_name}}</th>
+        	<td style="text-align:right">{{$duration}}</td>
+        </tr>
+        -->
+    </div>
+
   </body>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="jarty.js"></script>
+
 <script type="text/javascript" src="../../template.js"></script>
 <script type="text/javascript">
 
 var mock = { name : "Sample item" , category : "sample" , description : "moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>moge<br>" };
+
+var JartyTemplate = (function(){
+    var template = Jarty.compile( document.getElementById( "template_jarty" ).innerHTML );
+  var render = document.getElementById( "render" );
+    function update(){ render.innerHTML = template( mock ); }
+
+    return { update : update };
+})();
 
 var MyTemplateEngine = (function(){
   var template = getTemplate(["template_engine"]).template_engine ;
@@ -122,7 +160,7 @@ var JQueryAPITemplate = (function(){
       var t = template.clone();
       t.find( ".name"             ).text( mock.name        );
       t.find( ".category"         ).text( mock.category    );
-      t.find( "item_desctiption" ).text( mock.description );
+      t.find( ".item_desctiption" ).text( mock.description );
 
       render.empty().append( t );
 
@@ -137,7 +175,6 @@ var DOMApiTemplate = (function(){
     template.style.display = "block" ;
 
     function update (){
-      debugger;
       var t = template.cloneNode(1);
       t.getElementsByClassName( "name"             )[0].innerText = mock.name     ;
       t.getElementsByClassName( "category"         )[0].innerText = mock.category ;
@@ -180,12 +217,14 @@ var Profiler = (function(){
       duration: duration
     };
 
-    onComplete( result );
+    setTimeout( function() {
+        onComplete( result );
+    } , 0 );
   }
   return {
     bench : function ( func, _count, _onComplete ){
 
-      counter = _count | DEFAULT_BENCH_COUNT ;
+      counter = _count || DEFAULT_BENCH_COUNT ;
       onComplete = _onComplete||console.log;
 
 
@@ -196,35 +235,49 @@ var Profiler = (function(){
     }
   };
 })();
-var targets = [ MyTemplateEngine.update , DOMApiTemplate.update , JQueryAPITemplate.update , JQueryTemplate.update ];
-var results = [] ;
+var targets = [ 
+    { name : "MyTemplateEngine" , func : MyTemplateEngine.update  } , 
+    { name : "DOMApiTemplate"   , func : DOMApiTemplate.update    } ,
+    { name : "JQueryAPITemplate", func : JQueryAPITemplate.update } , 
+    { name : "JQueryTemplate"   , func : JQueryTemplate.update    } , 
+    { name : "JartyTemplate"    , func : JartyTemplate.update     }
+];
+var results = [] , count = 0 ;
 
-profTarget();
+
+document.addEventListener( "DOMContentLoaded" , profTarget , false );
 
 
 function profTarget(){
-  if( targets.length <= 0 ){
+  if( targets.length <= count ){
     printResult();
     return;
   }
 
-  var func = targets.shift();
+  var func = targets[count].func ;
+  count++;
 
-  console.log(func); 
-  Profiler.bench( func , 10 , onResult );
+  Profiler.bench( func , 10000 , onResult );
 }
 
 function onResult( r ){
+  document.getElementById( "progress" ).innerHTML = "end : " + targets[count-1].name ;
+
   results.push( r );
   profTarget();
+
 
   render.innerHTML = "";
 }
 
 function printResult(){
+  var template = getTemplate(["result_template"]).result_template ;
+  var result = [] ;
   for( var i = 0 , n = results.length ; i < n ; i++ ){
-    console.log( results[i].duration + "[ms]" );
+      result.push( template( { func_name : targets[i].name , duration : results[i].duration } ) );
   }
+
+  document.getElementById( "result" ).innerHTML += result.join("");
 }
 
 
