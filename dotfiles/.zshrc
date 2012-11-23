@@ -3,18 +3,16 @@
 #---------------------------------------------
 #export LANG=ja_JP.UTF-8
 export EDITOR=vim
-export PYTHONPATH=$HOME/local/lib/python
-export PERL5LIB=/home/cocoromi/perl/lib/perl:/home/bashi/perl/share/perl
 export LD_LIBRARY_PATH="$HOME/local/lib"
 export EDITOR=vim
 #export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
-export PATH=$PATH:$HOME/local/bin:$HOME/Library/flex_sdk/bin:/opt/local/bin:/opt/local/sbin/:$HOME/Library/eclipse:$HOME/Library/android_sdk/tools:$HOME/.work/chromium/depot_tools
-export NODE_PATH=/usr/local/lib/node_modules
+export PATH=/usr/local/bin:$PATH
 
 export MANPATH=/opt/local/man:$MANPATH
+export JAVA_HOME=/Library/Java/Home/
 
 ##############################################
 # alias
@@ -45,6 +43,7 @@ colors
 
 local COMMAND=""
 local COMMAND_TIME=""
+local CURRENT_BRANCH=""
 precmd() { 
     if [ "$COMMAND_TIME" -ne "0" ] ; then 
         local d=`date +%s`
@@ -56,6 +55,15 @@ precmd() {
     fi
     COMMAND="0"
     COMMAND_TIME="0"
+
+
+    CURRENT_BRANCH=`git symbolic-ref --short HEAD 2>/dev/null`
+    if [ -z "${CURRENT_BRANCH}" ] ; then
+      CURRENT_BRANCH=
+    else
+      CURRENT_BRANCH="[${CURRENT_BRANCH}]"
+    fi
+
 }
 preexec () {
     COMMAND="${1}"
@@ -80,12 +88,12 @@ local BLUE=$'%{\e[1;34m%}'
 
 
 HOSTNAME=`hostname`
-PROMPT=$DEFAULT'[$CYAN${USER}$DEFAULT@$CYAN${HOSTNAME}$DEFAULT]$CYAN$AGENT_MARK$YELLOW$TITLE$DEFAULT%(!.#.$) '
-RPROMPT=$PURPLE'[%~]'$DEFAULT
+PROMPT=$DEFAULT'[$CYAN${USER}$DEFAULT@$CYAN${HOSTNAME}$DEFAULT]$CYAN$AGENT_MARK''$YELLOW$TITLE$DEFAULT%(!.#.$) '
+RPROMPT=$PURPLE'[%~]${CYAN}${CURRENT_BRANCH}'${DEFAULT}
 if [ -z "$SSH_CLIENT" ] ; then
     HOSTNAME=""
-    PROMPT=$DEFAULT'[$GREEN${USER}$DEFAULT@$GREEN${HOSTNAME}$DEFAULT]${AGENT_MARK}%(!.#.$) '
-    RPROMPT=$CYAN'[%~]'$DEFAULT
+    PROMPT=$DEFAULT'[$GREEN${USER}$DEFAULT@$GREEN${HOSTNAME}${DEFAULT}]${AGENT_MARK}''%(!.#.$) '
+    RPROMPT=$CYAN'[%~]${PURPLE}${CURRENT_BRANCH}'${DEFAULT}
 fi
 
 
@@ -175,3 +183,20 @@ function convert_smb_url() {
   fi
 }
 
+function up() {
+  to=$(perl -le '$p=$ENV{PWD}."/";$d="/".$ARGV[0]."/";$r=rindex($p,$d);$r>=0 && print substr($p, 0, $r+length($d))' $1)
+  if [ "$to" = "" ]; then
+    echo "no such file or directory: $1" 1>&2
+    return 1
+  fi
+  cd $to
+}
+
+
+local WORK_ROOT=${HOME}/Work
+local DEV_ROOT=${WORK_ROOT}/watch
+alias cdr='cd ${WORK_ROOT}'
+alias cddev='cd ${DEV_ROOT}'
+alias cdcss='cd ${DEV_ROOT}/web/css/watch_zero'
+
+fpath=(~/.functions ${fpath})

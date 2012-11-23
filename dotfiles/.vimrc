@@ -20,8 +20,10 @@ NeoBundle 'git://repo.or.cz/vcscommand'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
 NeoBundle 'git://github.com/thinca/vim-ft-svn_diff.git'
 NeoBundle 'git://github.com/Shougo/vimproc.git'
-NeoBundle 'git@github.com:umezo/vim-unite-vcs.git'
+NeoBundle 'git://github.com/hrsh7th/vim-unite-vcs.git'
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundle 'git://github.com/thinca/vim-qfreplace.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
 
 
 filetype plugin on
@@ -30,6 +32,7 @@ filetype plugin on
 
 
 
+let g:vimfiler_safe_mode_by_default=0
 
 
 
@@ -50,6 +53,8 @@ filetype plugin on                                            " enable filetype 
 syntax on                                                     " enable syntax hilighting
 set t_Co=256
 
+"let g:user_zen_leader_key= '<TAB>'                       " set TAB key to trigger for zen coding
+let g:user_zen_expandabbr_key = '<C-F>'                       " set TAB key to trigger for zen coding
 
 set hlsearch                                                  " hilight words in search
 set incsearch                                                 " use incremental search
@@ -86,6 +91,8 @@ set nowrap                                                    " disable line wra
 
 set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set laststatus=2                                              " always show status line
+
+set diffopt=iwhite
 
 
 "set foldmethod=marker
@@ -163,15 +170,13 @@ imap <C-l> <Right>
 
 " use C-y and C-u as BS and Del in insert mode
 imap <C-u> <BS>
-inoremap <C-i> <Del>
+inoremap <leader><C-i> <Del>
 
 " insert line to next line in insert mode
 imap <C-o> <ESC>o
 
 
 vmap <silent> <C-a>= :Alignta =<CR>
-
-"let g:user_zen_expandabbr_key = '<TAB>'                       " set TAB key to trigger for zen coding
 
 colorscheme asmdev                                            " color setting
 
@@ -184,10 +189,13 @@ augroup my-unit
 augroup END
 function! g:my_unite_settings()
   imap <buffer><Cr> <Plug>(unite_insert_leave)
+"  nmap <buffer><Esc> <Plug>(unite_exit)
+"  nmap <buffer>:q <Plug>(unite_exit)
 endfunction
 
 
 call unite#custom_default_action('file', 'tabopen')
+call unite#custom_max_candidates('file_rec,file_rec/async', 0)
 
 
 
@@ -200,6 +208,11 @@ call unite#custom_default_action('file', 'tabopen')
 let mapleader = "\<TAB>"
 nmap <leader><c-u><c-f> :Unite file_rec/async:. 
 nmap <leader><c-u><c-g> :Unite grep:. 
+nmap <leader><c-u><c-v> :Unite vcs/
+nmap <leader><c-u><c-l> :Unite line
+nmap <leader><c-u><c-r> :UniteResume<CR>
+
+
 
 
 
