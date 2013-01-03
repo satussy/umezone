@@ -1,0 +1,66 @@
+body {
+  font-family:sans-serif;
+}
+
+h1 {
+  border-bottom:1px solid #EEE ;
+}
+
+h2 {
+  margin:0;
+  padding:0;
+  font-size:18px;
+  font-weight:normal;
+}
+
+a {
+  text-decoration:none;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+$imgWidth:320px;
+$imgHeight:200px;
+$defaultDuration:.2s;
+
+h1 .time {
+  font-size:12px;
+  font-weight:normal;
+}
+
+.commandContainer {
+  li { 
+    display:inline-block;
+  }
+}
+.logImageContainer{
+
+  .logImage {
+    display:inline-block;
+    width:$imgWidth;
+    margin:5px;
+    .overlay {
+      position:absolute;
+      width:$imgWidth;
+      height:$imgHeight;
+      background-color:rgb(0,0,0);
+      -webkit-transition:opacity $defaultDuration linear;
+      opacity:0;
+    }
+
+    &:hover .overlay {
+      opacity:.4;
+    }
+
+    img {
+      width:$imgWidth;
+      height:$imgHeight;
+    }
+
+    h2 {
+      text-align:center;
+    }
+  }
+
+}
+
+
