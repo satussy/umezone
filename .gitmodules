@@ -1,0 +1,6 @@
+[submodule "asobiba/auto_avengers/lib/Twig"]
+	path = asobiba/auto_avengers/lib/Twig
+	url = git://github.com/fabpot/Twig.git
+[submodule "lib/rubygems"]
+	path = lib/rubygems
+	url = git://github.com/rubygems/rubygems.git
