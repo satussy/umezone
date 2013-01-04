@@ -9,6 +9,7 @@
 <h1>Command</h1>
 <ul class="commandContainer">
   <li><a href="index.php?cmd=clear">Clear</a></li>
+  <li><a href="index.php?cmd=pause">Pause</a></li>
   <li><a href=""></a></li>
   <li><a href=""></a></li>
   <li><a href=""></a></li>
@@ -16,8 +17,12 @@
 </ul>
 <h1>Status</h1>
 <p>{{isRunning?"Running":"Wait"}}</p>
+{% if isPaused %}
+  <p>Paused</p>
+{% endif %}
+
 {% if isCleared %}
-  <p>Cleard</p>
+  <p>Cleared</p>
 {% else %}
   <p>Last Run:{{data.startAt|date("Y-m-d H:i:s")}} ( {{(now-data.startAt)//60}} min {{(now-data.startAt)%60}} sec ago )</p>
 {% endif %}

@@ -34,7 +34,7 @@ class AvengersStatus {
     $this->status = file_exists( DATA_DIR."/lock" );
     $this->data = json_decode( file_get_contents( DATA_DIR."/data" ) , true );
     $this->data["startAt"] = (int)$this->data["startAt"];
-    $this->cleared = strlen( file_get_contents( DATA_DIR."/data" ) ) === 0 ;
+    $this->cleared = !isset( $this->data["startAt"] );
   }
 
   public function isRunning(){
@@ -45,6 +45,9 @@ class AvengersStatus {
   }
   public function isCleared(){
     return $this->cleared;
+  }
+  public function isPaused(){
+    return file_exists( DATA_DIR."/pause" );
   }
 }
 
@@ -93,6 +96,16 @@ class Service{
     $data_path = DATA_DIR."/data";
     file_put_contents( $data_path , "");
     $this->result["message"] = "cleared";
+    header("Location:/Avengers/index.php");
+  }
+  function pause(){
+    $path = DATA_DIR."/pause" ;
+    if( file_exists( $path ) ){
+      unlink( $path );
+    }else{
+      touch( $path );
+    }
+    header("Location:/Avengers/index.php");
   }
 
   public function doCommand(){
@@ -116,6 +129,7 @@ $service->doCommand();
 $params = array( 
   "isRunning" => $status->isRunning() ,
   "isCleared" => $status->isCleared() ,
+  "isPaused" => $status->isPaused(),
   "data" => $status->getData(),
   "now" => time() ,
   "log" => array(

@@ -46,7 +46,12 @@ def readData():
   data = fp.readline()
   fp.close()
 
-  return json.JSONDecoder().decode( data )
+  try:
+    data = json.JSONDecoder().decode( data )
+  except ValueError:
+    data = { "startAt":0 , "success":True }
+
+  return data 
 
 # end working data
 #============================================================================
@@ -59,6 +64,11 @@ startAt = time.strftime( "%Y%m%d_%H%M%S" )
 # 実行中なら止める
 if os.path.exists( LOCK_FILE ):
   print "previous script running: %s" % ( startAt )
+  os.sys.exit(0)
+
+# 一時停止要求があれば止める
+if os.path.exists( "working/pause" ):
+  print "script is paused: %s" % ( startAt )
   os.sys.exit(0)
 
 
