@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import argparse
+import logging
 import os
 import time
 import json
@@ -7,9 +9,29 @@ import json
 import batch_core as core
 import batch as bat
 
+parser = argparse.ArgumentParser(description='Avengers auto flight manager')
+parser.add_argument( "--force" , action="store_true" );
+options = parser.parse_args()
+
+
+
 currentDir = os.path.dirname(__file__)  
 if not currentDir == "" :
   os.chdir( currentDir )
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
+                    filename='log/log.txt',
+                    filemode='w')
+
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG )
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s','%Y-%m-%d %H:%M:%S') 
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
+
+logger = logging;
 
 
 success = False
@@ -63,20 +85,24 @@ startAt = time.strftime( "%Y%m%d_%H%M%S" )
 
 # 実行中なら止める
 if os.path.exists( LOCK_FILE ):
-  print "previous script running: %s" % ( startAt )
+  logger.debug( "previous script running: %s" % ( startAt ))
   os.sys.exit(0)
 
+if options.force :
+  logger.debug( "script will run with force option: %s" % ( startAt ))
+
 # 一時停止要求があれば止める
-if os.path.exists( "working/pause" ):
-  print "script is paused: %s" % ( startAt )
+elif os.path.exists( "working/pause" ):
+  logger.debug( "script is paused: %s" % ( startAt ))
   os.sys.exit(0)
 
 # 前回実行時より21分経過していなければ止める
 #   TODO 失敗だった場合は辞めなくてもいい
 data = readData()
-if ( time.time() - data.get("startAt") ) < 21 * 60 :
-  print "not taken 21min: %s" % ( startAt )
-  os.sys.exit(0)
+if not options.force :
+  if ( time.time() - data.get("startAt") ) < 21 * 60 :
+    logger.debug( "not taken 21min: %s" % ( startAt ))
+    os.sys.exit(0)
 
 
 createLockFile()
@@ -84,7 +110,7 @@ createLockFile()
 
 os.system("open /Applications/Google\ Chrome.app")
 
-print "start capture at %s" % startAt
+logger.debug( "start capture at %s" % startAt)
 
 core.SCREEN_CAPTURE_PATH = "working/screen.png" 
 
@@ -150,8 +176,9 @@ try:
   flightTryCount = 0
   flightCount = 0
   while True:
+    logger.debug( "Flight Try %d" % flightTryCount )
     # なかなか見つからなかったらいい加減諦める
-    if flightTryCount >= 100:
+    if flightTryCount >= 30:
       break
 
     # もう全部出勤しましたよ
@@ -159,26 +186,26 @@ try:
       break
 
     skip = bat.clickFlightStart()
-    time.sleep(1)
+    time.sleep(.5)
 
     if skip :
       flightTryCount += 1
-      time.sleep(3)
+      time.sleep(.5)
       continue
 
 
     skip = bat.clickSendHero()
     if skip :
       flightTryCount += 1
-      time.sleep(3)
+      time.sleep(.5)
       continue
 
-    time.sleep(1)
+    time.sleep(.5)
 
     # 強制的出勤先選択画面処理
     if bat.detectFlightDestination():
       bat.click20min()
-      time.sleep(1)
+      time.sleep(.5)
 
     # 適当にヒーロー出勤
     while True:
@@ -197,8 +224,7 @@ try:
 
 
 except ValueError:
-  print ValueError.message 
-  print "Error at:%s" % ( startAt )
+  logger.error( ValueError.message )
   os.system( "cp %s error/%s.png" % ( SCREEN_CAPTURE_PATH , startAt ) )
 
   storeData( False )

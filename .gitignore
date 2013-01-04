@@ -2,3 +2,6 @@
 asobiba/auto_avengers/error/*
 asobiba/auto_avengers/working/*
 *pyc
+asobiba/auto_avengers/web/css/*.css
+.sass-cache
+asobiba/auto_avengers/log

@@ -5,7 +5,7 @@ define( "TEMPLATE_DIR" , PROJECT_ROOT."/tpl" );
 define( "DATA_DIR" , PROJECT_ROOT."/working" );
 define( "LOG_DIR" , PROJECT_ROOT."/log" );
 define( "ERROR_LOG" , LOG_DIR."/error" );
-define( "NORMAL_LOG" , LOG_DIR."/log" );
+define( "NORMAL_LOG" , LOG_DIR."/log.txt" );
 define( "ERROR_DIR" , PROJECT_ROOT."/error" );
 ini_set("date.timezone", "Asia/Tokyo");
 umask( 0666 );

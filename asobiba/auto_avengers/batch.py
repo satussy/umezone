@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import batch_core as core
 import time
+import logging as logger
 
 # アベンジャーズを開く
 def clickBookmark():
@@ -217,7 +218,7 @@ def doMissionExit():
   while clickMissionExit():
     try_count += 1
     if try_count >= 30:
-      print "Error: mission exit not found"
+      logger.error( "Error: mission exit not found")
       raise ValueError
 
   clickMissionClose()
@@ -233,7 +234,7 @@ def clickEndBookmark():
 def doBattleLoop():
   while True:
     if detectYourScore():
-      print "Battle End"
+      logger.debug( "Battle End")
       break
 
     attack_count = 0
@@ -258,7 +259,7 @@ def doBattleLoop():
 
       attack_count += 1
       if attack_count >= 30 :
-        print "Error: attack not found"
+        logger.error( "Error: attack not found")
         raise ValueError
         break
 
@@ -280,7 +281,7 @@ def doBattleLoop():
 
       enemy_count += 1
       if enemy_count >= 30:
-        print "Error: enemy not found"
+        logger.error( "Error: enemy not found")
         raise ValueError
         break
 
@@ -295,14 +296,14 @@ def doStartMission1_1():
   chapter_try_counter = 0
   while( True ):
     if detectChapter1() :
-      print "Chapter1"
+      logger.debug( "Chapter1")
       break
     else:
       clickPrevChapter()
  
     chapter_try_counter += 1 
     if chapter_try_counter > 100 :
-      print "not found"
+      logger.debug( "not found")
       break
  
   clickMission1_1()
@@ -332,7 +333,7 @@ def doSelectBattle():
 
     missionTryCount += 1
     if missionTryCount > 20 :
-      print "Error: mission start fail"
+      logger.error( "Error: mission start fail")
       break
  
   time.sleep(5)
@@ -377,14 +378,14 @@ def doMission():
       time.sleep(3)
       doMissionExit()
 
-      print "Mission complete"
+      logger.debug( "Mission complete")
       break
 
 
     mission_count += 1
 
     if mission_count >= 20:
-      print "Error: mission main loop"
+      logger.error( "Error: mission main loop")
       raise ValueError
 
 

@@ -1,4 +1,5 @@
 import cv
+import logging as logger
 
 
 def detect ( templatePath, targetPath, threshold = 0.8 ):
@@ -11,7 +12,7 @@ def detect ( templatePath, targetPath, threshold = 0.8 ):
 
   cv.MatchTemplate (target, template, dstImg , cv.CV_TM_CCOEFF_NORMED);
   minMaxLoc = cv.MinMaxLoc (dstImg);
-  print "%s, %s" % ( templatePath, minMaxLoc )
+  logger.debug( "%s, %.2f%%" % ( templatePath, minMaxLoc[1]*100 ) )
   if minMaxLoc[1] < threshold :
     return False
 
