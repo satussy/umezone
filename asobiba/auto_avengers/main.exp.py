@@ -73,7 +73,6 @@ if ( time.time() - data.get("startAt") ) < 3 * 60 + 30:
 createLockFile()
 
 
-#os.system("open /Applications/Google\ Chrome\ Dev.app")
 os.system("open /Applications/Google\ Chrome.app")
 
 print "start capture at %s" % startAt
@@ -615,6 +614,9 @@ try:
       click3min()
       time.sleep(1)
 
+
+    clickNextHeroPage()
+    clickNextHeroPage()
 
     # 適当にヒーロー出勤
     while True:

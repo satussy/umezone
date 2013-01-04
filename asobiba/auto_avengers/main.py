@@ -71,7 +71,6 @@ if os.path.exists( "working/pause" ):
   print "script is paused: %s" % ( startAt )
   os.sys.exit(0)
 
-
 # 前回実行時より21分経過していなければ止める
 #   TODO 失敗だった場合は辞めなくてもいい
 data = readData()
@@ -83,7 +82,6 @@ if ( time.time() - data.get("startAt") ) < 21 * 60 :
 createLockFile()
 
 
-#os.system("open /Applications/Google\ Chrome\ Dev.app")
 os.system("open /Applications/Google\ Chrome.app")
 
 print "start capture at %s" % startAt
