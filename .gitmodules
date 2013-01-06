@@ -4,3 +4,6 @@
 [submodule "lib/rubygems"]
 	path = lib/rubygems
 	url = git://github.com/rubygems/rubygems.git
+[submodule "asobiba/auto_avengers/web/js/jquery"]
+	path = asobiba/auto_avengers/web/js/jquery
+	url = git://github.com/jquery/jquery.git
