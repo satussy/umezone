@@ -7,8 +7,8 @@ define( "LOG_DIR" , PROJECT_ROOT."/log" );
 define( "ERROR_LOG" , LOG_DIR."/error" );
 define( "NORMAL_LOG" , LOG_DIR."/log.txt" );
 define( "ERROR_DIR" , PROJECT_ROOT."/error" );
+define( "CHARA_DIR" , PROJECT_ROOT."/templates/charas" );
 ini_set("date.timezone", "Asia/Tokyo");
-umask( 0666 );
 
 
 
@@ -108,6 +108,12 @@ class Service{
     header("Location:/Avengers/index.php");
   }
 
+  function savePriority(){
+    $p = new Priority();
+    $p->save( $_POST["priority"] );
+    header("Location:/Avengers/index.php");
+  }
+
   public function doCommand(){
     $cmd = $this->cmd;
     $this->$cmd();
@@ -119,12 +125,61 @@ class Service{
 }
 
 
+class Priority{
+  private $charas = array();
+  function __construct(){
+    exec( sprintf( "ls -1 %s|sed -e 's/.png//'" , escapeshellarg(CHARA_DIR) ) , $list);
+    $this->charas = $list ;
+
+    $json =  DATA_DIR."/priority.json" ;
+    if( file_exists( $json ) ){
+      $content = file_get_contents($json) ;
+      if( strlen( $content ) !== 0 ){
+        $this->priority = json_decode( $content , true );
+      }else{
+        $this->priority = $this->charas ;
+      }
+    }else{
+      $this->priority = $this->charas ;
+    }
+  }
+
+  public function getCharas(){
+    return $this->charas ;
+  }
+
+  public function getPriority(){
+    return $this->priority;
+  }
+
+  public function save( $list ){
+    $this->priority = $list ;
+    file_put_contents( DATA_DIR."/priority.json" , json_encode( $list ) );
+  }
+}
+
+
+class CronTab {
+  private $source = null ;
+  function __construct(){
+    exec( "crontab -l"  , $cron);
+    $this->source= implode( "\n" , $cron );
+  }
+
+  public function getSource(){
+    return $this->source ;
+  }
+}
+
+
 
 $page = new Page();
 $status = new AvengersStatus();
 $log = new Log();
 $service = new Service();
 $service->doCommand();
+$priority = new Priority();
+$cron = new CronTab();
 
 $params = array( 
   "isRunning" => $status->isRunning() ,
@@ -139,6 +194,12 @@ $params = array(
   ) ,
   "cmd" => array(
     "message" => $service->getMessage()
+  ),
+  "priority" => array(
+    "list" => $priority->getPriority()
+  ),
+  "cron" => array(
+    "source" => $cron->getSource()
   )
 );
 $page->render( $params );

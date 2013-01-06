@@ -12,6 +12,9 @@ h2 {
   font-size:18px;
   font-weight:normal;
 }
+ul{
+  margin:0;padding:0; list-style-type:none;
+}
 
 a {
   text-decoration:none;
@@ -63,4 +66,90 @@ h1 .time {
 
 }
 
+$priorityItemHeight:40px;
+$priorityItemMargin:5px;
+$priorityItemPadding:5px;
+$priorityItemBorder:1px;
+
+.priorityContainer {
+  .priorityItem {
+    .priorityItemIndex{
+      display:inline-block;
+      width:25px;
+    }
+
+    .priorityItemName{
+      line-height:40px;
+      padding-left:10px;
+
+      display:inline-block;
+      vertical-align:top;
+      height: $priorityItemHeight ;
+
+    }
+  }
+
+  .priorityItem {
+    margin:$priorityItemMargin 10px;
+    padding:$priorityItemPadding;
+    border-bottom:1px solid #CCC;
+    box-shadow:0px 0px 0px #888 inset;
+    background-color:rgba(0,0,0,0);
+    cursor:pointer;
+    -webkit-transition:
+      box-shadow $defaultDuration linear,
+      background-color $defaultDuration linear ;
+
+    &:hover {
+      background-color:rgba(0,0,0,.1);
+      box-shadow:1px 1px 4px #888 inset;
+    }
+
+    &.dragging {
+      opacity:.4;
+
+    }
+  }
+
+
+  .priorityItemImage{
+    background:no-repeat;
+    background-size:40px;
+    padding-left:40px;
+    background-position:5px;
+
+    -webkit-transition: height $defaultDuration linear ;
+  }
+
+  .priorityList {
+    height:auto;
+    background-color:#EEE;
+    border:#CCC 1px solid;
+  }
+
+  &.close .priorityList {
+    height:($priorityItemHeight + $priorityItemMargin + $priorityItemBorder + $priorityItemPadding*2) * 8 + $priorityItemMargin ;
+    overflow:scroll;
+  }
+
+  &.open .priorityList {
+    height:auto;
+  }
+
+
+  .priorityToggleContainer { 
+    .open , .close{ 
+      display:none ; 
+      cursor:pointer;
+    }
+  }
+  &.open {
+    .priorityToggleContainer .open { display:none; }
+    .priorityToggleContainer .close{ display:block; }
+  }
+  &.close{
+    .priorityToggleContainer .open { display:block; }
+    .priorityToggleContainer .close{ display:none ; }
+  }
+}
 

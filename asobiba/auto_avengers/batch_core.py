@@ -19,7 +19,7 @@ def getPoint(templatePath,skip=False):
     if skip:
       return False
     else:
-      raise ValueError
+      raise ValueError( templatePath )
 
   return point
 

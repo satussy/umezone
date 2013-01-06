@@ -116,6 +116,18 @@ core.SCREEN_CAPTURE_PATH = "working/screen.png"
 
 
 
+fp = open( "working/priority.json", "r" )
+priority = fp.readline()
+fp.close()
+
+try:
+  priority = json.JSONDecoder().decode( priority )
+except ValueError:
+  pass
+
+priority.reverse();
+
+
 
 try:
 
@@ -171,7 +183,6 @@ try:
     # 飛行機が返ってくるまで時間がかかります
     time.sleep(5)
 
-
   # フライト任務ループ
   flightTryCount = 0
   flightCount = 0
@@ -207,18 +218,42 @@ try:
       bat.click20min()
       time.sleep(.5)
 
-    # 適当にヒーロー出勤
-    while True:
-      skip = bat.clickSelectHeroButton()
-      if not skip:
-        break
 
-      time.sleep(1)
+    hero = priority.pop()
+    logger.debug( hero )
+    heroSelectTryCount = 0
 
-    # おっけおっけ
-    bat.clickHeroConfirm()
+    try:
+      # 適当にヒーロー出勤
+      while True:
+        logger.debug( "click templates/charas/%s.png" % hero ) 
+        skip = core.click( "templates/charas/%s.png" % hero , True )
+        if not skip :
+          break
 
-    bat.doTrainingRequired()
+        logger.debug( "%s not found" % hero ) 
+
+        logger.debug( "search next page" )
+        bat.clickNextHeroPage()
+        heroSelectTryCount += 1
+
+        if heroSelectTryCount >= 5 :
+          raise Exception( "try 5 times" )
+
+        logger.debug( "sleep 1" )
+        time.sleep(1)
+    except Exception:
+      logger.debug( Exception.message )
+    except ValueError:
+      logger.debug( ValueError.message )
+
+    else:
+      # おっけおっけ
+      bat.clickHeroConfirm()
+
+      bat.doTrainingRequired()
+
+
 
     flightCount += 1
 
