@@ -33,8 +33,8 @@ class AvengersStatus {
   function __construct(){
     $this->status = file_exists( DATA_DIR."/lock" );
     $this->data = json_decode( file_get_contents( DATA_DIR."/data" ) , true );
-    $this->data["startAt"] = (int)$this->data["startAt"];
     $this->cleared = !isset( $this->data["startAt"] );
+    $this->data["startAt"] = (int)$this->data["startAt"];
   }
 
   public function isRunning(){
