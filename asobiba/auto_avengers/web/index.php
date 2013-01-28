@@ -135,7 +135,7 @@ class Priority{
     if( file_exists( $json ) ){
       $content = file_get_contents($json) ;
       if( strlen( $content ) !== 0 ){
-        $this->priority = json_decode( $content , true );
+        $this->priority = array_unique( array_merge( json_decode( $content , true ) , $this->charas ) );
       }else{
         $this->priority = $this->charas ;
       }
