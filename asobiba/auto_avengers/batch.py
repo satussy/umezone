@@ -64,6 +64,9 @@ def clickSendHero():
 def detectFlightDestination():
   return core.detect( "templates/3min.png" )
 
+def click10min():
+  core.click( "templates/10min.png" )
+
 def click20min():
   core.click( "templates/20min.png" )
 

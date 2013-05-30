@@ -96,12 +96,12 @@ elif os.path.exists( "working/pause" ):
   logger.debug( "script is paused: %s" % ( startAt ))
   os.sys.exit(0)
 
-# 前回実行時より21分経過していなければ止める
+# 前回実行時より11分経過していなければ止める
 #   TODO 失敗だった場合は辞めなくてもいい
 data = readData()
 if not options.force :
-  if ( time.time() - data.get("startAt") ) < 21 * 60 :
-    logger.debug( "not taken 21min: %s" % ( startAt ))
+  if ( time.time() - data.get("startAt") ) < 11 * 60 :
+    logger.debug( "not taken 11min: %s" % ( startAt ))
     os.sys.exit(0)
 
 
@@ -214,9 +214,8 @@ try:
     time.sleep(.5)
 
     # 強制的出勤先選択画面処理
-    if bat.detectFlightDestination():
-      bat.click20min()
-      time.sleep(.5)
+    bat.click10min()
+    time.sleep(.5)
 
 
     hero = priority.pop()
@@ -240,8 +239,8 @@ try:
         if heroSelectTryCount >= 5 :
           raise Exception( "try 5 times" )
 
-        logger.debug( "sleep 1" )
-        time.sleep(1)
+        logger.debug( "sleep .5" )
+        time.sleep(.5)
     except Exception:
       logger.debug( Exception.message )
     except ValueError:
